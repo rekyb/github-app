@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="bgColor" format="color"/>
+    <attr name="appLogo" format="integer"/>
+    <attr name="branding" format="integer"/>
+</resources>

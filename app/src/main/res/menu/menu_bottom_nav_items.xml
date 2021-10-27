@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_discover_fragment"
+        android:title="@string/label_discover"
+        android:icon="@drawable/ic_search_24dp"/>
+    <item
+        android:id="@+id/item_favourites_fragment"
+        android:title="@string/label_favourites"
+        android:icon="@drawable/ic_favorite_24dp"/>
+    <item
+        android:id="@+id/item_more_fragment"
+        android:title="@string/label_more"
+        android:icon="@drawable/ic_more_24dp"/>
+
+</menu>

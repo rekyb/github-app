@@ -1,0 +1,32 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext {
+        build_gradle = "7.0.3"
+        kotlin_gradle = "1.5.31"
+        spotless = "5.17.0"
+        hilt_version = "2.39.1"
+        navigation_version = "2.3.5"
+        retrofit_version = "2.9.0"
+        okhttp_version = "5.0.0-alpha.2"
+        coroutines_version = "1.5.2"
+        room_version = "2.3.0"
+        lifecycle_version = "2.3.1"
+    }
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$build_gradle"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_gradle"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotless"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    apply from: "$project.rootDir/spotless.gradle"
+}

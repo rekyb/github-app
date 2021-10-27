@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_navigation"
+    app:startDestination="@id/item_discover_fragment">
+
+    <fragment
+        android:id="@+id/item_discover_fragment"
+        android:name="com.rekyb.jyro.ui.discover.DiscoverFragment"
+        android:label="@string/label_discover"
+        tools:layout="@layout/fragment_discover"/>
+    <fragment
+        android:id="@+id/item_favourites_fragment"
+        android:name="com.rekyb.jyro.ui.favourites.FavouritesFragment"
+        android:label="@string/label_favourites"
+        tools:layout="@layout/fragment_favourites"/>
+    <fragment
+        android:id="@+id/item_more_fragment"
+        android:name="com.rekyb.jyro.ui.more.MoreFragment"
+        android:label="@string/label_more"
+        tools:layout="@layout/fragment_more"/>
+</navigation>
