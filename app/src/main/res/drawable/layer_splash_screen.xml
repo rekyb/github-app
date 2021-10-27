@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="?attr/bgColor" />
+        </shape>
+    </item>
+
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="?attr/appLogo"/>
+    </item>
+    <item android:bottom="50dp">
+        <bitmap
+            android:gravity="bottom"
+            android:src="?attr/branding"/>
+    </item>
+</layer-list>

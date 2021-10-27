@@ -3,4 +3,10 @@
     <string name="label_discover">Discover</string>
     <string name="label_favourites">Favourites</string>
     <string name="label_more">More</string>
+    <string name="label_search">Search</string>
+    <string name="query_hint">Type user name…</string>
+    <string name="user_ava_desc">User\'s Avatar Image</string>
+    <string name="default_state_text">All good, ready to go.</string>
+    <string name="error_state_text">Ops, something went wrong!</string>
+    <string name="no_internet_state_text">Disconnected, please try again later.</string>
 </resources>

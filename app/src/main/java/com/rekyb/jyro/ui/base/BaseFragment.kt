@@ -8,6 +8,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 
 abstract class BaseFragment<VB : ViewBinding>(
@@ -15,6 +16,7 @@ abstract class BaseFragment<VB : ViewBinding>(
 ) : Fragment() {
 
     private var _binding: VB? = null
+
     val binding get() = _binding
 
     override fun onCreateView(
