@@ -8,8 +8,8 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import timber.log.Timber
 
 abstract class BaseFragment<VB : ViewBinding>(
     @LayoutRes val layoutResId: Int,
@@ -34,6 +34,8 @@ abstract class BaseFragment<VB : ViewBinding>(
         super.onDestroy()
         (_binding as? ViewDataBinding?)?.unbind()
         _binding = null
+
+        Timber.d("$_binding destroyed")
     }
 
 }
