@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -14,6 +15,7 @@ import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.databinding.FragmentDiscoverBinding
 import com.rekyb.jyro.ui.base.BaseFragment
 import com.rekyb.jyro.utils.hide
+import com.rekyb.jyro.utils.setTopDrawable
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -54,7 +56,7 @@ class DiscoverFragment : BaseFragment<FragmentDiscoverBinding>(R.layout.fragment
             viewModel.searchUser(query)
             searchView.clearFocus()
 
-            setViewOnLoading(viewModel.dataState.value.isDataOnLoad)
+            binding?.onLoading(viewModel.dataState.value.isDataOnLoad)
         }
 
         return true
@@ -69,10 +71,10 @@ class DiscoverFragment : BaseFragment<FragmentDiscoverBinding>(R.layout.fragment
                 .collect { state ->
                     when (state.result) {
                         is DataState.Success -> {
-                            setViewOnResult()
+                            binding?.onSuccess()
                         }
                         is DataState.Error -> {
-                            setViewOnError()
+                            binding?.onError(state.result.message)
                             Timber.d(state.result.message)
                         }
                     }
@@ -80,29 +82,27 @@ class DiscoverFragment : BaseFragment<FragmentDiscoverBinding>(R.layout.fragment
         }
     }
 
-    private fun setViewOnLoading(state: Boolean) {
+    private fun FragmentDiscoverBinding.onLoading(state: Boolean) {
         if (state) {
-            binding?.apply {
-                tvPlaceholder.hide()
-                rvSearchResults.hide()
-                progressBar.show()
-            }
-        }
-    }
-
-    private fun setViewOnResult() {
-        binding?.apply {
             tvPlaceholder.hide()
-            rvSearchResults.show()
-            progressBar.hide()
+            rvSearchResults.hide()
+            progressBar.show()
         }
     }
 
-    private fun setViewOnError() {
-        binding?.apply {
-            tvPlaceholder.show()
-            rvSearchResults.hide()
-            progressBar.hide()
-        }
+    private fun FragmentDiscoverBinding.onSuccess() {
+        tvPlaceholder.hide()
+        rvSearchResults.show()
+        progressBar.hide()
+    }
+
+    private fun FragmentDiscoverBinding.onError(errorMessage: String) {
+        tvPlaceholder.apply {
+            text = errorMessage
+            setTopDrawable(AppCompatResources
+                .getDrawable(context, R.drawable.ic_exclamation_mark))
+        }.show()
+        rvSearchResults.hide()
+        progressBar.hide()
     }
 }

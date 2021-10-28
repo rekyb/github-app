@@ -21,8 +21,8 @@ class SearchUserUseCase @Inject constructor(
             try {
                 val response = repo.search(query)
                 emit(DataState.Success(response))
-            } catch (e: Exception) {
-                emit(ExceptionHandler(context).handleError(e))
+            } catch (error: Exception) {
+                emit(ExceptionHandler(context).handleError(error))
             }
         }
     }

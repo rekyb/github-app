@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme.WithSplashScreen">
         <activity
             android:name=".ui.main.MainActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="true"
             android:theme="@style/AppTheme.WithSplashScreen">
             <intent-filter>
