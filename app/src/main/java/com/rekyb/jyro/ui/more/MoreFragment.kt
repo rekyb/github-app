@@ -8,12 +8,11 @@ import com.rekyb.jyro.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MoreFragment: BaseFragment<FragmentMoreBinding>(R.layout.fragment_more) {
+class MoreFragment : BaseFragment<FragmentMoreBinding>(R.layout.fragment_more) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.tvPlaceholder?.text = activity?.application?.getString(R.string.label_more)
     }
-
 }

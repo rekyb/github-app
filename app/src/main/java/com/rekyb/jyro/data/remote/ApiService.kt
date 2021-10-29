@@ -12,5 +12,4 @@ interface ApiService {
      */
     @GET(Constants.GIT_SEARCH_END_POINT)
     suspend fun search(@Query("q") query: String): SearchResponseDto
-
 }

@@ -19,12 +19,11 @@ class SearchUserUseCase @Inject constructor(
     operator fun invoke(query: String): Flow<DataState<SearchResponse>> {
         return flow {
             try {
-                val response = repo.search(query)
-                emit(DataState.Success(response))
+                emit(DataState.Loading)
+                emit(DataState.Success(repo.search(query)))
             } catch (error: Exception) {
                 emit(ExceptionHandler(context).handleError(error))
             }
         }
     }
-
 }

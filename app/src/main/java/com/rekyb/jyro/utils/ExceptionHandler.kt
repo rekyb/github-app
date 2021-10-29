@@ -5,7 +5,6 @@ import com.rekyb.jyro.R
 import com.rekyb.jyro.common.DataState
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.HttpException
-import java.io.IOException
 import java.lang.Exception
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException

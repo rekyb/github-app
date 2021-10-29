@@ -22,6 +22,5 @@ object RepositoryModule {
     ): UserRepository {
 
         return UserRepositoryImpl(apiService, searchResponseMapper)
-
     }
 }

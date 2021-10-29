@@ -8,12 +8,11 @@ import com.rekyb.jyro.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavouritesFragment: BaseFragment<FragmentFavouritesBinding>(R.layout.fragment_favourites) {
+class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>(R.layout.fragment_favourites) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.tvPlaceholder?.text = activity?.application?.getString(R.string.label_favourites)
     }
-
 }

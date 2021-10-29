@@ -9,13 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import timber.log.Timber
 
 abstract class BaseFragment<VB : ViewBinding>(
     @LayoutRes val layoutResId: Int,
 ) : Fragment() {
 
     private var _binding: VB? = null
-
     val binding get() = _binding
 
     override fun onCreateView(
@@ -25,6 +25,7 @@ abstract class BaseFragment<VB : ViewBinding>(
     ): View? {
 
         _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
+        Timber.d("Binding on fragment has been created!")
 
         return _binding?.root
     }
@@ -33,6 +34,7 @@ abstract class BaseFragment<VB : ViewBinding>(
         super.onDestroy()
         (_binding as? ViewDataBinding?)?.unbind()
         _binding = null
-    }
 
+        Timber.d("Binding on fragment has been destroyed!")
+    }
 }

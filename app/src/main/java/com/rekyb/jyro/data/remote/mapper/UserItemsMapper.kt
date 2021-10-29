@@ -4,7 +4,7 @@ import com.rekyb.jyro.data.remote.response.UserItemsDto
 import com.rekyb.jyro.domain.model.UserItems
 import com.rekyb.jyro.utils.EntityMapper
 
-class UserItemsMapper: EntityMapper<UserItemsDto, UserItems> {
+class UserItemsMapper : EntityMapper<UserItemsDto, UserItems> {
     override fun mapFromEntity(entity: UserItemsDto): UserItems {
         return UserItems(
             userName = entity.login,
@@ -23,11 +23,11 @@ class UserItemsMapper: EntityMapper<UserItemsDto, UserItems> {
         )
     }
 
-    fun toDomainList(initial: List<UserItems>): List<UserItemsDto>{
+    fun toDomainList(initial: List<UserItems>): List<UserItemsDto> {
         return initial.map { mapToEntity(it) }
     }
 
-    fun fromDomainList(initial: List<UserItemsDto>): List<UserItems>{
+    fun fromDomainList(initial: List<UserItemsDto>): List<UserItems> {
         return initial.map { mapFromEntity(it) }
     }
 }

@@ -4,7 +4,7 @@ import com.rekyb.jyro.data.remote.response.SearchResponseDto
 import com.rekyb.jyro.domain.model.SearchResponse
 import com.rekyb.jyro.utils.EntityMapper
 
-class SearchResponseMapper : EntityMapper<SearchResponseDto,SearchResponse> {
+class SearchResponseMapper : EntityMapper<SearchResponseDto, SearchResponse> {
     private val mapper = UserItemsMapper()
 
     override fun mapFromEntity(entity: SearchResponseDto): SearchResponse {
@@ -22,6 +22,4 @@ class SearchResponseMapper : EntityMapper<SearchResponseDto,SearchResponse> {
             items = mapper.toDomainList(domainModel.userItems)
         )
     }
-
-
 }

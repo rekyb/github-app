@@ -13,5 +13,4 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun search(query: String): SearchResponse {
         return mapper.mapFromEntity(apiService.search(query))
     }
-
 }

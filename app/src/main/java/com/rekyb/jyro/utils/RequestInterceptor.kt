@@ -4,7 +4,7 @@ import com.rekyb.jyro.common.Constants
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class RequestInterceptor: Interceptor {
+class RequestInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalResponse = chain.request()
         val response = originalResponse

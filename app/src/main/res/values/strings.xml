@@ -4,16 +4,16 @@
     <string name="label_favourites">Favourites</string>
     <string name="label_more">More</string>
     <string name="label_search">Search</string>
-    <string name="query_hint">Type user name…</string>
+    <string name="query_hint">Search Github users</string>
     <string name="user_ava_desc">User\'s Avatar Image</string>
-    <string name="default_state_text">All good, ready to go.</string>
+    <string name="default_state_text">All good, ready to go</string>
     <string name="error_default">Ops, something went wrong!</string>
-    <string name="error_not_identified">Unexpected error encountered.</string>
-    <string name="error_socket_timeout">Request timeout, please try again later.</string>
-    <string name="error_unknown_host">Cannot resolve host, please check your internet connection.</string>
+    <string name="error_not_identified">Unexpected error encountered</string>
+    <string name="error_socket_timeout">Request timeout, please try again later</string>
+    <string name="error_unknown_host">Cannot resolve host, please check your internet connection</string>
     <string name="error_bad_request">Bad request</string>
     <string name="error_unauthorized">Unauthorized request</string>
     <string name="error_forbidden">Forbidden request</string>
-    <string name="error_not_found">No data found</string>
+    <string name="error_not_found">Data not found, please try again</string>
     <string name="error_internal_server">Internal server error</string>
 </resources>
