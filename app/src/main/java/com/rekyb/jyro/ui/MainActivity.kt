@@ -1,4 +1,4 @@
-package com.rekyb.jyro.ui.main
+package com.rekyb.jyro.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

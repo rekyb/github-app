@@ -10,9 +10,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
 import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.databinding.FragmentDiscoverBinding
+import com.rekyb.jyro.domain.model.UserItems
+import com.rekyb.jyro.ui.adapter.AdapterDataObserver
 import com.rekyb.jyro.ui.adapter.DiscoverUserAdapter
 import com.rekyb.jyro.ui.base.BaseFragment
 import com.rekyb.jyro.utils.hide
@@ -30,7 +33,9 @@ class DiscoverFragment :
     SearchView.OnQueryTextListener {
 
     private lateinit var searchView: SearchView
-    private val adapter by lazy { DiscoverUserAdapter() }
+    private lateinit var recyclerView: RecyclerView
+
+    private val userAdapter by lazy { DiscoverUserAdapter() }
     private val viewModel: DiscoverViewModel by navGraphViewModels(R.id.app_navigation) {
         defaultViewModelProviderFactory
     }
@@ -38,10 +43,9 @@ class DiscoverFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupAdapter()
         setupDataCollector()
         setHasOptionsMenu(true)
-
-        binding?.rvSearchResults?.adapter = adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -69,6 +73,22 @@ class DiscoverFragment :
 
     override fun onQueryTextChange(newText: String?): Boolean = false
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        viewModel.scrollState = recyclerView.layoutManager?.onSaveInstanceState()
+    }
+
+    private fun setupAdapter() {
+        recyclerView = binding?.rvSearchResults!!
+        recyclerView.adapter = userAdapter
+
+        if (viewModel.scrollState != null) {
+            userAdapter.registerAdapterDataObserver(
+                AdapterDataObserver(recyclerView, viewModel.scrollState!!)
+            )
+        }
+    }
+
     private fun setupDataCollector() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.dataState
@@ -79,10 +99,12 @@ class DiscoverFragment :
                             is DataState.Loading -> onLoading()
                             is DataState.Error -> onError(state.result.message)
                             is DataState.Success -> {
-                                val data = state.result.data
-
-                                onSuccess(data.totalCount == 0)
-                                adapter.renderList(data.userItems)
+                                state.result.data.apply {
+                                    onSuccess(
+                                        isEmptyResults = totalCount == 0,
+                                        items = userItems
+                                    )
+                                }
                             }
                         }
                     }
@@ -96,10 +118,12 @@ class DiscoverFragment :
         progressBar.show()
     }
 
-    private fun FragmentDiscoverBinding.onSuccess(isEmptyResults: Boolean) {
+    private fun FragmentDiscoverBinding.onSuccess(isEmptyResults: Boolean, items: List<UserItems>) {
         if (isEmptyResults) {
             onError(requireContext().getString(R.string.error_not_found))
         } else {
+            userAdapter.renderList(items)
+
             tvPlaceholder.hide()
             rvSearchResults.show()
             progressBar.hide()
@@ -114,6 +138,7 @@ class DiscoverFragment :
                     .getDrawable(requireContext(), R.drawable.ic_exclamation_mark)
             )
         }.show()
+
         rvSearchResults.hide()
         progressBar.hide()
     }

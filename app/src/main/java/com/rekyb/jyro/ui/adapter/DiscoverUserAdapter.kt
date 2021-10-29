@@ -12,25 +12,27 @@ class DiscoverUserAdapter : RecyclerView.Adapter<DiscoverUserAdapter.ViewHolder>
 
     companion object {
         private val diffCallBack =
-            object : DiffUtil.ItemCallback<UserItems>(){
+            object : DiffUtil.ItemCallback<UserItems>() {
                 override fun areItemsTheSame(
                     oldItem: UserItems,
-                    newItem: UserItems
+                    newItem: UserItems,
                 ): Boolean {
                     return oldItem.userId == newItem.userId
                 }
 
                 override fun areContentsTheSame(
                     oldItem: UserItems,
-                    newItem: UserItems
+                    newItem: UserItems,
                 ): Boolean {
                     return oldItem == newItem
                 }
             }
     }
 
-    class ViewHolder(val binding: RvUsersItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: UserItems){
+    class ViewHolder(private val binding: RvUsersItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(items: UserItems) {
             binding.userData = items
             binding.executePendingBindings()
         }
@@ -38,7 +40,7 @@ class DiscoverUserAdapter : RecyclerView.Adapter<DiscoverUserAdapter.ViewHolder>
         companion object {
             fun from(parent: ViewGroup): ViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = RvUsersItemBinding.inflate(layoutInflater, parent,false)
+                val binding = RvUsersItemBinding.inflate(layoutInflater, parent, false)
 
                 return ViewHolder(binding)
             }
@@ -61,7 +63,7 @@ class DiscoverUserAdapter : RecyclerView.Adapter<DiscoverUserAdapter.ViewHolder>
 
     private val differ = AsyncListDiffer(this, diffCallBack)
 
-    fun renderList (newList: List<UserItems>) {
+    fun renderList(newList: List<UserItems>) {
         differ.submitList(newList)
         notifyItemChanged(itemCount)
     }

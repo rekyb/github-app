@@ -37,14 +37,14 @@ fun View.navigateTo(direction: NavDirections) {
 }
 
 @BindingAdapter("imageUrl")
-fun ImageView.loadImage (url: String?) {
+fun ImageView.loadImage(url: String?) {
     val circleProgressDrawable = CircularProgressDrawable(context).apply {
         strokeWidth = 5f
         centerRadius = 30f
         start()
     }
 
-    this.load(url){
+    this.load(url) {
         diskCachePolicy(CachePolicy.ENABLED)
         placeholder(circleProgressDrawable)
         error(R.drawable.ic_error_loading_image)
