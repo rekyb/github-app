@@ -22,12 +22,10 @@ import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.setTopDrawable
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-@ExperimentalCoroutinesApi
 class DiscoverFragment :
     BaseFragment<FragmentDiscoverBinding>(R.layout.fragment_discover),
     SearchView.OnQueryTextListener {
@@ -43,9 +41,15 @@ class DiscoverFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupAdapter()
-        setupDataCollector()
+        setAdapter()
+        setDataCollector()
         setHasOptionsMenu(true)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        recyclerView.layoutManager?.onSaveInstanceState().also { viewModel.scrollState = it }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -55,9 +59,7 @@ class DiscoverFragment :
 
         searchView = searchMenuItem.actionView as SearchView
         searchView.apply {
-            queryHint = activity?.getString(R.string.query_hint)
-            maxWidth = Integer.MAX_VALUE
-
+            queryHint = requireContext().getString(R.string.query_hint)
             setOnQueryTextListener(this@DiscoverFragment)
         }
     }
@@ -73,64 +75,57 @@ class DiscoverFragment :
 
     override fun onQueryTextChange(newText: String?): Boolean = false
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        viewModel.scrollState = recyclerView.layoutManager?.onSaveInstanceState()
-    }
-
-    private fun setupAdapter() {
+    private fun setAdapter() {
         recyclerView = binding?.rvSearchResults!!
         recyclerView.adapter = userAdapter
 
         if (viewModel.scrollState != null) {
             userAdapter.registerAdapterDataObserver(
-                AdapterDataObserver(recyclerView, viewModel.scrollState!!)
+                AdapterDataObserver(
+                    recyclerView,
+                    viewModel.scrollState!!
+                )
             )
         }
     }
 
-    private fun setupDataCollector() {
+    private fun setDataCollector() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.dataState
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect { state ->
                     binding?.apply {
-                        when (state.result) {
-                            is DataState.Loading -> onLoading()
-                            is DataState.Error -> onError(state.result.message)
+                        when (val result = state.result) {
                             is DataState.Success -> {
-                                state.result.data.apply {
+                                result.data.apply {
                                     onSuccess(
                                         isEmptyResults = totalCount == 0,
                                         items = userItems
                                     )
                                 }
                             }
+                            is DataState.Error -> onError(result.message)
+                            is DataState.Loading -> onLoading()
                         }
                     }
                 }
         }
     }
 
-    private fun FragmentDiscoverBinding.onLoading() {
-        tvPlaceholder.hide()
-        rvSearchResults.hide()
-        progressBar.show()
-    }
-
     private fun FragmentDiscoverBinding.onSuccess(isEmptyResults: Boolean, items: List<UserItems>) {
+        progressBar.hide()
+
         if (isEmptyResults) {
             onError(requireContext().getString(R.string.error_not_found))
         } else {
             userAdapter.renderList(items)
-
-            tvPlaceholder.hide()
             rvSearchResults.show()
-            progressBar.hide()
+            tvPlaceholder.hide()
         }
     }
 
     private fun FragmentDiscoverBinding.onError(errorMessage: String) {
+        rvSearchResults.hide()
         tvPlaceholder.apply {
             text = errorMessage
             setTopDrawable(
@@ -138,8 +133,11 @@ class DiscoverFragment :
                     .getDrawable(requireContext(), R.drawable.ic_exclamation_mark)
             )
         }.show()
+    }
 
+    private fun FragmentDiscoverBinding.onLoading() {
+        progressBar.show()
+        tvPlaceholder.hide()
         rvSearchResults.hide()
-        progressBar.hide()
     }
 }
