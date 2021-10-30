@@ -1,4 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/primaryColor</item>
         <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
@@ -9,11 +10,12 @@
         <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/primaryColor</item>
 
-        <item name="bgColor">@color/white</item>
+        <item name="adaptiveColor">@color/white</item>
         <item name="icColor">@color/black</item>
         <item name="appLogo">@drawable/app_logo</item>
         <item name="branding">@drawable/branding</item>
     </style>
+
     <style name="AppTheme.WithSplashScreen" parent="AppTheme">
         <item name="android:windowBackground">@drawable/layer_splash_screen</item>
     </style>
