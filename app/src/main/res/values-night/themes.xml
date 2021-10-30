@@ -8,7 +8,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="android:navigationBarColor">@color/primaryDarkSurface</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/secondaryDarkSurface</item>
-        <item name="bgColor">@color/black</item>
+        <item name="adaptiveColor">@color/black</item>
         <item name="appLogo">@drawable/app_logo_dark</item>
         <item name="branding">@drawable/branding_dark</item>
     </style>
