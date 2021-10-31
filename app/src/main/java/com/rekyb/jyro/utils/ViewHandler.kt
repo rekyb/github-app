@@ -10,13 +10,14 @@ import androidx.databinding.BindingAdapter
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import coil.annotation.ExperimentalCoilApi
 import coil.load
 import coil.request.CachePolicy
 import coil.transform.CircleCropTransformation
-import coil.transition.CrossfadeTransition
 import com.rekyb.jyro.R
 
+/**
+ * An assortment of extensions to help me handling the View
+ */
 fun View.show(): View {
     if (visibility != VISIBLE) {
         visibility = VISIBLE
@@ -39,7 +40,6 @@ fun View.navigateTo(direction: NavDirections) {
     Navigation.findNavController(this).navigate(direction)
 }
 
-@ExperimentalCoilApi
 @BindingAdapter("imageUrl")
 fun ImageView.loadImage(url: String?) {
     val circleProgressDrawable = CircularProgressDrawable(context).apply {
@@ -51,7 +51,7 @@ fun ImageView.loadImage(url: String?) {
     this.load(url) {
         diskCachePolicy(CachePolicy.ENABLED)
         placeholder(circleProgressDrawable)
-        transition(CrossfadeTransition())
+        crossfade(true)
         error(R.drawable.ic_error_loading_image)
     }
 }

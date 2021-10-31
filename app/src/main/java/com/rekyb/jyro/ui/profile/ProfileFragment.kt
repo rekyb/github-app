@@ -30,10 +30,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getUserDetails(args.username)
-    }
-
-    override fun onResume() {
-        super.onResume()
         setProfileDataCollector()
     }
 

@@ -52,10 +52,13 @@ class DiscoverFragment :
 
 
         recyclerView?.apply {
+            /**
+             * Save the scroll sate at the viewModel
+             */
             viewModel.scrollState = layoutManager?.onSaveInstanceState()
 
             /**
-             * Nullifying spree, prevent that pesky memory leaks
+             * Nullifying spree, prevent those pesky memory leaks
              */
             adapter = null
             userAdapter = null
@@ -119,6 +122,7 @@ class DiscoverFragment :
                 .collect { state ->
                     binding?.apply {
                         when (val result = state.result) {
+                            is DataState.Loading -> onLoading()
                             is DataState.Success -> {
                                 result.data.apply {
                                     onSuccess(
@@ -128,11 +132,16 @@ class DiscoverFragment :
                                 }
                             }
                             is DataState.Error -> onError(result.message)
-                            is DataState.Loading -> onLoading()
                         }
                     }
                 }
         }
+    }
+
+    private fun FragmentDiscoverBinding.onLoading() {
+        progressBar.show()
+        tvPlaceholder.hide()
+        rvSearchResults.hide()
     }
 
     private fun FragmentDiscoverBinding.onSuccess(isEmptyResults: Boolean, items: List<UserItemsModel>) {
@@ -158,12 +167,4 @@ class DiscoverFragment :
             )
         }.show()
     }
-
-    private fun FragmentDiscoverBinding.onLoading() {
-        progressBar.show()
-        tvPlaceholder.hide()
-        rvSearchResults.hide()
-    }
-
-
 }
