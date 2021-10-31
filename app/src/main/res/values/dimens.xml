@@ -2,15 +2,16 @@
 <resources>
     <dimen name="zero_dp">0dp</dimen>
     <dimen name="elevation">7dp</dimen>
-    <dimen name="circle_bar_size">150dp</dimen>
-    <dimen name="avatar_image_size">75dp</dimen>
-    <dimen name="avatar_profile_size">128dp</dimen>
+    <dimen name="circle_bar_size">128dp</dimen>
+    <dimen name="avatar_image_size">64dp</dimen>
+    <dimen name="avatar_profile_size">108dp</dimen>
     <dimen name="card_radius">8dp</dimen>
     <dimen name="card_margin">9dp</dimen>
     <dimen name="wrapper_margin">15dp</dimen>
     <dimen name="wrapper_padding">5dp</dimen>
     <dimen name="title_text_size">24sp</dimen>
-    <dimen name="default_state_text_size">18sp</dimen>
-    <dimen name="user_detail_text_size">15sp</dimen>
-    <dimen name="user_name_text_size">16sp</dimen>
+    <dimen name="default_text_size">18sp</dimen>
+    <dimen name="user_name_text_size">15sp</dimen>
+    <dimen name="small_dp">3dp</dimen>
+    <dimen name="medium_dp">10dp</dimen>
 </resources>

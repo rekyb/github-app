@@ -36,6 +36,7 @@ fun View.navigateTo(direction: NavDirections) {
     Navigation.findNavController(this).navigate(direction)
 }
 
+
 @BindingAdapter("imageUrl")
 fun ImageView.loadImage(url: String?) {
     val circleProgressDrawable = CircularProgressDrawable(context).apply {
@@ -48,6 +49,5 @@ fun ImageView.loadImage(url: String?) {
         diskCachePolicy(CachePolicy.ENABLED)
         placeholder(circleProgressDrawable)
         error(R.drawable.ic_error_loading_image)
-        crossfade(true)
     }
 }
