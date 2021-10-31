@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/discover_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.discover.DiscoverFragment">
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/default_state_text"
-            android:textSize="@dimen/default_state_text_size"
+            android:textSize="@dimen/default_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

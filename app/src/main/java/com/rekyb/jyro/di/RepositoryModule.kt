@@ -1,6 +1,7 @@
 package com.rekyb.jyro.di
 
 import com.rekyb.jyro.data.remote.ApiService
+import com.rekyb.jyro.data.remote.mapper.GetDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.SearchResponseMapper
 import com.rekyb.jyro.repository.UserRepository
 import com.rekyb.jyro.repository.UserRepositoryImpl
@@ -19,8 +20,13 @@ object RepositoryModule {
     fun provideUserRepository(
         apiService: ApiService,
         searchResponseMapper: SearchResponseMapper,
+        getDetailsMapper: GetDetailsMapper,
     ): UserRepository {
 
-        return UserRepositoryImpl(apiService, searchResponseMapper)
+        return UserRepositoryImpl(
+            apiService,
+            searchResponseMapper,
+            getDetailsMapper
+        )
     }
 }
