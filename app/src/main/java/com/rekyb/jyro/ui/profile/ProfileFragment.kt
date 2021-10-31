@@ -11,8 +11,11 @@ import androidx.navigation.fragment.navArgs
 import com.rekyb.jyro.R
 import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.databinding.FragmentProfileBinding
+import com.rekyb.jyro.domain.model.GetDetailsModel
 import com.rekyb.jyro.ui.MainActivity
 import com.rekyb.jyro.ui.base.BaseFragment
+import com.rekyb.jyro.utils.hide
+import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -27,6 +30,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getUserDetails(args.username)
+    }
+
+    override fun onResume() {
+        super.onResume()
         setProfileDataCollector()
     }
 
@@ -45,13 +52,35 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             viewModel.profileState
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect { state ->
-                    when(state.result) {
-                        is DataState.Success -> {
-                            binding?.userdata = state.result.data
-                        }
-                        else -> binding?.userdata = null
-                    }
+                   binding?.run {
+                       when(state.result) {
+                           is DataState.Loading -> onLoading()
+                           is DataState.Success -> onSuccess(state.result)
+                           is DataState.Error -> onError(state.result.message)
+                       }
+                   }
                 }
         }
+    }
+
+    private fun FragmentProfileBinding.onLoading() {
+        progressBar.show()
+        profileContentWrapper.hide()
+        tvPlaceholder.hide()
+    }
+
+    private fun FragmentProfileBinding.onSuccess(state: DataState.Success<GetDetailsModel>) {
+        userdata = state.data
+        progressBar.hide()
+        profileContentWrapper.show()
+        tvPlaceholder.hide()
+    }
+
+    private fun FragmentProfileBinding.onError(errorMessage: String) {
+        progressBar.hide()
+        profileContentWrapper.hide()
+        tvPlaceholder.apply {
+            text = errorMessage
+        }.show()
     }
 }
