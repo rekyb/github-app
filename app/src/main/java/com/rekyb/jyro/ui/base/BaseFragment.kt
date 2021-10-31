@@ -11,12 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import timber.log.Timber
 
-/**
- * One BaseFragment to rule them all!
- *
- * No seriously, this base fragment will provide bindings
- * to all it's respective fragment. No more rewriting bindings.
- */
 abstract class BaseFragment<VB : ViewBinding>(
     @LayoutRes val layoutResId: Int,
 ) : Fragment() {

@@ -9,7 +9,6 @@
         <item name="colorOnSecondary">@color/black</item>
         <item name="android:navigationBarColor">?attr/colorPrimaryVariant</item>
         <item name="android:statusBarColor" tools:targetApi="l">@color/primaryColor</item>
-
         <item name="adaptiveColor">@color/white</item>
         <item name="icColor">@color/black</item>
         <item name="appLogo">@drawable/app_logo</item>

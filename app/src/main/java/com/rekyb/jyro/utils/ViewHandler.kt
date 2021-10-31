@@ -2,8 +2,9 @@ package com.rekyb.jyro.utils
 
 import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
+import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -15,9 +16,6 @@ import coil.request.CachePolicy
 import coil.transform.CircleCropTransformation
 import com.rekyb.jyro.R
 
-/**
- * An assortment of extensions to help me handling the View
- */
 fun View.show(): View {
     if (visibility != VISIBLE) {
         visibility = VISIBLE
@@ -28,6 +26,13 @@ fun View.show(): View {
 fun View.hide(): View {
     if (visibility != INVISIBLE) {
         visibility = INVISIBLE
+    }
+    return this
+}
+
+fun View.gone(): View {
+    if (visibility != GONE) {
+        visibility = GONE
     }
     return this
 }

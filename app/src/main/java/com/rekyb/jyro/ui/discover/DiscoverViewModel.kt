@@ -27,7 +27,9 @@ class DiscoverViewModel @Inject constructor(
     var scrollState: Parcelable? = null
 
     fun searchUser(query: String) {
-        if (query == _query.value) return
+        val isErrorEncountered = _dataState.value.result is DataState.Error
+
+        if (query == _query.value && !isErrorEncountered) return
 
         search(query)
             .map { _dataState.value = dataState.value.copy(result = it) }

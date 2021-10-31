@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.databinding.RvUsersItemBinding
 import com.rekyb.jyro.domain.model.UserItemsModel
 
-class DiscoverUserAdapter(private val listener: Listener) :
-    RecyclerView.Adapter<DiscoverUserAdapter.ViewHolder>() {
+class MainListAdapter(private val listener: Listener) :
+    RecyclerView.Adapter<MainListAdapter.ViewHolder>() {
 
     companion object {
         private val diffCallBack =
