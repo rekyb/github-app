@@ -54,6 +54,9 @@ class DiscoverFragment :
         recyclerView?.apply {
             viewModel.scrollState = layoutManager?.onSaveInstanceState()
 
+            /**
+             * Nullifying spree, prevent that pesky memory leaks
+             */
             adapter = null
             userAdapter = null
             searchView = null
@@ -69,6 +72,8 @@ class DiscoverFragment :
         searchView = searchMenuItem.actionView as SearchView
         searchView?.apply {
             queryHint = requireContext().getString(R.string.query_hint)
+            maxWidth = Integer.MAX_VALUE
+
             setOnQueryTextListener(this@DiscoverFragment)
         }
     }

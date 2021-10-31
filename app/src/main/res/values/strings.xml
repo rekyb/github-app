@@ -17,4 +17,5 @@
     <string name="error_not_found">Data not found, please try again</string>
     <string name="error_internal_server">Internal server error</string>
     <string name="label_profile">Profile</string>
+    <string name="label_getting_data">Getting data…</string>
 </resources>
