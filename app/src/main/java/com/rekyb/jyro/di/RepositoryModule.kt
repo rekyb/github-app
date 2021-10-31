@@ -3,6 +3,7 @@ package com.rekyb.jyro.di
 import com.rekyb.jyro.data.remote.ApiService
 import com.rekyb.jyro.data.remote.mapper.GetDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.SearchResponseMapper
+import com.rekyb.jyro.data.remote.mapper.UserItemsMapper
 import com.rekyb.jyro.repository.UserRepository
 import com.rekyb.jyro.repository.UserRepositoryImpl
 import dagger.Module
@@ -21,12 +22,14 @@ object RepositoryModule {
         apiService: ApiService,
         searchResponseMapper: SearchResponseMapper,
         getDetailsMapper: GetDetailsMapper,
+        userItemsMapper: UserItemsMapper
     ): UserRepository {
 
         return UserRepositoryImpl(
             apiService,
             searchResponseMapper,
-            getDetailsMapper
+            getDetailsMapper,
+            userItemsMapper
         )
     }
 }

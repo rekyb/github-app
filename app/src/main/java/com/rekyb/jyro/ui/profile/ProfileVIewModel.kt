@@ -15,7 +15,7 @@ class ProfileVIewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _profileState = MutableStateFlow(ProfileState())
-    val profileState get() = _profileState
+    val profileState get() = _profileState.asStateFlow()
 
     fun getUserDetails(userName: String) {
         getDetails.invoke(userName)

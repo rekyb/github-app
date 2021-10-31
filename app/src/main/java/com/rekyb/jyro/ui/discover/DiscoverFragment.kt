@@ -16,7 +16,7 @@ import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.databinding.FragmentDiscoverBinding
 import com.rekyb.jyro.domain.model.UserItemsModel
 import com.rekyb.jyro.ui.adapter.AdapterDataObserver
-import com.rekyb.jyro.ui.adapter.DiscoverUserAdapter
+import com.rekyb.jyro.ui.adapter.MainListAdapter
 import com.rekyb.jyro.ui.base.BaseFragment
 import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.navigateTo
@@ -29,11 +29,11 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DiscoverFragment :
     BaseFragment<FragmentDiscoverBinding>(R.layout.fragment_discover),
-    SearchView.OnQueryTextListener, DiscoverUserAdapter.Listener {
+    SearchView.OnQueryTextListener, MainListAdapter.Listener {
 
     private var searchView: SearchView? = null
     private var recyclerView: RecyclerView? = null
-    private var userAdapter: DiscoverUserAdapter? = null
+    private var listAdapter: MainListAdapter? = null
 
     private val viewModel: DiscoverViewModel by navGraphViewModels(R.id.app_navigation) {
         defaultViewModelProviderFactory
@@ -52,16 +52,10 @@ class DiscoverFragment :
 
 
         recyclerView?.apply {
-            /**
-             * Save the scroll sate at the viewModel
-             */
             viewModel.scrollState = layoutManager?.onSaveInstanceState()
 
-            /**
-             * Nullifying spree, prevent those pesky memory leaks
-             */
             adapter = null
-            userAdapter = null
+            listAdapter = null
             searchView = null
             recyclerView = null
         }
@@ -100,13 +94,13 @@ class DiscoverFragment :
     }
 
     private fun setAdapter() {
-        userAdapter = DiscoverUserAdapter(this)
+        listAdapter = MainListAdapter(this)
 
         recyclerView = binding?.rvSearchResults!!
-        recyclerView!!.adapter = userAdapter
+        recyclerView!!.adapter = listAdapter
 
         if (viewModel.scrollState != null) {
-            userAdapter!!.registerAdapterDataObserver(
+            listAdapter!!.registerAdapterDataObserver(
                 AdapterDataObserver(
                     recyclerView!!,
                     viewModel.scrollState!!
@@ -149,7 +143,7 @@ class DiscoverFragment :
         if (isEmptyResults) {
             onError(requireContext().getString(R.string.error_not_found))
         } else {
-            userAdapter?.renderList(items)
+            listAdapter?.renderList(items)
             rvSearchResults.show()
             tvPlaceholder.hide()
             progressBar.hide()

@@ -11,7 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.rekyb.jyro.R
 import com.rekyb.jyro.databinding.ActivityMainBinding
-import com.rekyb.jyro.utils.hide
+import com.rekyb.jyro.utils.gone
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,6 +55,6 @@ class MainActivity : AppCompatActivity() {
         binding = null
     }
 
-    fun hideBottomNavView() = binding?.bottomNavView?.hide()
+    fun removeBottomNavView() = binding?.bottomNavView?.gone()
     fun showBottomNavView() = binding?.bottomNavView?.show()
 }
