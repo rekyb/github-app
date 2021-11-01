@@ -1,8 +1,8 @@
-package com.rekyb.jyro.domain.use_case
+package com.rekyb.jyro.domain.use_case.remote
 
 import android.content.Context
 import com.rekyb.jyro.common.DataState
-import com.rekyb.jyro.domain.model.GetDetailsModel
+import com.rekyb.jyro.domain.model.SearchResultsModel
 import com.rekyb.jyro.repository.UserRepositoryImpl
 import com.rekyb.jyro.utils.ExceptionHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -11,20 +11,19 @@ import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
 
-class GetDetailsUseCase @Inject constructor(
+class SearchUserUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repo: UserRepositoryImpl,
 ) {
 
-    operator fun invoke(userName: String): Flow<DataState<GetDetailsModel>> {
+    operator fun invoke(query: String): Flow<DataState<SearchResultsModel>> {
         return flow {
             try {
                 emit(DataState.Loading)
-                emit(DataState.Success(repo.getDetails(userName)))
+                emit(DataState.Success(repo.search(query)))
             } catch (error: Exception) {
                 emit(ExceptionHandler(context).handleError(error))
             }
         }
     }
-
 }

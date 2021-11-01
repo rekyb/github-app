@@ -43,7 +43,6 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
                     putString(FRAGMENT_USERNAME, userName)
                     putString(FRAGMENT_FOLLOW_TYPE, type)
                 }
-
             }
         }
     }

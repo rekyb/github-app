@@ -1,4 +1,4 @@
-package com.rekyb.jyro.domain.use_case
+package com.rekyb.jyro.domain.use_case.remote
 
 import android.content.Context
 import com.rekyb.jyro.common.DataState

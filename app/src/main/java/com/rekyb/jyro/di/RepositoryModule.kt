@@ -1,5 +1,6 @@
 package com.rekyb.jyro.di
 
+import com.rekyb.jyro.data.local.FavouritesDao
 import com.rekyb.jyro.data.remote.ApiService
 import com.rekyb.jyro.data.remote.mapper.GetDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.SearchResponseMapper
@@ -22,14 +23,16 @@ object RepositoryModule {
         apiService: ApiService,
         searchResponseMapper: SearchResponseMapper,
         getDetailsMapper: GetDetailsMapper,
-        userItemsMapper: UserItemsMapper
+        userItemsMapper: UserItemsMapper,
+        favouritesDao: FavouritesDao
     ): UserRepository {
 
         return UserRepositoryImpl(
             apiService,
             searchResponseMapper,
             getDetailsMapper,
-            userItemsMapper
+            userItemsMapper,
+            favouritesDao
         )
     }
 }

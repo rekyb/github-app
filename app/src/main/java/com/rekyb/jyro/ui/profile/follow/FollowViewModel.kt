@@ -3,8 +3,8 @@ package com.rekyb.jyro.ui.profile.follow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rekyb.jyro.common.DataState
-import com.rekyb.jyro.domain.use_case.GetFollowersUseCase
-import com.rekyb.jyro.domain.use_case.GetFollowingsUseCase
+import com.rekyb.jyro.domain.use_case.remote.GetFollowersUseCase
+import com.rekyb.jyro.domain.use_case.remote.GetFollowingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

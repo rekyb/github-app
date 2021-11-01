@@ -3,7 +3,7 @@ package com.rekyb.jyro.ui.profile
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rekyb.jyro.common.DataState
-import com.rekyb.jyro.domain.use_case.GetDetailsUseCase
+import com.rekyb.jyro.domain.use_case.remote.GetDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*

@@ -1,5 +1,6 @@
 package com.rekyb.jyro.repository
 
+import com.rekyb.jyro.data.local.FavouritesDao
 import com.rekyb.jyro.data.remote.ApiService
 import com.rekyb.jyro.data.remote.mapper.GetDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.SearchResponseMapper
@@ -13,7 +14,8 @@ class UserRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val searchResponseMapper: SearchResponseMapper,
     private val getDetailsMapper: GetDetailsMapper,
-    private val userItemsMapper: UserItemsMapper
+    private val userItemsMapper: UserItemsMapper,
+    private val favouritesDao: FavouritesDao,
 ) : UserRepository {
 
     override suspend fun search(query: String): SearchResultsModel {
@@ -30,5 +32,21 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getFollowers(userName: String): List<UserItemsModel> {
         return userItemsMapper.fromDomainList(apiService.getUserFollowers(userName))
+    }
+
+    override suspend fun getFavList(): List<UserItemsModel> {
+        return favouritesDao.getFavouritesList()
+    }
+
+    override suspend fun getFavUserDetails(user: String): UserItemsModel {
+        return favouritesDao.getUserDetail(user)
+    }
+
+    override suspend fun addUserToFavList(user: UserItemsModel) {
+        return favouritesDao.addUserToFavList(user)
+    }
+
+    override suspend fun removeUserFromFavList(user: UserItemsModel) {
+        return favouritesDao.deleteUserFromFavList(user)
     }
 }
