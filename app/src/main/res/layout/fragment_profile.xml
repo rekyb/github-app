@@ -9,7 +9,7 @@
 
         <variable
             name="userdata"
-            type="com.rekyb.jyro.domain.model.GetDetailsModel" />
+            type="com.rekyb.jyro.domain.model.UserDetailsModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

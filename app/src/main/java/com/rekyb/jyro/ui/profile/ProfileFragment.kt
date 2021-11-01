@@ -13,7 +13,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.rekyb.jyro.R
 import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.databinding.FragmentProfileBinding
-import com.rekyb.jyro.domain.model.GetDetailsModel
+import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.ui.MainActivity
 import com.rekyb.jyro.ui.adapter.ViewPagerAdapter
 import com.rekyb.jyro.ui.base.BaseFragment
@@ -96,7 +96,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         tvPlaceholder.hide()
     }
 
-    private fun FragmentProfileBinding.onSuccess(state: DataState.Success<GetDetailsModel>) {
+    private fun FragmentProfileBinding.onSuccess(state: DataState.Success<UserDetailsModel>) {
         userdata = state.data
         progressBar.hide()
         profileContentWrapper.show()

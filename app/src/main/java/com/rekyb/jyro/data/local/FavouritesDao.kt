@@ -1,28 +1,26 @@
 package com.rekyb.jyro.data.local
 
-
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.OnConflictStrategy
 import androidx.room.Insert
 import androidx.room.Delete
-import com.rekyb.jyro.domain.model.UserItemsModel
 
 @Dao
 interface FavouritesDao {
 
     @Query("select * from favourites_table")
-    suspend fun getFavouritesList(): List<UserItemsModel>
+    suspend fun getFavouritesList(): List<FavouritesUsersEntity>
 
-    @Query("SELECT * from favourites_table WHERE userName = :username")
-    fun getUserDetail(username: String): UserItemsModel
+    @Query("SELECT * from favourites_table WHERE id = :userId")
+    fun getUserDetail(userId: Int): FavouritesUsersEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addUserToFavList(user: UserItemsModel)
+    suspend fun addUserToFavList(user: FavouritesUsersEntity)
 
     @Delete
-    suspend fun deleteUserFromFavList(user: UserItemsModel)
+    suspend fun removeUserFromFavList(user: FavouritesUsersEntity)
 
-    @Query("DELETE FROM favourites_table")
-    suspend fun deleteAllFavEntries()
+    // @Query("DELETE FROM favourites_table")
+    // suspend fun deleteAllFavEntries()
 }

@@ -1,20 +1,20 @@
 package com.rekyb.jyro.repository
 
-import com.rekyb.jyro.domain.model.GetDetailsModel
+import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.model.SearchResultsModel
 import com.rekyb.jyro.domain.model.UserItemsModel
 
 interface UserRepository {
 
     suspend fun search(query: String): SearchResultsModel
-    suspend fun getDetails(userName: String): GetDetailsModel
+    suspend fun getDetails(userName: String): UserDetailsModel
     suspend fun getFollowing(userName: String): List<UserItemsModel>
     suspend fun getFollowers(userName: String): List<UserItemsModel>
 
-    suspend fun getFavList(): List<UserItemsModel>
-    suspend fun getFavUserDetails(user: String): UserItemsModel
-    suspend fun addUserToFavList(user: UserItemsModel)
-    suspend fun removeUserFromFavList(user: UserItemsModel)
+    suspend fun getFavouritesList(): List<UserDetailsModel>
+    suspend fun getFavUserDetails(userId: Int): UserDetailsModel
+    suspend fun addUserToFavList(user: UserDetailsModel)
+    suspend fun removeUserFromFavList(user: UserDetailsModel)
 
     // suspend fun clearFavList()
 }

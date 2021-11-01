@@ -2,8 +2,8 @@ package com.rekyb.jyro.di
 
 import com.rekyb.jyro.data.local.FavouritesDao
 import com.rekyb.jyro.data.remote.ApiService
-import com.rekyb.jyro.data.remote.mapper.GetDetailsMapper
-import com.rekyb.jyro.data.remote.mapper.SearchResponseMapper
+import com.rekyb.jyro.data.remote.mapper.UserDetailsMapper
+import com.rekyb.jyro.data.remote.mapper.SearchResultsMapper
 import com.rekyb.jyro.data.remote.mapper.UserItemsMapper
 import com.rekyb.jyro.repository.UserRepository
 import com.rekyb.jyro.repository.UserRepositoryImpl
@@ -21,8 +21,8 @@ object RepositoryModule {
     @Singleton
     fun provideUserRepository(
         apiService: ApiService,
-        searchResponseMapper: SearchResponseMapper,
-        getDetailsMapper: GetDetailsMapper,
+        searchResponseMapper: SearchResultsMapper,
+        getDetailsMapper: UserDetailsMapper,
         userItemsMapper: UserItemsMapper,
         favouritesDao: FavouritesDao
     ): UserRepository {

@@ -14,12 +14,12 @@ class UserItemsMapper : EntityMapper<UserItemsDto, UserItemsModel> {
         )
     }
 
-    override fun mapToEntity(domainModel: UserItemsModel): UserItemsDto {
+    override fun mapToEntity(model: UserItemsModel): UserItemsDto {
         return UserItemsDto(
-            login = domainModel.userName,
-            id = domainModel.userId,
-            avatarUrl = domainModel.userAvatarUrl,
-            url = domainModel.userProfileUrl
+            login = model.userName,
+            id = model.userId,
+            avatarUrl = model.userAvatarUrl,
+            url = model.userProfileUrl
         )
     }
 

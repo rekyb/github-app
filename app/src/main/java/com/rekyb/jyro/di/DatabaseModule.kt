@@ -23,6 +23,6 @@ object DatabaseModule {
     @Singleton
     @Provides
     fun provideFavouritesDao(database: FavouritesDatabase): FavouritesDao {
-        return database.favDao()
+        return database.favouritesDao()
     }
 }

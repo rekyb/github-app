@@ -1,6 +1,6 @@
 package com.rekyb.jyro.utils
 
-interface EntityMapper<Entity, DomainModel> {
-    fun mapFromEntity(entity: Entity): DomainModel
-    fun mapToEntity(domainModel: DomainModel): Entity
+interface EntityMapper<Entity, Model> {
+    fun mapFromEntity(entity: Entity): Model
+    fun mapToEntity(model: Model): Entity
 }

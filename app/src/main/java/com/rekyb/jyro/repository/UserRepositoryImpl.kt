@@ -1,19 +1,20 @@
 package com.rekyb.jyro.repository
 
+import com.rekyb.jyro.data.local.FavouritesUsersEntity
 import com.rekyb.jyro.data.local.FavouritesDao
 import com.rekyb.jyro.data.remote.ApiService
-import com.rekyb.jyro.data.remote.mapper.GetDetailsMapper
-import com.rekyb.jyro.data.remote.mapper.SearchResponseMapper
+import com.rekyb.jyro.data.remote.mapper.UserDetailsMapper
+import com.rekyb.jyro.data.remote.mapper.SearchResultsMapper
 import com.rekyb.jyro.data.remote.mapper.UserItemsMapper
-import com.rekyb.jyro.domain.model.GetDetailsModel
+import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.model.SearchResultsModel
 import com.rekyb.jyro.domain.model.UserItemsModel
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
-    private val searchResponseMapper: SearchResponseMapper,
-    private val getDetailsMapper: GetDetailsMapper,
+    private val searchResponseMapper: SearchResultsMapper,
+    private val getDetailsMapper: UserDetailsMapper,
     private val userItemsMapper: UserItemsMapper,
     private val favouritesDao: FavouritesDao,
 ) : UserRepository {
@@ -22,7 +23,7 @@ class UserRepositoryImpl @Inject constructor(
         return searchResponseMapper.mapFromEntity(apiService.search(query))
     }
 
-    override suspend fun getDetails(userName: String): GetDetailsModel {
+    override suspend fun getDetails(userName: String): UserDetailsModel {
         return getDetailsMapper.mapFromEntity(apiService.getDetails(userName))
     }
 
@@ -34,19 +35,19 @@ class UserRepositoryImpl @Inject constructor(
         return userItemsMapper.fromDomainList(apiService.getUserFollowers(userName))
     }
 
-    override suspend fun getFavList(): List<UserItemsModel> {
-        return favouritesDao.getFavouritesList()
+    override suspend fun getFavouritesList(): List<UserDetailsModel> {
+        return favouritesDao.getFavouritesList().map { it.toModel() }
     }
 
-    override suspend fun getFavUserDetails(user: String): UserItemsModel {
-        return favouritesDao.getUserDetail(user)
+    override suspend fun getFavUserDetails(userId: Int): UserDetailsModel {
+        return favouritesDao.getUserDetail(userId).toModel()
     }
 
-    override suspend fun addUserToFavList(user: UserItemsModel) {
-        return favouritesDao.addUserToFavList(user)
+    override suspend fun addUserToFavList(user: UserDetailsModel) {
+        return favouritesDao.addUserToFavList(FavouritesUsersEntity.from(user))
     }
 
-    override suspend fun removeUserFromFavList(user: UserItemsModel) {
-        return favouritesDao.deleteUserFromFavList(user)
+    override suspend fun removeUserFromFavList(user: UserDetailsModel) {
+        return favouritesDao.removeUserFromFavList(FavouritesUsersEntity.from(user))
     }
 }

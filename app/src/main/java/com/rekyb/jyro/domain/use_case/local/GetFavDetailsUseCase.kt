@@ -1,4 +1,4 @@
-package com.rekyb.jyro.domain.use_case.remote
+package com.rekyb.jyro.domain.use_case.local
 
 import android.content.Context
 import com.rekyb.jyro.common.DataState
@@ -11,16 +11,16 @@ import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
 
-class GetDetailsUseCase @Inject constructor(
+class GetFavDetailsUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repo: UserRepositoryImpl,
 ) {
 
-    operator fun invoke(userName: String): Flow<DataState<UserDetailsModel>> {
+    operator fun invoke(username: String): Flow<DataState<UserDetailsModel>> {
         return flow {
             try {
                 emit(DataState.Loading)
-                emit(DataState.Success(repo.getDetails(userName)))
+                emit(DataState.Success(repo.getDetails(username)))
             } catch (error: Exception) {
                 emit(ExceptionHandler(context).handleError(error))
             }

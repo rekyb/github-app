@@ -2,7 +2,7 @@ package com.rekyb.jyro.domain.use_case.local
 
 import android.content.Context
 import com.rekyb.jyro.common.DataState
-import com.rekyb.jyro.domain.model.UserItemsModel
+import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.repository.UserRepositoryImpl
 import com.rekyb.jyro.utils.ExceptionHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -16,11 +16,11 @@ class GetFavListUseCase @Inject constructor(
     private val repo: UserRepositoryImpl,
 ) {
 
-    operator fun invoke(): Flow<DataState<List<UserItemsModel>>> {
+    operator fun invoke(): Flow<DataState<List<UserDetailsModel>>> {
         return flow {
             try {
                 emit(DataState.Loading)
-                emit(DataState.Success(repo.getFavList()))
+                emit(DataState.Success(repo.getFavouritesList()))
             } catch (error: Exception) {
                 emit(ExceptionHandler(context).handleError(error))
             }
