@@ -87,8 +87,12 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
 
     private fun getFollowData() {
         when (followType) {
-            "Following" -> username?.let { viewModel.getFollowingList(it) }
-            "Followers" -> username?.let { viewModel.getFollowersList(it) }
+            requireContext().getString(R.string.label_following) -> username?.let {
+                viewModel.getFollowingList(it)
+            }
+            requireContext().getString(R.string.label_followers) -> username?.let {
+                viewModel.getFollowersList(it)
+            }
         }
     }
 

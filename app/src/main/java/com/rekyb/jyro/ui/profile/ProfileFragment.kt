@@ -54,14 +54,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     override fun onDestroyView() {
         super.onDestroyView()
 
-        viewPager = null
         tabs = null
+        viewPager = null
     }
 
     private fun setTabsAndViewPager() {
         viewPager = binding?.viewPager
         tabs = binding?.tabLayout
-        val tabsTitles = listOf("Following", "Followers")
+
+        val tabsTitles = listOf(
+            requireContext().getString(R.string.label_following),
+            requireContext().getString(R.string.label_followers)
+        )
 
         viewPager?.adapter = ViewPagerAdapter(this, args.username, tabsTitles)
 

@@ -20,4 +20,6 @@
     <string name="label_getting_data">Getting required data…</string>
     <string name="error_empty_follower">User did not have any follower</string>
     <string name="error_following_empty">User did not following anyone</string>
+    <string name="label_following">Following</string>
+    <string name="label_followers">Followers</string>
 </resources>
