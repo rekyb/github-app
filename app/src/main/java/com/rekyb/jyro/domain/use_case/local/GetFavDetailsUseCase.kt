@@ -16,11 +16,11 @@ class GetFavDetailsUseCase @Inject constructor(
     private val repo: UserRepositoryImpl,
 ) {
 
-    operator fun invoke(username: String): Flow<DataState<UserDetailsModel>> {
+    operator fun invoke(userId: Int): Flow<DataState<UserDetailsModel>> {
         return flow {
             try {
                 emit(DataState.Loading)
-                emit(DataState.Success(repo.getDetails(username)))
+                emit(DataState.Success(repo.getFavUserDetails(userId)))
             } catch (error: Exception) {
                 emit(ExceptionHandler(context).handleError(error))
             }

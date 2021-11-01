@@ -154,13 +154,13 @@
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@id/view_pager"
+                    app:layout_constraintBottom_toTopOf="@id/main_view_pager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/upper_wrapper" />
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/view_pager"
+                    android:id="@+id/main_view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -177,8 +177,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="16dp"
+            android:backgroundTint="#E91E63"
             android:contentDescription="@string/label_favourites"
-            android:src="@drawable/ic_favorite_24dp"
+            android:src="@drawable/ic_fav_border"
             app:borderWidth="@dimen/zero_dp"
             app:elevation="@dimen/elevation"
             app:fabSize="normal" />

@@ -22,6 +22,7 @@ import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
@@ -31,13 +32,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private var viewPager: ViewPager2? = null
     private var tabs: TabLayout? = null
+    private var user: UserDetailsModel? = null
+    private var isFavourites: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.getUserDetails(args.username)
 
-        setTabsAndViewPager()
+        setComponents()
         setProfileDataCollector()
     }
 
@@ -58,9 +61,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         viewPager = null
     }
 
-    private fun setTabsAndViewPager() {
-        viewPager = binding?.viewPager
-        tabs = binding?.tabLayout
+    private fun setComponents() {
+        binding?.apply {
+            viewPager = mainViewPager
+            tabs = tabLayout
+            fabFavorite.setOnClickListener {
+                isFavourites?.let { value ->
+                    setFavourite(value)
+                }
+            }
+        }
 
         val tabsTitles = listOf(
             requireContext().getString(R.string.label_following),
@@ -74,6 +84,26 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         }.attach()
     }
 
+    private fun setFavourite(state: Boolean) {
+        viewModel.apply {
+            if (!state) {
+                addUserToFavList(user!!)
+            } else {
+                removeUserFromFavList(user!!)
+            }
+        }
+    }
+
+    private fun toggleFabIcon(state: Boolean) {
+        binding?.apply {
+            if (state) {
+                fabFavorite.setImageResource(R.drawable.ic_fav_filled)
+            } else {
+                fabFavorite.setImageResource(R.drawable.ic_fav_border)
+            }
+        }
+    }
+
     private fun setProfileDataCollector() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.profileState
@@ -82,11 +112,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                     binding?.run {
                         when (state.result) {
                             is DataState.Loading -> onLoading()
-                            is DataState.Success -> onSuccess(state.result)
+                            is DataState.Success -> {
+                                onSuccess(state.result)
+
+                                user = state.result.data
+                                isFavourites = state.isFavourite!!
+                                Timber.d("fav2: $isFavourites")
+                            }
                             is DataState.Error -> onError(state.result.message)
                         }
                     }
                 }
+
+            toggleFabIcon(isFavourites)
         }
     }
 

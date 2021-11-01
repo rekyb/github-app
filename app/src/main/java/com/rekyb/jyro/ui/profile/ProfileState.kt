@@ -4,5 +4,6 @@ import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.domain.model.UserDetailsModel
 
 data class ProfileState(
+    val isFavourite: Boolean? = false,
     val result: DataState<UserDetailsModel>? = null
 )
