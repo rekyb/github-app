@@ -2,11 +2,11 @@ package com.rekyb.jyro.ui.profile.follow
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
 import com.rekyb.jyro.common.Constants.FRAGMENT_FOLLOW_TYPE
@@ -21,9 +21,9 @@ import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.navigateTo
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
+import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 @AndroidEntryPoint
 class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_follow),
@@ -102,6 +102,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
                             is DataState.Loading -> onLoading()
                             is DataState.Success -> onSuccess(
                                 isEmptyResult = following.data.isEmpty(),
+                                isDataFollower = false,
                                 items = following.data
                             )
                             is DataState.Error -> onError(following.message)
@@ -113,6 +114,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
                             is DataState.Loading -> onLoading()
                             is DataState.Success -> onSuccess(
                                 isEmptyResult = followers.data.isEmpty(),
+                                isDataFollower = true,
                                 items = followers.data
                             )
                             is DataState.Error -> onError(followers.message)
@@ -124,32 +126,43 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
     }
 
     private fun FragmentFollowBinding.onLoading() {
-        tvPlaceholder.apply {
-            text = requireContext().getString(R.string.label_getting_data)
-        }.show()
-        rvFollowList.hide()
+        with(requireContext()) {
+            Toasty.info(
+                this,
+                getString(R.string.label_getting_data),
+                Toast.LENGTH_SHORT
+            ).show()
+            rvFollowList.hide()
+        }
     }
 
     private fun FragmentFollowBinding.onSuccess(
         isEmptyResult: Boolean,
+        isDataFollower: Boolean,
         items: List<UserItemsModel>,
     ) {
 
-        if (isEmptyResult) {
-            onError(requireContext().getString(R.string.error_not_found))
-        } else {
-            listAdapter?.renderList(items)
-
-            tvPlaceholder.hide()
-            rvFollowList.show()
+        when {
+            isEmptyResult && isDataFollower -> {
+                onError(requireContext().getString(R.string.error_empty_follower))
+            }
+            isEmptyResult && !isDataFollower -> {
+                onError(requireContext().getString(R.string.error_following_empty))
+            }
+            else -> {
+                listAdapter?.renderList(items)
+                rvFollowList.show()
+            }
         }
 
     }
 
     private fun FragmentFollowBinding.onError(errorMessage: String) {
-        tvPlaceholder.apply {
-            text = errorMessage
-        }.show()
+        Toasty.success(
+            requireContext(),
+            errorMessage,
+            Toast.LENGTH_LONG
+        ).show()
         rvFollowList.hide()
     }
 }

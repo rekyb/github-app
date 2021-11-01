@@ -54,7 +54,8 @@ fun ImageView.loadImage(url: String?) {
     }
 
     this.load(url) {
-        diskCachePolicy(CachePolicy.ENABLED)
+        diskCachePolicy(CachePolicy.DISABLED)
+        memoryCachePolicy(CachePolicy.DISABLED)
         placeholder(circleProgressDrawable)
         crossfade(true)
         error(R.drawable.ic_error_loading_image)
@@ -62,9 +63,10 @@ fun ImageView.loadImage(url: String?) {
 }
 
 @BindingAdapter("circleImage")
-fun ImageView.loadAsCircularImage(url: String?){
-    this.load(url){
-        diskCachePolicy(CachePolicy.ENABLED)
+fun ImageView.loadAsCircularImage(url: String?) {
+    this.load(url) {
+        diskCachePolicy(CachePolicy.DISABLED)
+        memoryCachePolicy(CachePolicy.DISABLED)
         error(R.drawable.ic_error_loading_image)
         crossfade(true)
         transformations(CircleCropTransformation())
