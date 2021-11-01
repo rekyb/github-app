@@ -2,7 +2,9 @@ package com.rekyb.jyro.di
 
 import com.rekyb.jyro.common.Constants
 import com.rekyb.jyro.data.remote.ApiService
+import com.rekyb.jyro.data.remote.mapper.GetDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.SearchResponseMapper
+import com.rekyb.jyro.data.remote.mapper.UserItemsMapper
 import com.rekyb.jyro.utils.RequestInterceptor
 import dagger.Module
 import dagger.Provides
@@ -52,4 +54,12 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideSearchResponseMapper(): SearchResponseMapper = SearchResponseMapper()
+
+    @Provides
+    @Singleton
+    fun provideGetDetailsResponseMapper(): GetDetailsMapper = GetDetailsMapper()
+
+    @Provides
+    @Singleton
+    fun provideUserItemsMapper(): UserItemsMapper = UserItemsMapper()
 }

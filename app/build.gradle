@@ -3,11 +3,12 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
 
-    def STRING= 'String'
+    def STRING = 'String'
     def GITHUB_API_KEY = '"' + GithubApiKey + '"' ?: '"Define your Github API Key!"'
 
     compileSdk 31
@@ -50,10 +51,12 @@ dependencies {
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "com.google.android.material:material:1.4.0"
 
-    // Layout
+    // Components
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.constraintlayout:constraintlayout:2.1.1"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+    implementation "com.github.GrenderG:Toasty:1.5.2"
     implementation "io.coil-kt:coil:1.4.0"
 
     // Lifecycle

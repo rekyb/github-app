@@ -7,18 +7,18 @@
 
         <variable
             name="userData"
-            type="com.rekyb.jyro.domain.model.UserItems" />
+            type="com.rekyb.jyro.domain.model.UserItemsModel" />
     </data>
 
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/card_margin_dp"
+        android:layout_margin="@dimen/card_margin"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
-        app:cardCornerRadius="@dimen/radius_dp"
+        app:cardCornerRadius="@dimen/card_radius"
         app:cardElevation="@dimen/elevation">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +28,8 @@
             <ImageView
                 android:id="@+id/iv_user_avatar"
                 imageUrl="@{userData.userAvatarUrl}"
-                android:layout_width="@dimen/image_dp"
-                android:layout_height="@dimen/image_dp"
+                android:layout_width="@dimen/avatar_image_size"
+                android:layout_height="@dimen/avatar_image_size"
                 android:contentDescription="@string/user_ava_desc"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,9 +41,9 @@
                 android:id="@+id/tv_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/card_user_name_margin"
+                android:layout_marginStart="@dimen/wrapper_margin"
                 android:text="@{userData.userName}"
-                android:textSize="@dimen/card_text_size"
+                android:textSize="@dimen/title_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_user_avatar"
                 app:layout_constraintTop_toTopOf="parent"

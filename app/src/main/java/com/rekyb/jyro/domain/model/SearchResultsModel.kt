@@ -1,7 +1,7 @@
 package com.rekyb.jyro.domain.model
 
-data class SearchResponse(
+data class SearchResultsModel(
     val totalCount: Int,
     val incompleteResults: Boolean,
-    val userItems: List<UserItems>,
+    val userItems: List<UserItemsModel>,
 )

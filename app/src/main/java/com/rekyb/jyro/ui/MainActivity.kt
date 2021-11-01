@@ -11,6 +11,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.rekyb.jyro.R
 import com.rekyb.jyro.databinding.ActivityMainBinding
+import com.rekyb.jyro.utils.gone
+import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,4 +54,7 @@ class MainActivity : AppCompatActivity() {
         binding?.unbind()
         binding = null
     }
+
+    fun removeBottomNavView() = binding?.bottomNavView?.gone()
+    fun showBottomNavView() = binding?.bottomNavView?.show()
 }

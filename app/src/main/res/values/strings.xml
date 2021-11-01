@@ -14,6 +14,12 @@
     <string name="error_bad_request">Bad request</string>
     <string name="error_unauthorized">Unauthorized request</string>
     <string name="error_forbidden">Forbidden request</string>
-    <string name="error_not_found">Data not found, please try again</string>
+    <string name="error_not_found">Data not found, please try again.</string>
     <string name="error_internal_server">Internal server error</string>
+    <string name="label_profile">Profile</string>
+    <string name="label_getting_data">Getting required data…</string>
+    <string name="error_empty_follower">User did not have any follower</string>
+    <string name="error_following_empty">User did not following anyone</string>
+    <string name="label_following">Following</string>
+    <string name="label_followers">Followers</string>
 </resources>

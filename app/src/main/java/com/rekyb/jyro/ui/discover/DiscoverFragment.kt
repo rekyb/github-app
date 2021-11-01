@@ -14,11 +14,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
 import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.databinding.FragmentDiscoverBinding
-import com.rekyb.jyro.domain.model.UserItems
+import com.rekyb.jyro.domain.model.UserItemsModel
 import com.rekyb.jyro.ui.adapter.AdapterDataObserver
-import com.rekyb.jyro.ui.adapter.DiscoverUserAdapter
+import com.rekyb.jyro.ui.adapter.MainListAdapter
 import com.rekyb.jyro.ui.base.BaseFragment
 import com.rekyb.jyro.utils.hide
+import com.rekyb.jyro.utils.navigateTo
 import com.rekyb.jyro.utils.setTopDrawable
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
@@ -28,12 +29,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class DiscoverFragment :
     BaseFragment<FragmentDiscoverBinding>(R.layout.fragment_discover),
-    SearchView.OnQueryTextListener {
+    SearchView.OnQueryTextListener, MainListAdapter.Listener {
 
-    private lateinit var searchView: SearchView
-    private lateinit var recyclerView: RecyclerView
+    private var searchView: SearchView? = null
+    private var recyclerView: RecyclerView? = null
+    private var listAdapter: MainListAdapter? = null
 
-    private val userAdapter by lazy { DiscoverUserAdapter() }
     private val viewModel: DiscoverViewModel by navGraphViewModels(R.id.app_navigation) {
         defaultViewModelProviderFactory
     }
@@ -49,7 +50,15 @@ class DiscoverFragment :
     override fun onDestroyView() {
         super.onDestroyView()
 
-        recyclerView.layoutManager?.onSaveInstanceState().also { viewModel.scrollState = it }
+
+        recyclerView?.apply {
+            viewModel.scrollState = layoutManager?.onSaveInstanceState()
+
+            adapter = null
+            listAdapter = null
+            searchView = null
+            recyclerView = null
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -58,8 +67,10 @@ class DiscoverFragment :
         val searchMenuItem = menu.findItem(R.id.app_bar_search)
 
         searchView = searchMenuItem.actionView as SearchView
-        searchView.apply {
+        searchView?.apply {
             queryHint = requireContext().getString(R.string.query_hint)
+            maxWidth = Integer.MAX_VALUE
+
             setOnQueryTextListener(this@DiscoverFragment)
         }
     }
@@ -67,7 +78,7 @@ class DiscoverFragment :
     override fun onQueryTextSubmit(query: String?): Boolean {
         query?.let {
             viewModel.searchUser(query)
-            searchView.clearFocus()
+            searchView?.clearFocus()
         }
 
         return true
@@ -75,14 +86,23 @@ class DiscoverFragment :
 
     override fun onQueryTextChange(newText: String?): Boolean = false
 
+    override fun onItemClick(view: View, data: UserItemsModel) {
+        view.navigateTo(
+            DiscoverFragmentDirections
+                .passResultToProfile(data.userName)
+        )
+    }
+
     private fun setAdapter() {
+        listAdapter = MainListAdapter(this)
+
         recyclerView = binding?.rvSearchResults!!
-        recyclerView.adapter = userAdapter
+        recyclerView!!.adapter = listAdapter
 
         if (viewModel.scrollState != null) {
-            userAdapter.registerAdapterDataObserver(
+            listAdapter!!.registerAdapterDataObserver(
                 AdapterDataObserver(
-                    recyclerView,
+                    recyclerView!!,
                     viewModel.scrollState!!
                 )
             )
@@ -96,6 +116,7 @@ class DiscoverFragment :
                 .collect { state ->
                     binding?.apply {
                         when (val result = state.result) {
+                            is DataState.Loading -> onLoading()
                             is DataState.Success -> {
                                 result.data.apply {
                                     onSuccess(
@@ -105,27 +126,33 @@ class DiscoverFragment :
                                 }
                             }
                             is DataState.Error -> onError(result.message)
-                            is DataState.Loading -> onLoading()
                         }
                     }
                 }
         }
     }
 
-    private fun FragmentDiscoverBinding.onSuccess(isEmptyResults: Boolean, items: List<UserItems>) {
-        progressBar.hide()
+    private fun FragmentDiscoverBinding.onLoading() {
+        progressBar.show()
+        tvPlaceholder.hide()
+        rvSearchResults.hide()
+    }
+
+    private fun FragmentDiscoverBinding.onSuccess(isEmptyResults: Boolean, items: List<UserItemsModel>) {
 
         if (isEmptyResults) {
             onError(requireContext().getString(R.string.error_not_found))
         } else {
-            userAdapter.renderList(items)
+            listAdapter?.renderList(items)
             rvSearchResults.show()
             tvPlaceholder.hide()
+            progressBar.hide()
         }
     }
 
     private fun FragmentDiscoverBinding.onError(errorMessage: String) {
         rvSearchResults.hide()
+        progressBar.hide()
         tvPlaceholder.apply {
             text = errorMessage
             setTopDrawable(
@@ -133,11 +160,5 @@ class DiscoverFragment :
                     .getDrawable(requireContext(), R.drawable.ic_exclamation_mark)
             )
         }.show()
-    }
-
-    private fun FragmentDiscoverBinding.onLoading() {
-        progressBar.show()
-        tvPlaceholder.hide()
-        rvSearchResults.hide()
     }
 }

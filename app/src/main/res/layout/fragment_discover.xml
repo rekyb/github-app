@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/discover_screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.discover.DiscoverFragment">
@@ -13,7 +14,7 @@
             android:layout_width="@dimen/zero_dp"
             android:layout_height="@dimen/zero_dp"
             android:clipToPadding="false"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +26,7 @@
             android:id="@+id/progress_bar"
             android:layout_width="@dimen/circle_bar_size"
             android:layout_height="@dimen/circle_bar_size"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,8 +38,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/default_state_text"
-            android:textSize="@dimen/default_state_text_size"
-            android:padding="@dimen/padding_dp"
+            android:textSize="@dimen/default_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
