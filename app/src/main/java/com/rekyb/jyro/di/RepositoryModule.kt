@@ -5,6 +5,8 @@ import com.rekyb.jyro.data.remote.ApiService
 import com.rekyb.jyro.data.remote.mapper.UserDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.SearchResultsMapper
 import com.rekyb.jyro.data.remote.mapper.UserItemsMapper
+import com.rekyb.jyro.repository.FavouritesRepository
+import com.rekyb.jyro.repository.FavouritesRepositoryImpl
 import com.rekyb.jyro.repository.UserRepository
 import com.rekyb.jyro.repository.UserRepositoryImpl
 import dagger.Module
@@ -24,7 +26,6 @@ object RepositoryModule {
         searchResponseMapper: SearchResultsMapper,
         getDetailsMapper: UserDetailsMapper,
         userItemsMapper: UserItemsMapper,
-        favouritesDao: FavouritesDao
     ): UserRepository {
 
         return UserRepositoryImpl(
@@ -32,7 +33,12 @@ object RepositoryModule {
             searchResponseMapper,
             getDetailsMapper,
             userItemsMapper,
-            favouritesDao
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavouritesRepository(favouritesDao: FavouritesDao): FavouritesRepository {
+        return FavouritesRepositoryImpl(favouritesDao)
     }
 }

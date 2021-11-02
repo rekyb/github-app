@@ -2,7 +2,6 @@ package com.rekyb.jyro.ui.profile.follow
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -21,7 +20,6 @@ import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.navigateTo
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import es.dmoral.toasty.Toasty
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -105,7 +103,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
                             is DataState.Loading -> onLoading()
                             is DataState.Success -> onSuccess(
                                 isEmptyResult = following.data.isEmpty(),
-                                isDataFollower = false,
+                                isFollower = false,
                                 items = following.data
                             )
                             is DataState.Error -> onError(following.message)
@@ -117,7 +115,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
                             is DataState.Loading -> onLoading()
                             is DataState.Success -> onSuccess(
                                 isEmptyResult = followers.data.isEmpty(),
-                                isDataFollower = true,
+                                isFollower = true,
                                 items = followers.data
                             )
                             is DataState.Error -> onError(followers.message)
@@ -129,43 +127,38 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
     }
 
     private fun FragmentFollowBinding.onLoading() {
-        with(requireContext()) {
-            Toasty.info(
-                this,
-                getString(R.string.label_getting_data),
-                Toast.LENGTH_SHORT
-            ).show()
-            rvFollowList.hide()
-        }
+        rvFollowList.hide()
+        tvPlaceholder.hide()
     }
 
     private fun FragmentFollowBinding.onSuccess(
         isEmptyResult: Boolean,
-        isDataFollower: Boolean,
+        isFollower: Boolean,
         items: List<UserItemsModel>,
     ) {
 
         when {
-            isEmptyResult && isDataFollower -> {
-                onError(requireContext().getString(R.string.error_empty_follower))
+            isEmptyResult && isFollower -> {
+                onError("$username " +
+                        requireContext().getString(R.string.error_empty_follower))
             }
-            isEmptyResult && !isDataFollower -> {
-                onError(requireContext().getString(R.string.error_following_empty))
+            isEmptyResult && !isFollower -> {
+                onError("$username " +
+                        requireContext().getString(R.string.error_empty_following))
             }
             else -> {
                 listAdapter?.renderList(items)
                 rvFollowList.show()
+                tvPlaceholder.hide()
             }
         }
 
     }
 
     private fun FragmentFollowBinding.onError(errorMessage: String) {
-        Toasty.success(
-            requireContext(),
-            errorMessage,
-            Toast.LENGTH_LONG
-        ).show()
         rvFollowList.hide()
+        tvPlaceholder.apply {
+            text = errorMessage
+        }.show()
     }
 }

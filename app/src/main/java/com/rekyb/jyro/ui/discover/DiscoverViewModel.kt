@@ -8,11 +8,12 @@ import com.rekyb.jyro.domain.use_case.remote.SearchUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -33,6 +34,7 @@ class DiscoverViewModel @Inject constructor(
 
         search(query)
             .map { _dataState.value = dataState.value.copy(result = it) }
+            .distinctUntilChanged()
             .flowOn(Dispatchers.IO)
             .stateIn(
                 viewModelScope,

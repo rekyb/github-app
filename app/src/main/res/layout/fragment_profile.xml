@@ -154,15 +154,16 @@
                     android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@id/main_view_pager"
+                    app:layout_constraintBottom_toTopOf="@id/profile_view_pager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/upper_wrapper" />
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/main_view_pager"
+                    android:id="@+id/profile_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="@dimen/zero_dp"
+                    app:layout_constraintDimensionRatio="H, 1:1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

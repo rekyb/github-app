@@ -9,17 +9,17 @@ import androidx.room.Delete
 @Dao
 interface FavouritesDao {
 
-    @Query("select * from favourites_table")
-    suspend fun getFavouritesList(): List<FavouritesUsersEntity>
+    @Query("SELECT * FROM favourites_table")
+    suspend fun getFavouritesList(): List<FavouritesEntity>
 
-    @Query("SELECT * from favourites_table WHERE id = :userId")
-    fun getUserDetail(userId: Int): FavouritesUsersEntity
+    @Query("SELECT EXISTS(SELECT * FROM favourites_table WHERE id = :userId)")
+    suspend fun check(userId: Int): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addUserToFavList(user: FavouritesUsersEntity)
+    suspend fun add(user: FavouritesEntity)
 
     @Delete
-    suspend fun removeUserFromFavList(user: FavouritesUsersEntity)
+    suspend fun remove(user: FavouritesEntity)
 
     // @Query("DELETE FROM favourites_table")
     // suspend fun deleteAllFavEntries()

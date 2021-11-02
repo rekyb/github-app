@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.rekyb.jyro.domain.model.UserDetailsModel
 
 @Entity(tableName = "favourites_table")
-data class FavouritesUsersEntity(
+data class FavouritesEntity(
     @PrimaryKey val id: Int,
     val login: String,
     val name: String,
@@ -16,8 +16,8 @@ data class FavouritesUsersEntity(
     val following_url: String,
 ) {
     companion object {
-        fun from(model: UserDetailsModel): FavouritesUsersEntity {
-            return FavouritesUsersEntity(
+        fun toEntityFrom(model: UserDetailsModel): FavouritesEntity {
+            return FavouritesEntity(
                 id = model.id!!,
                 login = model.userName!!,
                 name = model.fullName ?: "",

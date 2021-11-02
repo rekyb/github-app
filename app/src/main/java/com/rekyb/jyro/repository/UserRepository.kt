@@ -10,11 +10,4 @@ interface UserRepository {
     suspend fun getDetails(userName: String): UserDetailsModel
     suspend fun getFollowing(userName: String): List<UserItemsModel>
     suspend fun getFollowers(userName: String): List<UserItemsModel>
-
-    suspend fun getFavouritesList(): List<UserDetailsModel>
-    suspend fun getFavUserDetails(userId: Int): UserDetailsModel
-    suspend fun addUserToFavList(user: UserDetailsModel)
-    suspend fun removeUserFromFavList(user: UserDetailsModel)
-
-    // suspend fun clearFavList()
 }
