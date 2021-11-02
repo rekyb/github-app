@@ -10,11 +10,12 @@ import com.rekyb.jyro.domain.use_case.local.RemoveFromFavUseCase
 import com.rekyb.jyro.domain.use_case.remote.GetDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -22,7 +23,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileVIewModel @Inject constructor(
+@ExperimentalCoroutinesApi
+class ProfileViewModel @Inject constructor(
     private val getDetails: GetDetailsUseCase,
     private val addToFavUseCase: AddToFavUseCase,
     private val removeFromFavUseCase: RemoveFromFavUseCase,
@@ -37,11 +39,7 @@ class ProfileVIewModel @Inject constructor(
             .map { _profileState.value = profileState.value.copy(result = it) }
             .distinctUntilChanged()
             .flowOn(Dispatchers.IO)
-            .stateIn(
-                viewModelScope,
-                SharingStarted.Eagerly,
-                DataState.Loading
-            )
+            .stateIn(viewModelScope, SharingStarted.Eagerly, DataState.Loading)
     }
 
     fun addUserToFavList(user: UserDetailsModel) {
@@ -53,12 +51,13 @@ class ProfileVIewModel @Inject constructor(
     }
 
     fun checkIsUserOnFavList(userId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            checkUserUseCase(userId)
+        viewModelScope.launch {
+            checkUserUseCase.invoke(userId)
+                .map { _profileState.value = profileState.value.copy(isUserListedAsFavourite = it) }
+                .flatMapLatest { checkUserUseCase.invoke(userId) }
+                .distinctUntilChanged()
                 .flowOn(Dispatchers.IO)
-                .collect {
-                    _profileState.value = profileState.value.copy(isUserListedAsFavourite = it)
-                }
+                .stateIn(viewModelScope, SharingStarted.Eagerly, null)
         }
     }
 }
