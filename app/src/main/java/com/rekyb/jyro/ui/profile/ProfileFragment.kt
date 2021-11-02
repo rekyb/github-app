@@ -85,6 +85,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                         FancyToast.SUCCESS,
                         false).show()
                     addUserToFavList(userData!!)
+                    FancyToast.makeText(requireContext(),
+                        "Added to favourites",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false).show()
                 } else {
                     FancyToast.makeText(requireContext(),
                         "Removed from your list",
@@ -92,6 +97,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                         FancyToast.INFO,
                         false).show()
                     removeUserFromFavList(userData!!)
+                    FancyToast.makeText(requireContext(),
+                        "Removed from favourites",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.INFO,
+                        false).show()
                 }
 
                 toggleFabIcon(value)

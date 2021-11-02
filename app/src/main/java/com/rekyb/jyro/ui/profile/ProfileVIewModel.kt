@@ -34,9 +34,11 @@ class ProfileViewModel @Inject constructor(
     private val _profileState = MutableStateFlow(ProfileState())
     val profileState get() = _profileState.asStateFlow()
 
+
     fun getUserDetails(userName: String) {
         getDetails.invoke(userName)
             .map { _profileState.value = profileState.value.copy(result = it) }
+            .flatMapLatest { getDetails.invoke(userName) }
             .distinctUntilChanged()
             .flowOn(Dispatchers.IO)
             .stateIn(viewModelScope, SharingStarted.Eagerly, DataState.Loading)
@@ -54,9 +56,9 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             checkUserUseCase.invoke(userId)
                 .map { _profileState.value = profileState.value.copy(isUserListedAsFavourite = it) }
-                .flatMapLatest { checkUserUseCase.invoke(userId) }
-                .distinctUntilChanged()
+                .flatMapLatest { checkUserUseCase(userId) }
                 .flowOn(Dispatchers.IO)
+                .distinctUntilChanged()
                 .stateIn(viewModelScope, SharingStarted.Eagerly, null)
         }
     }
