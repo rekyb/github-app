@@ -96,69 +96,71 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
     private fun setFollowDataCollector() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.followState
-                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
                 .collect { state ->
-                    binding?.apply {
-                        when (val following = state.followingResult) {
-                            is DataState.Loading -> onLoading()
-                            is DataState.Success -> onSuccess(
-                                isEmptyResult = following.data.isEmpty(),
-                                isFollower = false,
-                                items = following.data
-                            )
-                            is DataState.Error -> onError(following.message)
-                        }
+                    when (val following = state.followingResult) {
+                        is DataState.Loading -> onLoading()
+                        is DataState.Success -> onSuccess(
+                            isEmptyResult = following.data.isEmpty(),
+                            isFollower = false,
+                            items = following.data
+                        )
+                        is DataState.Error -> onError(following.message)
                     }
 
-                    binding?.apply {
-                        when (val followers = state.followersResult) {
-                            is DataState.Loading -> onLoading()
-                            is DataState.Success -> onSuccess(
-                                isEmptyResult = followers.data.isEmpty(),
-                                isFollower = true,
-                                items = followers.data
-                            )
-                            is DataState.Error -> onError(followers.message)
-                        }
+                    when (val followers = state.followersResult) {
+                        is DataState.Loading -> onLoading()
+                        is DataState.Success -> onSuccess(
+                            isEmptyResult = followers.data.isEmpty(),
+                            isFollower = true,
+                            items = followers.data
+                        )
+                        is DataState.Error -> onError(followers.message)
                     }
+
                 }
-
         }
     }
 
-    private fun FragmentFollowBinding.onLoading() {
-        rvFollowList.hide()
-        tvPlaceholder.hide()
+    private fun onLoading() {
+        binding?.apply {
+            rvFollowList.hide()
+            tvPlaceholder.hide()
+        }
     }
 
-    private fun FragmentFollowBinding.onSuccess(
+    private fun onSuccess(
         isEmptyResult: Boolean,
         isFollower: Boolean,
         items: List<UserItemsModel>,
     ) {
 
-        when {
-            isEmptyResult && isFollower -> {
-                onError("$username " +
-                        requireContext().getString(R.string.error_empty_follower))
-            }
-            isEmptyResult && !isFollower -> {
-                onError("$username " +
-                        requireContext().getString(R.string.error_empty_following))
-            }
-            else -> {
-                listAdapter?.renderList(items)
-                rvFollowList.show()
-                tvPlaceholder.hide()
+        binding?.apply {
+            when {
+                isEmptyResult && isFollower -> {
+                    onError("$username " +
+                            requireContext().getString(R.string.error_empty_follower))
+                }
+                isEmptyResult && !isFollower -> {
+                    onError("$username " +
+                            requireContext().getString(R.string.error_empty_following))
+                }
+                else -> {
+                    listAdapter?.renderList(items)
+                    rvFollowList.show()
+                    tvPlaceholder.hide()
+                }
             }
         }
 
     }
 
-    private fun FragmentFollowBinding.onError(errorMessage: String) {
-        rvFollowList.hide()
-        tvPlaceholder.apply {
-            text = errorMessage
-        }.show()
+    private fun onError(errorMessage: String) {
+        binding?.apply {
+            rvFollowList.hide()
+            tvPlaceholder.apply {
+                text = errorMessage
+            }.show()
+        }
     }
 }

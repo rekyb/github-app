@@ -18,8 +18,8 @@
     <string name="error_internal_server">Internal server error</string>
     <string name="label_profile">Profile</string>
     <string name="label_getting_data">Getting required data…</string>
-    <string name="error_empty_follower">doesn\'t have any followers</string>
-    <string name="error_empty_following">doesn\'t following anyone</string>
+    <string name="error_empty_follower">doesn\'t have any followers yet</string>
+    <string name="error_empty_following">isn\'t following anyone</string>
     <string name="label_following">Following</string>
     <string name="label_followers">Followers</string>
 </resources>

@@ -34,10 +34,9 @@ class MainActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.profile_fragment) {
-                removeBottomNavView()
-            } else {
-                showBottomNavView()
+            when (destination.id) {
+                R.id.profile_fragment -> removeBottomNavView()
+                else -> showBottomNavView()
             }
         }
 

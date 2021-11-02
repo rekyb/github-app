@@ -18,18 +18,18 @@ import com.rekyb.jyro.ui.adapter.ViewPagerAdapter
 import com.rekyb.jyro.ui.base.BaseFragment
 import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.show
+import com.shashank.sony.fancytoastlib.FancyToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.scanFold
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
+@ExperimentalCoroutinesApi
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
 
     private val args by navArgs<ProfileFragmentArgs>()
-    private val viewModel: ProfileVIewModel by viewModels()
+    private val viewModel: ProfileViewModel by viewModels()
 
     private var viewPager: ViewPager2? = null
     private var tabs: TabLayout? = null
@@ -53,6 +53,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private fun setComponents() {
         binding?.apply {
+            lifecycleOwner = viewLifecycleOwner
             viewPager = profileViewPager
             tabs = tabLayout
             fabFavorite.setOnClickListener {
@@ -78,18 +79,29 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
             state?.let { value ->
                 if (!value) {
+                    FancyToast.makeText(requireContext(),
+                        "Added to your list",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false).show()
                     addUserToFavList(userData!!)
-                    toggleFabIcon(true)
                 } else {
+                    FancyToast.makeText(requireContext(),
+                        "Removed from your list",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.INFO,
+                        false).show()
                     removeUserFromFavList(userData!!)
-                    toggleFabIcon(false)
                 }
+
+                toggleFabIcon(value)
             }
         }
     }
 
     private fun toggleFabIcon(state: Boolean) {
         viewModel.checkIsUserOnFavList(userData?.id!!)
+
         binding?.apply {
             if (state) {
                 fabFavorite.setImageResource(R.drawable.ic_fav_filled)
@@ -109,11 +121,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                             is DataState.Loading -> onLoading()
                             is DataState.Success -> {
                                 onSuccess(state.result)
-
                                 userData = state.result.data
-                                state.isUserListedAsFavourite?.let { value ->
-                                        toggleFabIcon(value)
-                                }
+
+                                state.isUserListedAsFavourite?.let { toggleFabIcon(it) }
                             }
                             is DataState.Error -> onError(state.result.message)
                         }

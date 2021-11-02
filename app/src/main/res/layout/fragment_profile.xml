@@ -163,8 +163,8 @@
                     android:id="@+id/profile_view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/zero_dp"
-                    app:layout_constraintDimensionRatio="H, 1:1"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="H, 1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
@@ -177,12 +177,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:backgroundTint="#E91E63"
+            android:layout_margin="@dimen/fab_margin"
+            android:backgroundTint="@color/pink"
             android:contentDescription="@string/label_favourites"
             android:src="@drawable/ic_fav_border"
             app:borderWidth="@dimen/zero_dp"
             app:elevation="@dimen/elevation"
-            app:fabSize="normal" />
+            app:fabSize="normal"
+            app:tint="@android:color/white" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

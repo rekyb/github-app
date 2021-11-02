@@ -8,4 +8,5 @@
     <color name="secondaryDarkColor">#c56000</color>
     <color name="primaryDarkSurface">#2B2B2B</color>
     <color name="secondaryDarkSurface">#141414</color>
+    <color name="pink">#E91E63</color>
 </resources>

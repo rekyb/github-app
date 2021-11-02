@@ -114,51 +114,60 @@ class DiscoverFragment :
             viewModel.dataState
                 .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                 .collect { state ->
-                    binding?.apply {
-                        when (val result = state.result) {
-                            is DataState.Loading -> onLoading()
-                            is DataState.Success -> {
-                                result.data.apply {
-                                    onSuccess(
-                                        isEmptyResults = totalCount == 0,
-                                        items = userItems
-                                    )
-                                }
+                    when (val result = state.result) {
+                        is DataState.Loading -> onLoading()
+                        is DataState.Success -> {
+                            result.data.apply {
+                                onSuccess(
+                                    isEmptyResults = totalCount == 0,
+                                    items = userItems
+                                )
                             }
-                            is DataState.Error -> onError(result.message)
                         }
+                        is DataState.Error -> onError(result.message)
                     }
                 }
+
         }
     }
 
-    private fun FragmentDiscoverBinding.onLoading() {
-        progressBar.show()
-        tvPlaceholder.hide()
-        rvSearchResults.hide()
-    }
-
-    private fun FragmentDiscoverBinding.onSuccess(isEmptyResults: Boolean, items: List<UserItemsModel>) {
-
-        if (isEmptyResults) {
-            onError(requireContext().getString(R.string.error_not_found))
-        } else {
-            listAdapter?.renderList(items)
-            rvSearchResults.show()
+    private fun onLoading() {
+        binding?.apply {
+            progressBar.show()
             tvPlaceholder.hide()
-            progressBar.hide()
+            rvSearchResults.hide()
         }
     }
 
-    private fun FragmentDiscoverBinding.onError(errorMessage: String) {
-        rvSearchResults.hide()
-        progressBar.hide()
-        tvPlaceholder.apply {
-            text = errorMessage
-            setTopDrawable(
-                AppCompatResources
-                    .getDrawable(requireContext(), R.drawable.ic_exclamation_mark)
-            )
-        }.show()
+    private fun onSuccess(
+        isEmptyResults: Boolean,
+        items: List<UserItemsModel>,
+    ) {
+
+        binding?.apply {
+            if (isEmptyResults) {
+                onError(requireContext().getString(R.string.error_not_found))
+            } else {
+                rvSearchResults.show()
+                tvPlaceholder.hide()
+                progressBar.hide()
+
+                listAdapter?.renderList(items)
+            }
+        }
+    }
+
+    private fun onError(errorMessage: String) {
+       binding?.apply {
+           rvSearchResults.hide()
+           progressBar.hide()
+           tvPlaceholder.apply {
+               text = errorMessage
+               setTopDrawable(
+                   AppCompatResources
+                       .getDrawable(requireContext(), R.drawable.ic_exclamation_mark)
+               )
+           }.show()
+       }
     }
 }
