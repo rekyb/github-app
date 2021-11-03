@@ -20,12 +20,12 @@ import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.show
 import com.shashank.sony.fancytoastlib.FancyToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-@ExperimentalCoroutinesApi
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
 
     private val args by navArgs<ProfileFragmentArgs>()
@@ -33,7 +33,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private var viewPager: ViewPager2? = null
     private var tabs: TabLayout? = null
-    private var userData: UserDetailsModel? = null
+    private var isItFavourite: Boolean? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,7 +41,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         viewModel.getUserDetails(args.username)
 
         setComponents()
-        setProfileDataCollector()
+        setProfileDataObserver()
     }
 
     override fun onDestroyView() {
@@ -52,19 +52,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     }
 
     private fun setComponents() {
+        val tabsTitles = listOf(
+            requireContext().getString(R.string.label_following),
+            requireContext().getString(R.string.label_followers)
+        )
+
         binding?.apply {
             lifecycleOwner = viewLifecycleOwner
             viewPager = profileViewPager
             tabs = tabLayout
             fabFavorite.setOnClickListener {
-                setFavourite()
+                setFavourite(isItFavourite)
             }
         }
-
-        val tabsTitles = listOf(
-            requireContext().getString(R.string.label_following),
-            requireContext().getString(R.string.label_followers)
-        )
 
         viewPager?.adapter = ViewPagerAdapter(this, args.username, tabsTitles)
 
@@ -73,44 +73,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         }.attach()
     }
 
-    private fun setFavourite() {
-        viewModel.apply {
-            val state = profileState.value.isUserListedAsFavourite
-
-            state?.let { value ->
-                if (!value) {
-                    FancyToast.makeText(requireContext(),
-                        "Added to your list",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,
-                        false).show()
-                    addUserToFavList(userData!!)
-                    FancyToast.makeText(requireContext(),
-                        "Added to favourites",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,
-                        false).show()
-                } else {
-                    FancyToast.makeText(requireContext(),
-                        "Removed from your list",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.INFO,
-                        false).show()
-                    removeUserFromFavList(userData!!)
-                    FancyToast.makeText(requireContext(),
-                        "Removed from favourites",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.INFO,
-                        false).show()
-                }
-
-                toggleFabIcon(value)
-            }
-        }
-    }
-
     private fun toggleFabIcon(state: Boolean) {
-        viewModel.checkIsUserOnFavList(userData?.id!!)
+        viewModel.checkIsUserOnFavList(binding?.userdata?.id!!)
 
         binding?.apply {
             if (state) {
@@ -121,48 +85,77 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         }
     }
 
-    private fun setProfileDataCollector() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.profileState
-                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-                .collect { state ->
-                    binding?.run {
-                        when (state.result) {
-                            is DataState.Loading -> onLoading()
-                            is DataState.Success -> {
-                                onSuccess(state.result)
-                                userData = state.result.data
+    private fun setFavourite(state: Boolean?) {
+        viewModel.apply {
 
-                                state.isUserListedAsFavourite?.let { toggleFabIcon(it) }
-                            }
-                            is DataState.Error -> onError(state.result.message)
-                        }
-                    }
+            state?.let { value ->
+                if (!value) {
+                    FancyToast.makeText(requireContext(),
+                        "Added to your list",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.SUCCESS,
+                        false).show()
+                    addUserToFavList(binding?.userdata!!)
+                } else {
+                    FancyToast.makeText(requireContext(),
+                        "Removed from your list",
+                        FancyToast.LENGTH_SHORT,
+                        FancyToast.INFO,
+                        false).show()
+                    removeUserFromFavList(binding?.userdata!!)
                 }
+
+                toggleFabIcon(value)
+            }
         }
     }
 
-    private fun FragmentProfileBinding.onLoading() {
-        progressBar.show()
-        profileContentWrapper.hide()
-        tvPlaceholder.hide()
-        fabFavorite.hide()
+    private fun setProfileDataObserver() {
+        viewModel.profileState
+            .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+            .flowOn(Dispatchers.Main)
+            .onEach { state ->
+                when (state.result) {
+                    is DataState.Loading -> onLoading()
+                    is DataState.Success -> {
+                        onSuccess(state.result)
+
+                        isItFavourite = state.isUserListedAsFavourite
+                        isItFavourite?.let { toggleFabIcon(it) }
+                    }
+                    is DataState.Error -> onError(state.result.message)
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun FragmentProfileBinding.onSuccess(state: DataState.Success<UserDetailsModel>) {
-        userdata = state.data
-        progressBar.hide()
-        profileContentWrapper.show()
-        tvPlaceholder.hide()
-        fabFavorite.show()
+    private fun onLoading() {
+        binding?.apply {
+            progressBar.show()
+            profileContentWrapper.hide()
+            tvPlaceholder.hide()
+            fabFavorite.hide()
+        }
     }
 
-    private fun FragmentProfileBinding.onError(errorMessage: String) {
-        progressBar.hide()
-        profileContentWrapper.hide()
-        tvPlaceholder.apply {
-            text = errorMessage
-        }.show()
-        fabFavorite.hide()
+    private fun onSuccess(state: DataState.Success<UserDetailsModel>) {
+        binding?.apply {
+            userdata = state.data
+
+            progressBar.hide()
+            profileContentWrapper.show()
+            tvPlaceholder.hide()
+            fabFavorite.show()
+        }
+    }
+
+    private fun onError(errorMessage: String) {
+        binding?.apply {
+            progressBar.hide()
+            profileContentWrapper.hide()
+            tvPlaceholder.apply {
+                text = errorMessage
+            }.show()
+            fabFavorite.hide()
+        }
     }
 }

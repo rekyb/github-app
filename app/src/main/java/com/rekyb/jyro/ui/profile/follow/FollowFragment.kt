@@ -20,8 +20,10 @@ import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.navigateTo
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_follow),
@@ -59,7 +61,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
         setAdapter()
 
         getFollowData()
-        setFollowDataCollector()
+        setFollowDataObserver()
     }
 
     override fun onItemClick(view: View, data: UserItemsModel) {
@@ -93,33 +95,38 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
         }
     }
 
-    private fun setFollowDataCollector() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.followState
-                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-                .collect { state ->
-                    when (val following = state.followingResult) {
-                        is DataState.Loading -> onLoading()
-                        is DataState.Success -> onSuccess(
-                            isEmptyResult = following.data.isEmpty(),
-                            isFollower = false,
-                            items = following.data
-                        )
-                        is DataState.Error -> onError(following.message)
-                    }
-
-                    when (val followers = state.followersResult) {
-                        is DataState.Loading -> onLoading()
-                        is DataState.Success -> onSuccess(
-                            isEmptyResult = followers.data.isEmpty(),
-                            isFollower = true,
-                            items = followers.data
-                        )
-                        is DataState.Error -> onError(followers.message)
-                    }
-
+    private fun setFollowDataObserver() {
+        // Observe the following state
+        viewModel.followingState
+            .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+            .flowOn(Dispatchers.Main)
+            .onEach { state ->
+                when (val followingResult = state.result) {
+                    is DataState.Loading -> onLoading()
+                    is DataState.Success -> onSuccess(
+                        isFollower = false,
+                        isEmptyResult = followingResult.data.isEmpty(),
+                        items = followingResult.data
+                    )
+                    is DataState.Error -> onError(followingResult.message)
                 }
-        }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        // Observe the followers state
+        viewModel.followersState
+            .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+            .flowOn(Dispatchers.Main)
+            .onEach { state ->
+                when (val followerResult = state.result) {
+                    is DataState.Loading -> onLoading()
+                    is DataState.Success -> onSuccess(
+                        isFollower = true,
+                        isEmptyResult = followerResult.data.isEmpty(),
+                        items = followerResult.data
+                    )
+                    is DataState.Error -> onError(followerResult.message)
+                }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onLoading() {
@@ -130,8 +137,8 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
     }
 
     private fun onSuccess(
-        isEmptyResult: Boolean,
         isFollower: Boolean,
+        isEmptyResult: Boolean,
         items: List<UserItemsModel>,
     ) {
 
@@ -147,6 +154,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
                 }
                 else -> {
                     listAdapter?.renderList(items)
+
                     rvFollowList.show()
                     tvPlaceholder.hide()
                 }

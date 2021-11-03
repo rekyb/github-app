@@ -15,6 +15,7 @@ import coil.load
 import coil.request.CachePolicy
 import coil.transform.CircleCropTransformation
 import com.rekyb.jyro.R
+import kotlinx.coroutines.Dispatchers
 
 fun View.show(): View {
     if (visibility != VISIBLE) {
@@ -56,8 +57,8 @@ fun ImageView.loadImage(url: String?) {
     this.load(url) {
         diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.DISABLED)
+        dispatcher(Dispatchers.IO)
         placeholder(circleProgressDrawable)
-        crossfade(true)
         error(R.drawable.ic_error_loading_image)
     }
 }
@@ -68,7 +69,7 @@ fun ImageView.loadAsCircularImage(url: String?) {
         diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.DISABLED)
         error(R.drawable.ic_error_loading_image)
-        crossfade(true)
+        dispatcher(Dispatchers.IO)
         transformations(CircleCropTransformation())
     }
 }

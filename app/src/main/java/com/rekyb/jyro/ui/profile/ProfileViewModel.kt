@@ -2,7 +2,6 @@ package com.rekyb.jyro.ui.profile
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.use_case.local.AddToFavUseCase
 import com.rekyb.jyro.domain.use_case.local.CheckUserUseCase
@@ -10,56 +9,54 @@ import com.rekyb.jyro.domain.use_case.local.RemoveFromFavUseCase
 import com.rekyb.jyro.domain.use_case.remote.GetDetailsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-@ExperimentalCoroutinesApi
 class ProfileViewModel @Inject constructor(
     private val getDetails: GetDetailsUseCase,
-    private val addToFavUseCase: AddToFavUseCase,
-    private val removeFromFavUseCase: RemoveFromFavUseCase,
-    private val checkUserUseCase: CheckUserUseCase,
+    private val addToFav: AddToFavUseCase,
+    private val removeFromFav: RemoveFromFavUseCase,
+    private val checkOnFav: CheckUserUseCase,
 ) : ViewModel() {
 
     private val _profileState = MutableStateFlow(ProfileState())
     val profileState get() = _profileState.asStateFlow()
 
-
     fun getUserDetails(userName: String) {
-        getDetails.invoke(userName)
-            .map { _profileState.value = profileState.value.copy(result = it) }
-            .flatMapLatest { getDetails.invoke(userName) }
-            .distinctUntilChanged()
-            .flowOn(Dispatchers.IO)
-            .stateIn(viewModelScope, SharingStarted.Eagerly, DataState.Loading)
+        viewModelScope.launch {
+            getDetails(userName)
+                .flowOn(Dispatchers.IO)
+                .distinctUntilChanged()
+                .collect {
+                    _profileState.value = profileState.value.copy(result = it)
+                }
+        }
     }
 
     fun addUserToFavList(user: UserDetailsModel) {
-        viewModelScope.launch(Dispatchers.IO) { addToFavUseCase(user) }
+        viewModelScope.launch(Dispatchers.IO) { addToFav(user) }
     }
 
     fun removeUserFromFavList(user: UserDetailsModel) {
-        viewModelScope.launch(Dispatchers.IO) { removeFromFavUseCase(user) }
+        viewModelScope.launch(Dispatchers.IO) { removeFromFav(user) }
     }
 
     fun checkIsUserOnFavList(userId: Int) {
         viewModelScope.launch {
-            checkUserUseCase.invoke(userId)
-                .map { _profileState.value = profileState.value.copy(isUserListedAsFavourite = it) }
-                .flatMapLatest { checkUserUseCase(userId) }
+            checkOnFav.invoke(userId)
                 .flowOn(Dispatchers.IO)
                 .distinctUntilChanged()
-                .stateIn(viewModelScope, SharingStarted.Eagerly, null)
+                .collect {
+                    _profileState.value =
+                        profileState.value.copy(isUserListedAsFavourite = it)
+                }
         }
     }
+
 }

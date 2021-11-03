@@ -23,8 +23,10 @@ import com.rekyb.jyro.utils.navigateTo
 import com.rekyb.jyro.utils.setTopDrawable
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class DiscoverFragment :
@@ -43,7 +45,7 @@ class DiscoverFragment :
         super.onViewCreated(view, savedInstanceState)
 
         setAdapter()
-        setDataCollector()
+        setSearchResultsObserver()
         setHasOptionsMenu(true)
     }
 
@@ -109,26 +111,24 @@ class DiscoverFragment :
         }
     }
 
-    private fun setDataCollector() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.dataState
-                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                .collect { state ->
-                    when (val result = state.result) {
-                        is DataState.Loading -> onLoading()
-                        is DataState.Success -> {
-                            result.data.apply {
-                                onSuccess(
-                                    isEmptyResults = totalCount == 0,
-                                    items = userItems
-                                )
-                            }
+    private fun setSearchResultsObserver() {
+        viewModel.dataState
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .flowOn(Dispatchers.Main)
+            .onEach { state ->
+                when (val result = state.result) {
+                    is DataState.Loading -> onLoading()
+                    is DataState.Success -> {
+                        result.data.apply {
+                            onSuccess(
+                                isEmptyResults = totalCount == 0,
+                                items = userItems
+                            )
                         }
-                        is DataState.Error -> onError(result.message)
                     }
+                    is DataState.Error -> onError(result.message)
                 }
-
-        }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onLoading() {
@@ -158,16 +158,16 @@ class DiscoverFragment :
     }
 
     private fun onError(errorMessage: String) {
-       binding?.apply {
-           rvSearchResults.hide()
-           progressBar.hide()
-           tvPlaceholder.apply {
-               text = errorMessage
-               setTopDrawable(
-                   AppCompatResources
-                       .getDrawable(requireContext(), R.drawable.ic_exclamation_mark)
-               )
-           }.show()
-       }
+        binding?.apply {
+            rvSearchResults.hide()
+            progressBar.hide()
+            tvPlaceholder.apply {
+                text = errorMessage
+                setTopDrawable(
+                    AppCompatResources
+                        .getDrawable(requireContext(), R.drawable.ic_exclamation_mark)
+                )
+            }.show()
+        }
     }
 }

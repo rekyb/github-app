@@ -16,10 +16,10 @@ interface FavouritesDao {
     suspend fun check(userId: Int): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun add(user: FavouritesEntity)
+    fun add(user: FavouritesEntity)
 
     @Delete
-    suspend fun remove(user: FavouritesEntity)
+    fun remove(user: FavouritesEntity)
 
     // @Query("DELETE FROM favourites_table")
     // suspend fun deleteAllFavEntries()
