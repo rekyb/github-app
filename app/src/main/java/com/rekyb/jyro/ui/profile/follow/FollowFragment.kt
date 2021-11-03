@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
 import com.rekyb.jyro.common.Constants.FRAGMENT_FOLLOW_TYPE
@@ -21,9 +21,8 @@ import com.rekyb.jyro.utils.navigateTo
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_follow),
@@ -96,37 +95,43 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
     }
 
     private fun setFollowDataObserver() {
-        // Observe the following state
-        viewModel.followingState
-            .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-            .flowOn(Dispatchers.Main)
-            .onEach { state ->
-                when (val followingResult = state.result) {
-                    is DataState.Loading -> onLoading()
-                    is DataState.Success -> onSuccess(
-                        isFollower = false,
-                        isEmptyResult = followingResult.data.isEmpty(),
-                        items = followingResult.data
-                    )
-                    is DataState.Error -> onError(followingResult.message)
-                }
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-        // Observe the followers state
-        viewModel.followersState
-            .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-            .flowOn(Dispatchers.Main)
-            .onEach { state ->
-                when (val followerResult = state.result) {
-                    is DataState.Loading -> onLoading()
-                    is DataState.Success -> onSuccess(
-                        isFollower = true,
-                        isEmptyResult = followerResult.data.isEmpty(),
-                        items = followerResult.data
-                    )
-                    is DataState.Error -> onError(followerResult.message)
+                // Observe following state
+                launch {
+                    viewModel.followingState
+                        .collect { state ->
+                            when (val followingResult = state.result) {
+                                is DataState.Loading -> onLoading()
+                                is DataState.Success -> onSuccess(
+                                    isFollower = false,
+                                    isEmptyResult = followingResult.data.isEmpty(),
+                                    items = followingResult.data
+                                )
+                                is DataState.Error -> onError(followingResult.message)
+                            }
+                        }
                 }
-            }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+                // Observe followers state
+                launch {
+                    viewModel.followersState
+                        .collect { state ->
+                            when (val followerResult = state.result) {
+                                is DataState.Loading -> onLoading()
+                                is DataState.Success -> onSuccess(
+                                    isFollower = true,
+                                    isEmptyResult = followerResult.data.isEmpty(),
+                                    items = followerResult.data
+                                )
+                                is DataState.Error -> onError(followerResult.message)
+                            }
+                        }
+                }
+
+            }
+        }
     }
 
     private fun onLoading() {

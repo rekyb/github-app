@@ -112,7 +112,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private fun setProfileDataObserver() {
         viewModel.profileState
-            .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
             .flowOn(Dispatchers.Main)
             .onEach { state ->
                 when (state.result) {

@@ -4,5 +4,5 @@
         android:centerX="50%"
         android:startColor="?attr/colorPrimary"
         android:endColor="?attr/colorPrimaryVariant"
-        android:angle="75"/>
+        android:angle="45"/>
 </shape>

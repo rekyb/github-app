@@ -30,7 +30,7 @@
                     android:id="@+id/upper_wrapper"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/primaryColor"
+                    android:background="@drawable/gradient_background"
                     android:padding="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -162,13 +162,11 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/profile_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero_dp"
+                    android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintDimensionRatio="H, 1:1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

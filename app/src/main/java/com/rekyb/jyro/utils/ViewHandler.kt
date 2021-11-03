@@ -10,7 +10,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import coil.request.CachePolicy
 import coil.transform.CircleCropTransformation
@@ -48,17 +47,11 @@ fun View.navigateTo(direction: NavDirections) {
 
 @BindingAdapter("imageUrl")
 fun ImageView.loadImage(url: String?) {
-    val circleProgressDrawable = CircularProgressDrawable(context).apply {
-        strokeWidth = 5f
-        centerRadius = 30f
-        start()
-    }
-
     this.load(url) {
         diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.DISABLED)
         dispatcher(Dispatchers.IO)
-        placeholder(circleProgressDrawable)
+        placeholder(R.drawable.ic_placholder)
         error(R.drawable.ic_error_loading_image)
     }
 }
@@ -68,8 +61,9 @@ fun ImageView.loadAsCircularImage(url: String?) {
     this.load(url) {
         diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.DISABLED)
-        error(R.drawable.ic_error_loading_image)
         dispatcher(Dispatchers.IO)
+        placeholder(R.drawable.ic_placholder)
+        error(R.drawable.ic_error_loading_image)
         transformations(CircleCropTransformation())
     }
 }
