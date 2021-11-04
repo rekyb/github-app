@@ -87,7 +87,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             if (!isItFavourite) {
                 addUserToFavList(binding?.userdata!!)
                 FancyToast.makeText(requireContext(),
-                    "Added to your list",
+                    requireContext().getString(R.string.notify_added_to_list),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.SUCCESS,
                     false).show()
@@ -95,7 +95,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             } else {
                 removeUserFromFavList(binding?.userdata!!)
                 FancyToast.makeText(requireContext(),
-                    "Removed from your list",
+                    requireContext().getString(R.string.notify_removed_from_list),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.INFO,
                     false).show()

@@ -1,7 +1,12 @@
 package com.rekyb.jyro.ui.favourites
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.view.isEmpty
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
@@ -12,7 +17,9 @@ import com.rekyb.jyro.ui.adapter.FavouritesListAdapter
 import com.rekyb.jyro.ui.base.BaseFragment
 import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.navigateTo
+import com.rekyb.jyro.utils.setTopDrawable
 import com.rekyb.jyro.utils.show
+import com.shashank.sony.fancytoastlib.FancyToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +36,20 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>(R.layout.frag
 
         setAdapter()
         setFavouritesDataObserver()
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_appbar_clear, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return if (item.itemId == R.id.app_bar_clear_list) {
+            clearList()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onItemClick(view: View, data: UserDetailsModel) {
@@ -42,7 +63,6 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>(R.layout.frag
 
         listAdapter = null
         recyclerView = null
-        recyclerView?.adapter = null
     }
 
     private fun setAdapter() {
@@ -62,27 +82,66 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>(R.layout.frag
         })
     }
 
+    private fun clearList() {
+        if (recyclerView!!.isEmpty()) {
+            FancyToast.makeText(requireContext(),
+                requireContext().getString(R.string.notify_list_empty),
+                FancyToast.LENGTH_SHORT,
+                FancyToast.CONFUSING,
+                false).show()
+        } else {
+            FancyToast.makeText(requireContext(),
+                requireContext().getString(R.string.notify_list_delated),
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                false).show()
+
+            viewModel.clearList()
+        }
+    }
+
+    private fun defaultState() {
+        binding?.apply {
+            tvPlaceholder.apply {
+                text = requireContext().getString(R.string.empty_fav_list)
+                setTopDrawable(
+                    AppCompatResources
+                        .getDrawable(requireContext(), R.drawable.ic_default_state)
+                )
+            }.show()
+            rvFavList.hide()
+        }
+    }
+
     private fun onLoad() {
         binding?.apply {
-            progressBar.show()
             tvPlaceholder.hide()
+            rvFavList.hide()
         }
     }
 
     private fun onSuccess(result: List<UserDetailsModel>) {
         binding?.apply {
-            listAdapter?.renderList(result)
-            progressBar.hide()
-            tvPlaceholder.hide()
-            rvFavList.show()
+            if (result.isEmpty()) {
+                defaultState()
+            } else {
+                listAdapter?.renderList(result)
+
+                tvPlaceholder.hide()
+                rvFavList.show()
+            }
         }
     }
 
     private fun onError(errorMessage: String) {
         binding?.apply {
-            progressBar.hide()
+            rvFavList.hide()
             tvPlaceholder.apply {
                 text = errorMessage
+                setTopDrawable(
+                    AppCompatResources
+                        .getDrawable(requireContext(), R.drawable.ic_exclamation_mark)
+                )
             }.show()
         }
     }

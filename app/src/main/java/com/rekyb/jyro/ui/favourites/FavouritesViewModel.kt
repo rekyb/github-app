@@ -9,6 +9,7 @@ import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.use_case.local.ClearFavListUseCase
 import com.rekyb.jyro.domain.use_case.local.GetFavListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -32,4 +33,5 @@ class FavouritesViewModel @Inject constructor(
         }
     }
 
+    fun clearList() = viewModelScope.launch(Dispatchers.IO) { clearFavList() }
 }
