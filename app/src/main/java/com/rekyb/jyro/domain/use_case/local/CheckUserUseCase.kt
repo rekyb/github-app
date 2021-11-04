@@ -8,7 +8,7 @@ import javax.inject.Inject
 class CheckUserUseCase @Inject constructor(
     private val repo: FavouritesRepositoryImpl,
 ) {
-    operator fun invoke(userId: Int): Flow<Boolean> = flow {
-        emit(repo.checkUserOnFavList(userId))
+    operator fun invoke(userName: String): Flow<Boolean> = flow {
+        emit(repo.checkUserOnFavList(userName))
     }
 }

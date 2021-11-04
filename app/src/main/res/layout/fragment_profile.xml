@@ -162,7 +162,8 @@
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/profile_view_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/zero_dp"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -179,6 +180,8 @@
             android:backgroundTint="@color/pink"
             android:contentDescription="@string/label_favourites"
             android:src="@drawable/ic_fav_border"
+            android:clickable="true"
+            android:focusable="true"
             app:borderWidth="@dimen/zero_dp"
             app:elevation="@dimen/elevation"
             app:fabSize="normal"

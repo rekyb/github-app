@@ -13,8 +13,8 @@ interface FavouritesDao {
     @Query("SELECT * FROM favourites_table")
     fun getFavouritesList(): Flow<List<FavouritesEntity>>
 
-    @Query("SELECT EXISTS(SELECT * FROM favourites_table WHERE id = :userId)")
-    suspend fun check(userId: Int): Boolean
+    @Query("SELECT EXISTS(SELECT * FROM favourites_table WHERE login = :userName)")
+    suspend fun check(userName: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun add(user: FavouritesEntity)

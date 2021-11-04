@@ -5,8 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface FavouritesRepository {
 
-    suspend fun getFavouritesList(): Flow<List<UserDetailsModel>>
-    suspend fun checkUserOnFavList(userId: Int): Boolean
+    fun getFavouritesList(): Flow<List<UserDetailsModel>>
+    suspend fun checkUserOnFavList(userName: String): Boolean
     suspend fun addUserToFavList(user: UserDetailsModel)
     suspend fun removeUserFromFavList(user: UserDetailsModel)
     suspend fun clearFavList()

@@ -39,17 +39,9 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun addUserToFavList(user: UserDetailsModel) {
-        viewModelScope.launch(Dispatchers.IO) { addToFav(user) }
-    }
-
-    fun removeUserFromFavList(user: UserDetailsModel) {
-        viewModelScope.launch(Dispatchers.IO) { removeFromFav(user) }
-    }
-
-    fun checkIsUserOnFavList(userId: Int) {
+    fun checkIsUserOnFavList(userName: String) {
         viewModelScope.launch {
-            checkOnFav.invoke(userId)
+            checkOnFav.invoke(userName)
                 .flowOn(Dispatchers.IO)
                 .distinctUntilChanged()
                 .collect {
@@ -59,4 +51,11 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    fun addUserToFavList(user: UserDetailsModel) {
+        viewModelScope.launch(Dispatchers.IO) { addToFav(user) }
+    }
+
+    fun removeUserFromFavList(user: UserDetailsModel) {
+        viewModelScope.launch(Dispatchers.IO) { removeFromFav(user) }
+    }
 }

@@ -8,6 +8,7 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rekyb.jyro.R
@@ -20,8 +21,6 @@ import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.show
 import com.shashank.sony.fancytoastlib.FancyToast
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -33,7 +32,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private var viewPager: ViewPager2? = null
     private var tabs: TabLayout? = null
-    private var isItFavourite: Boolean? = null
+    private var fab: FloatingActionButton? = null
+
+    private var isItFavourite: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -41,12 +42,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         viewModel.getUserDetails(args.username)
 
         setComponents()
-        setProfileDataObserver()
+        setProfileDataState()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
+        fab = null
         tabs = null
         viewPager = null
     }
@@ -58,13 +60,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         )
 
         binding?.apply {
-            lifecycleOwner = viewLifecycleOwner
-            viewPager = profileViewPager
+            fab = fabFavorite
             tabs = tabLayout
-            fabFavorite.setOnClickListener {
-                setFavourite(isItFavourite)
-            }
+            viewPager = profileViewPager
         }
+
+        fab?.setOnClickListener { setFavourite() }
 
         viewPager?.adapter = ViewPagerAdapter(this, args.username, tabsTitles)
 
@@ -74,54 +75,48 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     }
 
     private fun toggleFabIcon(state: Boolean) {
-        viewModel.checkIsUserOnFavList(binding?.userdata?.id!!)
+        viewModel.checkIsUserOnFavList(args.username)
 
-        binding?.apply {
-            if (state) {
-                fabFavorite.setImageResource(R.drawable.ic_fav_filled)
-            } else {
-                fabFavorite.setImageResource(R.drawable.ic_fav_border)
-            }
+        if (state) {
+            fab!!.setImageResource(R.drawable.ic_fav_filled)
+        } else {
+            fab!!.setImageResource(R.drawable.ic_fav_border)
         }
     }
 
-    private fun setFavourite(state: Boolean?) {
+    private fun setFavourite() {
         viewModel.apply {
-
-            state?.let { value ->
-                if (!value) {
-                    FancyToast.makeText(requireContext(),
-                        "Added to your list",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.SUCCESS,
-                        false).show()
-                    addUserToFavList(binding?.userdata!!)
-                } else {
-                    FancyToast.makeText(requireContext(),
-                        "Removed from your list",
-                        FancyToast.LENGTH_SHORT,
-                        FancyToast.INFO,
-                        false).show()
-                    removeUserFromFavList(binding?.userdata!!)
-                }
-
-                toggleFabIcon(value)
+            if (!isItFavourite) {
+                addUserToFavList(binding?.userdata!!)
+                FancyToast.makeText(requireContext(),
+                    "Added to your list",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.SUCCESS,
+                    false).show()
+                toggleFabIcon(false)
+            } else {
+                removeUserFromFavList(binding?.userdata!!)
+                FancyToast.makeText(requireContext(),
+                    "Removed from your list",
+                    FancyToast.LENGTH_SHORT,
+                    FancyToast.INFO,
+                    false).show()
+                toggleFabIcon(true)
             }
         }
     }
 
-    private fun setProfileDataObserver() {
+    private fun setProfileDataState() {
         viewModel.profileState
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-            .flowOn(Dispatchers.Main)
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach { state ->
                 when (state.result) {
                     is DataState.Loading -> onLoading()
                     is DataState.Success -> {
                         onSuccess(state.result)
 
-                        isItFavourite = state.isUserListedAsFavourite
-                        isItFavourite?.let { toggleFabIcon(it) }
+                        isItFavourite = state.isUserListedAsFavourite ?: false
+                        toggleFabIcon(isItFavourite)
                     }
                     is DataState.Error -> onError(state.result.message)
                 }
@@ -140,7 +135,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private fun onSuccess(state: DataState.Success<UserDetailsModel>) {
         binding?.apply {
             userdata = state.data
-
             progressBar.hide()
             profileContentWrapper.show()
             tvPlaceholder.hide()

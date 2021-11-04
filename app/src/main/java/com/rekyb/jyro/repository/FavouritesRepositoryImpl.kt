@@ -14,15 +14,19 @@ class FavouritesRepositoryImpl @Inject constructor(
     private val favouritesDao: FavouritesDao,
 ) : FavouritesRepository {
 
-    override suspend fun getFavouritesList(): Flow<List<UserDetailsModel>> {
+    override fun getFavouritesList(): Flow<List<UserDetailsModel>> {
         return favouritesDao.getFavouritesList()
-            .map { data -> data.map { it.toDetailModel() } }
+            .map { data ->
+                data.map {
+                    it.toDetailModel()
+                }
+            }
             .distinctUntilChanged()
             .flowOn(Dispatchers.IO)
     }
 
-    override suspend fun checkUserOnFavList(userId: Int): Boolean {
-        return favouritesDao.check(userId)
+    override suspend fun checkUserOnFavList(userName: String): Boolean {
+        return favouritesDao.check(userName)
     }
 
     override suspend fun addUserToFavList(user: UserDetailsModel) {

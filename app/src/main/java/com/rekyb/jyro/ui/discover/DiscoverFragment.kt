@@ -113,7 +113,7 @@ class DiscoverFragment :
 
     private fun setSearchResultsObserver() {
         viewModel.dataState
-            .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .flowOn(Dispatchers.Main)
             .onEach { state ->
                 when (val result = state.result) {

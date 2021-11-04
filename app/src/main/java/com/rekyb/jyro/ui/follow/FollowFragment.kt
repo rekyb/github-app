@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
 import com.rekyb.jyro.common.Constants.FRAGMENT_FOLLOW_TYPE
@@ -20,9 +20,8 @@ import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.navigateTo
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
 class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_follow),
@@ -60,7 +59,8 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
         setAdapter()
 
         getFollowData()
-        setFollowDataObserver()
+        setFollowersDataState()
+        setFollowingDataState()
     }
 
     override fun onItemClick(view: View, data: UserItemsModel) {
@@ -94,44 +94,36 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
         }
     }
 
-    private fun setFollowDataObserver() {
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                // Observe following state
-                launch {
-                    viewModel.followingState
-                        .collect { state ->
-                            when (val followingResult = state.result) {
-                                is DataState.Loading -> onLoading()
-                                is DataState.Success -> onSuccess(
-                                    isFollower = false,
-                                    isEmptyResult = followingResult.data.isEmpty(),
-                                    items = followingResult.data
-                                )
-                                is DataState.Error -> onError(followingResult.message)
-                            }
-                        }
+    private fun setFollowersDataState() {
+        viewModel.followersState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .onEach { state ->
+                when (val result = state.result) {
+                    is DataState.Loading -> onLoading()
+                    is DataState.Success -> onSuccess(
+                        isFollower = true,
+                        isEmptyResult = result.data.isEmpty(),
+                        items = result.data
+                    )
+                    is DataState.Error -> onError(result.message)
                 }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
 
-                // Observe followers state
-                launch {
-                    viewModel.followersState
-                        .collect { state ->
-                            when (val followerResult = state.result) {
-                                is DataState.Loading -> onLoading()
-                                is DataState.Success -> onSuccess(
-                                    isFollower = true,
-                                    isEmptyResult = followerResult.data.isEmpty(),
-                                    items = followerResult.data
-                                )
-                                is DataState.Error -> onError(followerResult.message)
-                            }
-                        }
+    private fun setFollowingDataState() {
+        viewModel.followingState
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .onEach { state ->
+                when (val result = state.result) {
+                    is DataState.Loading -> onLoading()
+                    is DataState.Success -> onSuccess(
+                        isFollower = false,
+                        isEmptyResult = result.data.isEmpty(),
+                        items = result.data
+                    )
+                    is DataState.Error -> onError(result.message)
                 }
-
-            }
-        }
+            }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     private fun onLoading() {
@@ -165,7 +157,6 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
                 }
             }
         }
-
     }
 
     private fun onError(errorMessage: String) {
