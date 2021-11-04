@@ -18,8 +18,14 @@
     <string name="error_internal_server">Internal server error</string>
     <string name="label_profile">Profile</string>
     <string name="label_getting_data">Getting required data…</string>
-    <string name="error_empty_follower">User did not have any follower</string>
-    <string name="error_following_empty">User did not following anyone</string>
+    <string name="error_empty_follower">doesn\'t have any followers yet</string>
+    <string name="error_empty_following">isn\'t following anyone</string>
     <string name="label_following">Following</string>
     <string name="label_followers">Followers</string>
+    <string name="empty_fav_list">Feels empty here…</string>
+    <string name="label_clear_list">Clear list</string>
+    <string name="notify_list_empty">Your list are empty</string>
+    <string name="notify_list_delated">All entries successfully deleted</string>
+    <string name="notify_added_to_list">Added to your list</string>
+    <string name="notify_removed_from_list">Removed from your list</string>
 </resources>

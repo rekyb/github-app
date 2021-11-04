@@ -8,15 +8,29 @@
         android:layout_height="match_parent"
         tools:context=".ui.favourites.FavouritesFragment">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_fav_list"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
+            android:clipToPadding="false"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/rv_fav_items"/>
+
         <TextView
             android:id="@+id/tv_placeholder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_favourites"
+            android:gravity="center"
+            android:textSize="@dimen/medium_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,4 +1,4 @@
-package com.rekyb.jyro.domain.use_case
+package com.rekyb.jyro.domain.use_case.remote
 
 import android.content.Context
 import com.rekyb.jyro.common.DataState
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
 
-class GetFollowersUseCase @Inject constructor(
+class GetFollowingUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repo: UserRepositoryImpl,
 ) {
@@ -20,7 +20,7 @@ class GetFollowersUseCase @Inject constructor(
         return flow {
             try {
                 emit(DataState.Loading)
-                emit(DataState.Success(repo.getFollowers(userName)))
+                emit(DataState.Success(repo.getFollowing(userName)))
             } catch (error: Exception) {
                 emit(ExceptionHandler(context).handleError(error))
             }

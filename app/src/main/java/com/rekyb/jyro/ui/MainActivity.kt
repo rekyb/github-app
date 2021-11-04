@@ -33,6 +33,13 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment_container) as NavHostFragment
 
         navController = navHostFragment.navController
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.profile_fragment -> removeBottomNavView()
+                else -> showBottomNavView()
+            }
+        }
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.item_discover_fragment,
@@ -55,6 +62,6 @@ class MainActivity : AppCompatActivity() {
         binding = null
     }
 
-    fun removeBottomNavView() = binding?.bottomNavView?.gone()
-    fun showBottomNavView() = binding?.bottomNavView?.show()
+    private fun removeBottomNavView() = binding?.bottomNavView?.gone()
+    private fun showBottomNavView() = binding?.bottomNavView?.show()
 }

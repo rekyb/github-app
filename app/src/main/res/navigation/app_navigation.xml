@@ -11,7 +11,7 @@
         android:label="@string/label_discover"
         tools:layout="@layout/fragment_discover">
         <action
-            android:id="@+id/pass_result_to_profile"
+            android:id="@+id/pass_result"
             app:destination="@id/profile_fragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -22,7 +22,15 @@
         android:id="@+id/item_favourites_fragment"
         android:name="com.rekyb.jyro.ui.favourites.FavouritesFragment"
         android:label="@string/label_favourites"
-        tools:layout="@layout/fragment_favourites" />
+        tools:layout="@layout/fragment_favourites">
+        <action
+            android:id="@+id/pass_result"
+            app:destination="@id/profile_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/item_more_fragment"
         android:name="com.rekyb.jyro.ui.more.MoreFragment"

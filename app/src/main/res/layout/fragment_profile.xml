@@ -9,163 +9,182 @@
 
         <variable
             name="userdata"
-            type="com.rekyb.jyro.domain.model.GetDetailsModel" />
+            type="com.rekyb.jyro.domain.model.UserDetailsModel" />
     </data>
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.profile.ProfileFragment">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/profile_section"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            tools:context=".ui.profile.ProfileFragment">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/upper_wrapper"
+                android:id="@+id/profile_section"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/primaryColor"
-                android:padding="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/profile_content_wrapper"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/upper_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_background"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.Group
+                        android:id="@+id/profile_content_wrapper"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible"
+                        app:constraint_referenced_ids="tv_user_name, tv_full_name, tv_user_address,tv_user_company, iv_profile_avatar"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_profile_avatar"
+                        circleImage="@{userdata.userAvatarUrl}"
+                        android:layout_width="@dimen/avatar_profile_size"
+                        android:layout_height="@dimen/avatar_profile_size"
+                        android:layout_margin="@dimen/medium_dp"
+                        android:contentDescription="@string/user_ava_desc"
+                        android:padding="@dimen/small_dp"
+                        app:layout_constraintBottom_toTopOf="@id/tv_user_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:srcCompat="@tools:sample/avatars" />
+
+                    <TextView
+                        android:id="@+id/tv_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{userdata.userName}"
+                        android:textAlignment="center"
+                        android:textColor="?attr/adaptiveColor"
+                        android:textSize="@dimen/small_text_size"
+                        android:textStyle="italic"
+                        app:layout_constraintBottom_toTopOf="@id/tv_full_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_profile_avatar"
+                        tools:text="@tools:sample/first_names" />
+
+                    <TextView
+                        android:id="@+id/tv_full_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{userdata.fullName}"
+                        android:textAlignment="center"
+                        android:textColor="?attr/adaptiveColor"
+                        android:textSize="@dimen/large_text_size"
+                        android:textStyle="bold"
+                        android:visibility="@{userdata.fullName != null? View.VISIBLE: View.GONE}"
+                        app:layout_constraintBottom_toTopOf="@id/tv_user_company"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
+                        tools:text="@tools:sample/full_names" />
+
+                    <TextView
+                        android:id="@+id/tv_user_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/small_dp"
+                        android:text="@{userdata.userCompany}"
+                        android:textAlignment="center"
+                        android:textColor="?attr/adaptiveColor"
+                        android:textSize="@dimen/medium_text_size"
+                        android:visibility="@{userdata.userCompany != null? View.VISIBLE: View.GONE}"
+                        app:drawableStartCompat="@drawable/ic_company"
+                        app:layout_constraintBottom_toTopOf="@id/tv_user_address"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_full_name"
+                        tools:text="@tools:sample/lorem" />
+
+                    <TextView
+                        android:id="@+id/tv_user_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="@dimen/small_dp"
+                        android:text="@{userdata.userLocation}"
+                        android:textAlignment="center"
+                        android:textColor="?attr/adaptiveColor"
+                        android:textSize="@dimen/medium_text_size"
+                        android:visibility="@{userdata.userLocation != null? View.VISIBLE: View.GONE}"
+                        app:drawableStartCompat="@drawable/ic_location"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_user_company"
+                        tools:text="@tools:sample/cities" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_bar"
+                        android:layout_width="@dimen/circle_bar_size"
+                        android:layout_height="@dimen/circle_bar_size"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_placeholder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:textColor="?attr/adaptiveColor"
+                        android:textSize="@dimen/medium_text_size"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible"
-                    app:constraint_referenced_ids="tv_user_name, tv_full_name, tv_user_address,tv_user_company, iv_profile_avatar"
+                    app:layout_constraintBottom_toTopOf="@id/profile_view_pager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/upper_wrapper" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/profile_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero_dp"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/iv_profile_avatar"
-                    circleImage="@{userdata.userAvatarUrl}"
-                    android:layout_width="@dimen/avatar_profile_size"
-                    android:layout_height="@dimen/avatar_profile_size"
-                    android:layout_margin="@dimen/medium_dp"
-                    android:contentDescription="@string/user_ava_desc"
-                    android:padding="@dimen/small_dp"
-                    app:layout_constraintBottom_toTopOf="@id/tv_user_name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@tools:sample/avatars" />
-
-                <TextView
-                    android:id="@+id/tv_user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{userdata.userName}"
-                    android:textAlignment="center"
-                    android:textColor="?attr/adaptiveColor"
-                    android:textSize="@dimen/user_name_text_size"
-                    android:textStyle="italic"
-                    app:layout_constraintBottom_toTopOf="@id/tv_full_name"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_profile_avatar"
-                    tools:text="@tools:sample/first_names" />
-
-                <TextView
-                    android:id="@+id/tv_full_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{userdata.fullName}"
-                    android:textAlignment="center"
-                    android:textColor="?attr/adaptiveColor"
-                    android:textSize="@dimen/title_text_size"
-                    android:textStyle="bold"
-                    android:visibility="@{userdata.fullName != null? View.VISIBLE: View.GONE}"
-                    app:layout_constraintBottom_toTopOf="@id/tv_user_company"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
-                    tools:text="@tools:sample/full_names" />
-
-                <TextView
-                    android:id="@+id/tv_user_company"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/small_dp"
-                    android:text="@{userdata.userCompany}"
-                    android:textAlignment="center"
-                    android:textColor="?attr/adaptiveColor"
-                    android:textSize="@dimen/default_text_size"
-                    android:visibility="@{userdata.userCompany != null? View.VISIBLE: View.GONE}"
-                    app:drawableStartCompat="@drawable/ic_company"
-                    app:layout_constraintBottom_toTopOf="@id/tv_user_address"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_full_name"
-                    tools:text="@tools:sample/lorem" />
-
-                <TextView
-                    android:id="@+id/tv_user_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/small_dp"
-                    android:text="@{userdata.userLocation}"
-                    android:textAlignment="center"
-                    android:textColor="?attr/adaptiveColor"
-                    android:textSize="@dimen/default_text_size"
-                    android:visibility="@{userdata.userLocation != null? View.VISIBLE: View.GONE}"
-                    app:drawableStartCompat="@drawable/ic_location"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_user_company"
-                    tools:text="@tools:sample/cities" />
-
-                <ProgressBar
-                    android:id="@+id/progress_bar"
-                    android:layout_width="@dimen/circle_bar_size"
-                    android:layout_height="@dimen/circle_bar_size"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_placeholder"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="?attr/adaptiveColor"
-                    android:textSize="@dimen/default_text_size"
-                    android:visibility="invisible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/view_pager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/upper_wrapper" />
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="@dimen/fab_margin"
+            android:backgroundTint="@color/pink"
+            android:contentDescription="@string/label_favourites"
+            android:src="@drawable/ic_fav_border"
+            android:clickable="true"
+            android:focusable="true"
+            app:borderWidth="@dimen/zero_dp"
+            app:elevation="@dimen/elevation"
+            app:fabSize="normal"
+            app:tint="@android:color/white" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/wrapper_margin"
                 android:text="@{userData.userName}"
-                android:textSize="@dimen/title_text_size"
+                android:textSize="@dimen/large_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_user_avatar"
                 app:layout_constraintTop_toTopOf="parent"

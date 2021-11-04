@@ -2,19 +2,19 @@ package com.rekyb.jyro.utils
 
 import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.View.GONE
 import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import coil.load
 import coil.request.CachePolicy
 import coil.transform.CircleCropTransformation
 import com.rekyb.jyro.R
+import kotlinx.coroutines.Dispatchers
 
 fun View.show(): View {
     if (visibility != VISIBLE) {
@@ -47,17 +47,12 @@ fun View.navigateTo(direction: NavDirections) {
 
 @BindingAdapter("imageUrl")
 fun ImageView.loadImage(url: String?) {
-    val circleProgressDrawable = CircularProgressDrawable(context).apply {
-        strokeWidth = 5f
-        centerRadius = 30f
-        start()
-    }
-
     this.load(url) {
-        diskCachePolicy(CachePolicy.DISABLED)
+        diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.DISABLED)
-        placeholder(circleProgressDrawable)
+        dispatcher(Dispatchers.IO)
         crossfade(true)
+        placeholder(R.drawable.ic_placholder)
         error(R.drawable.ic_error_loading_image)
     }
 }
@@ -65,10 +60,12 @@ fun ImageView.loadImage(url: String?) {
 @BindingAdapter("circleImage")
 fun ImageView.loadAsCircularImage(url: String?) {
     this.load(url) {
-        diskCachePolicy(CachePolicy.DISABLED)
+        diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.DISABLED)
-        error(R.drawable.ic_error_loading_image)
+        dispatcher(Dispatchers.IO)
         crossfade(true)
+        placeholder(R.drawable.ic_placholder)
+        error(R.drawable.ic_error_loading_image)
         transformations(CircleCropTransformation())
     }
 }

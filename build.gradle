@@ -10,12 +10,12 @@ buildscript {
         okhttp_version = "5.0.0-alpha.2"
         coroutines_version = "1.5.2"
         room_version = "2.3.0"
+        lifecycle_version = "2.4.0"
     }
     repositories {
         google()
         mavenCentral()
         gradlePluginPortal()
-        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:$build_gradle"
