@@ -23,8 +23,6 @@ import com.rekyb.jyro.utils.navigateTo
 import com.rekyb.jyro.utils.setTopDrawable
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -45,7 +43,7 @@ class DiscoverFragment :
         super.onViewCreated(view, savedInstanceState)
 
         setAdapter()
-        setSearchResultsObserver()
+        setSearchResultsState()
         setHasOptionsMenu(true)
     }
 
@@ -90,8 +88,7 @@ class DiscoverFragment :
 
     override fun onItemClick(view: View, data: UserItemsModel) {
         view.navigateTo(
-            DiscoverFragmentDirections
-                .passResultToProfile(data.userName)
+            DiscoverFragmentDirections.passResult(data.userName)
         )
     }
 
@@ -101,6 +98,7 @@ class DiscoverFragment :
         recyclerView = binding?.rvSearchResults!!
         recyclerView!!.adapter = listAdapter
 
+        // Save scroll state when navigating to another screen
         if (viewModel.scrollState != null) {
             listAdapter!!.registerAdapterDataObserver(
                 AdapterDataObserver(
@@ -111,13 +109,12 @@ class DiscoverFragment :
         }
     }
 
-    private fun setSearchResultsObserver() {
+    private fun setSearchResultsState() {
         viewModel.dataState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-            .flowOn(Dispatchers.Main)
             .onEach { state ->
                 when (val result = state.result) {
-                    is DataState.Loading -> onLoading()
+                    is DataState.Loading -> onLoad()
                     is DataState.Success -> {
                         result.data.apply {
                             onSuccess(
@@ -131,7 +128,7 @@ class DiscoverFragment :
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun onLoading() {
+    private fun onLoad() {
         binding?.apply {
             progressBar.show()
             tvPlaceholder.hide()

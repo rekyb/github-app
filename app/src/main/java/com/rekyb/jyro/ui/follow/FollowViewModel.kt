@@ -3,7 +3,7 @@ package com.rekyb.jyro.ui.follow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rekyb.jyro.domain.use_case.remote.GetFollowersUseCase
-import com.rekyb.jyro.domain.use_case.remote.GetFollowingsUseCase
+import com.rekyb.jyro.domain.use_case.remote.GetFollowingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FollowViewModel @Inject constructor(
-    private val getFollowing: GetFollowingsUseCase,
+    private val getFollowing: GetFollowingUseCase,
     private val getFollowers: GetFollowersUseCase,
 ) : ViewModel() {
 

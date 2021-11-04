@@ -99,7 +99,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
                 when (val result = state.result) {
-                    is DataState.Loading -> onLoading()
+                    is DataState.Loading -> onLoad()
                     is DataState.Success -> onSuccess(
                         isFollower = true,
                         isEmptyResult = result.data.isEmpty(),
@@ -115,7 +115,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
                 when (val result = state.result) {
-                    is DataState.Loading -> onLoading()
+                    is DataState.Loading -> onLoad()
                     is DataState.Success -> onSuccess(
                         isFollower = false,
                         isEmptyResult = result.data.isEmpty(),
@@ -126,7 +126,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun onLoading() {
+    private fun onLoad() {
         binding?.apply {
             rvFollowList.hide()
             tvPlaceholder.hide()

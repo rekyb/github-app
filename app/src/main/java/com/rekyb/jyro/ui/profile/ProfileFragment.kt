@@ -33,7 +33,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private var viewPager: ViewPager2? = null
     private var tabs: TabLayout? = null
     private var fab: FloatingActionButton? = null
-
     private var isItFavourite: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,7 +47,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     override fun onDestroyView() {
         super.onDestroyView()
 
-        fab = null
         tabs = null
         viewPager = null
     }
@@ -111,7 +109,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach { state ->
                 when (state.result) {
-                    is DataState.Loading -> onLoading()
+                    is DataState.Loading -> onLoad()
                     is DataState.Success -> {
                         onSuccess(state.result)
 
@@ -123,7 +121,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun onLoading() {
+    private fun onLoad() {
         binding?.apply {
             progressBar.show()
             profileContentWrapper.hide()

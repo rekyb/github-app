@@ -51,6 +51,7 @@ fun ImageView.loadImage(url: String?) {
         diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.DISABLED)
         dispatcher(Dispatchers.IO)
+        crossfade(true)
         placeholder(R.drawable.ic_placholder)
         error(R.drawable.ic_error_loading_image)
     }
@@ -62,6 +63,7 @@ fun ImageView.loadAsCircularImage(url: String?) {
         diskCachePolicy(CachePolicy.ENABLED)
         memoryCachePolicy(CachePolicy.DISABLED)
         dispatcher(Dispatchers.IO)
+        crossfade(true)
         placeholder(R.drawable.ic_placholder)
         error(R.drawable.ic_error_loading_image)
         transformations(CircleCropTransformation())

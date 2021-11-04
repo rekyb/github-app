@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
 
-class GetFollowingsUseCase @Inject constructor(
+class GetFollowingUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repo: UserRepositoryImpl,
 ) {

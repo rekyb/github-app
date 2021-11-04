@@ -33,7 +33,7 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>(R.layout.frag
 
     override fun onItemClick(view: View, data: UserDetailsModel) {
         data.userName?.let { username ->
-            view.navigateTo(FavouritesFragmentDirections.passResultToProfileFromFav(username))
+            view.navigateTo(FavouritesFragmentDirections.passResult(username))
         }
     }
 
@@ -55,14 +55,14 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>(R.layout.frag
     private fun setFavouritesDataObserver() {
         viewModel.favouritesState.observe(viewLifecycleOwner, {
             when (val result = viewModel.favouritesState.value) {
-                is DataState.Loading -> onLoading()
+                is DataState.Loading -> onLoad()
                 is DataState.Success -> onSuccess(result.data)
                 is DataState.Error -> onError(result.message)
             }
         })
     }
 
-    private fun onLoading() {
+    private fun onLoad() {
         binding?.apply {
             progressBar.show()
             tvPlaceholder.hide()
