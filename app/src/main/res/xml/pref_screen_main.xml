@@ -9,24 +9,28 @@
             android:entries="@array/app_theme_preferences"
             android:entryValues="@array/app_theme_preferences"
             android:icon="@drawable/ic_theme"
-            android:key="list_preference_1"
+            android:key="@string/key_list_theme"
             android:summary="Choose your light or dark theme preference"
             android:title="Appearance" />
 
         <Preference
             android:icon="@drawable/ic_lang"
-            android:title="Change language"
-            android:summary="Change user interface text to supported language">
+            android:summary="Change your user interface language"
+            android:title="Language">
 
             <intent android:action="android.settings.LOCALE_SETTINGS" />
 
         </Preference>
+
+        <Preference
+            android:key="@string/key_clear_cache"
+            android:title="Clear cache" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="About">
         <Preference
             android:selectable="false"
-            android:summary="A simple Github API android application with MVVM architecture. Coded by Reky Bongso." />
+            android:summary="Just another Github API android project. Made by Reky Bongso." />
         <Preference
             android:summary="The source code of this project can be found on my Github repository."
             android:title="Source code">

@@ -28,4 +28,6 @@
     <string name="notify_list_delated">All entries successfully deleted</string>
     <string name="notify_added_to_list">Added to your list</string>
     <string name="notify_removed_from_list">Removed from your list</string>
+    <string name="key_list_theme">list_preference</string>
+    <string name="key_clear_cache">clear_cache</string>
 </resources>
