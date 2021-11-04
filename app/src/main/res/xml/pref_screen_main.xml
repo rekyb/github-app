@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Settings">
+
+        <ListPreference
+            android:defaultValue="1"
+            android:dialogTitle="Appearance"
+            android:entries="@array/app_theme_preferences"
+            android:entryValues="@array/app_theme_preferences"
+            android:icon="@drawable/ic_theme"
+            android:key="list_preference_1"
+            android:summary="Choose your light or dark theme preference"
+            android:title="Appearance" />
+
+        <Preference
+            android:icon="@drawable/ic_lang"
+            android:title="Change language"
+            android:summary="Change user interface text to supported language">
+
+            <intent android:action="android.settings.LOCALE_SETTINGS" />
+
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="About">
+        <Preference
+            android:selectable="false"
+            android:summary="A simple Github API android application with MVVM architecture. Coded by Reky Bongso." />
+        <Preference
+            android:summary="The source code of this project can be found on my Github repository."
+            android:title="Source code">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/rekybongso/jyro" />
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>
