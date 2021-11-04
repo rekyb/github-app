@@ -2,8 +2,8 @@ package com.rekyb.jyro.di
 
 import com.rekyb.jyro.common.Constants
 import com.rekyb.jyro.data.remote.ApiService
-import com.rekyb.jyro.data.remote.mapper.UserDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.SearchResultsMapper
+import com.rekyb.jyro.data.remote.mapper.UserDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.UserItemsMapper
 import com.rekyb.jyro.utils.RequestInterceptor
 import dagger.Module

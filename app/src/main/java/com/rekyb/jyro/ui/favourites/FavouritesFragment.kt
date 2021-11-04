@@ -23,7 +23,8 @@ import com.shashank.sony.fancytoastlib.FancyToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>(R.layout.fragment_favourites),
+class FavouritesFragment :
+    BaseFragment<FragmentFavouritesBinding>(R.layout.fragment_favourites),
     FavouritesListAdapter.Listener {
 
     private val viewModel: FavouritesViewModel by viewModels()
@@ -84,17 +85,21 @@ class FavouritesFragment : BaseFragment<FragmentFavouritesBinding>(R.layout.frag
 
     private fun clearList() {
         if (recyclerView!!.isEmpty()) {
-            FancyToast.makeText(requireContext(),
+            FancyToast.makeText(
+                requireContext(),
                 requireContext().getString(R.string.notify_list_empty),
                 FancyToast.LENGTH_SHORT,
                 FancyToast.CONFUSING,
-                false).show()
+                false
+            ).show()
         } else {
-            FancyToast.makeText(requireContext(),
+            FancyToast.makeText(
+                requireContext(),
                 requireContext().getString(R.string.notify_list_delated),
                 FancyToast.LENGTH_SHORT,
                 FancyToast.SUCCESS,
-                false).show()
+                false
+            ).show()
 
             viewModel.clearList()
         }

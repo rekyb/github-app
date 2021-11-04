@@ -18,7 +18,7 @@ class FavouritesRepositoryImpl @Inject constructor(
         return favouritesDao.getFavouritesList()
             .map { data ->
                 data.map {
-                    it.toDetailModel()
+                    it.toModel()
                 }
             }
             .distinctUntilChanged()

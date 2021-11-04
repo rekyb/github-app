@@ -1,7 +1,7 @@
 package com.rekyb.jyro.repository
 
-import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.model.SearchResultsModel
+import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.model.UserItemsModel
 
 interface UserRepository {

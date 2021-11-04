@@ -30,9 +30,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private val args by navArgs<ProfileFragmentArgs>()
     private val viewModel: ProfileViewModel by viewModels()
 
-    private var viewPager: ViewPager2? = null
-    private var tabs: TabLayout? = null
     private var fab: FloatingActionButton? = null
+    private var tabs: TabLayout? = null
+    private var viewPager: ViewPager2? = null
     private var isItFavourite: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -86,19 +86,23 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         viewModel.apply {
             if (!isItFavourite) {
                 addUserToFavList(binding?.userdata!!)
-                FancyToast.makeText(requireContext(),
+                FancyToast.makeText(
+                    requireContext(),
                     requireContext().getString(R.string.notify_added_to_list),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.SUCCESS,
-                    false).show()
+                    false
+                ).show()
                 toggleFabIcon(false)
             } else {
                 removeUserFromFavList(binding?.userdata!!)
-                FancyToast.makeText(requireContext(),
+                FancyToast.makeText(
+                    requireContext(),
                     requireContext().getString(R.string.notify_removed_from_list),
                     FancyToast.LENGTH_SHORT,
                     FancyToast.INFO,
-                    false).show()
+                    false
+                ).show()
                 toggleFabIcon(true)
             }
         }
@@ -106,7 +110,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private fun setProfileDataState() {
         viewModel.profileState
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
                 when (state.result) {
                     is DataState.Loading -> onLoad()

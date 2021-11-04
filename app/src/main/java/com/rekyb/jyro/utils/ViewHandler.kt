@@ -2,9 +2,9 @@ package com.rekyb.jyro.utils
 
 import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.View.GONE
 import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter

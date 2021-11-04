@@ -1,7 +1,7 @@
 package com.rekyb.jyro.data.remote
 
-import com.rekyb.jyro.data.remote.response.UserDetailsDto
 import com.rekyb.jyro.data.remote.response.SearchResultsDto
+import com.rekyb.jyro.data.remote.response.UserDetailsDto
 import com.rekyb.jyro.data.remote.response.UserItemsDto
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -19,20 +19,17 @@ interface ApiService {
      * https://api.github.com/users/{username}
      */
     @GET("users/{username}")
-    suspend fun getDetails(@Path("username") username: String)
-            : UserDetailsDto
+    suspend fun getDetails(@Path("username") username: String): UserDetailsDto
 
     /**
      * https://api.github.com/users/username/followers
      */
     @GET("users/{username}/followers")
-    suspend fun getUserFollowers(@Path("username") username: String)
-            : List<UserItemsDto>
+    suspend fun getUserFollowers(@Path("username") username: String): List<UserItemsDto>
 
     /**
      * https://api.github.com/users/username/following
      */
     @GET("users/{username}/following")
-    suspend fun getUserFollowing(@Path("username") username: String)
-            : List<UserItemsDto>
+    suspend fun getUserFollowing(@Path("username") username: String): List<UserItemsDto>
 }

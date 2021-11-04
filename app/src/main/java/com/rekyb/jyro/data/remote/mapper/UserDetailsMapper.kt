@@ -4,7 +4,7 @@ import com.rekyb.jyro.data.remote.response.UserDetailsDto
 import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.utils.EntityMapper
 
-class UserDetailsMapper: EntityMapper<UserDetailsDto, UserDetailsModel> {
+class UserDetailsMapper : EntityMapper<UserDetailsDto, UserDetailsModel> {
     override fun mapFromEntity(entity: UserDetailsDto): UserDetailsModel {
         return UserDetailsModel(
             id = entity.id,

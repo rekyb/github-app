@@ -29,7 +29,8 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class DiscoverFragment :
     BaseFragment<FragmentDiscoverBinding>(R.layout.fragment_discover),
-    SearchView.OnQueryTextListener, DiscoverListAdapter.Listener {
+    SearchView.OnQueryTextListener,
+    DiscoverListAdapter.Listener {
 
     private var searchView: SearchView? = null
     private var recyclerView: RecyclerView? = null
@@ -49,7 +50,6 @@ class DiscoverFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-
 
         recyclerView?.apply {
             viewModel.scrollState = layoutManager?.onSaveInstanceState()

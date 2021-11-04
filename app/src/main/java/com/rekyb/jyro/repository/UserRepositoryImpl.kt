@@ -1,11 +1,11 @@
 package com.rekyb.jyro.repository
 
 import com.rekyb.jyro.data.remote.ApiService
-import com.rekyb.jyro.data.remote.mapper.UserDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.SearchResultsMapper
+import com.rekyb.jyro.data.remote.mapper.UserDetailsMapper
 import com.rekyb.jyro.data.remote.mapper.UserItemsMapper
-import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.model.SearchResultsModel
+import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.model.UserItemsModel
 import javax.inject.Inject
 

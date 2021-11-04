@@ -18,7 +18,7 @@ import javax.inject.Inject
 class FavouritesViewModel @Inject constructor(
     private val getFavList: GetFavListUseCase,
     private val clearFavList: ClearFavListUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _favouritesState: MutableLiveData<DataState<List<UserDetailsModel>>> = MutableLiveData()
     val favouritesState: LiveData<DataState<List<UserDetailsModel>>> = _favouritesState
@@ -28,7 +28,7 @@ class FavouritesViewModel @Inject constructor(
     }
 
     private fun getFavouritesList() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             getFavList().collect { _favouritesState.postValue(it) }
         }
     }

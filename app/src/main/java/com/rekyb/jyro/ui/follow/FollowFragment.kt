@@ -24,7 +24,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 @AndroidEntryPoint
-class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_follow),
+class FollowFragment :
+    BaseFragment<FragmentFollowBinding>(R.layout.fragment_follow),
     DiscoverListAdapter.Listener {
 
     private var username: String? = null
@@ -142,12 +143,16 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
         binding?.apply {
             when {
                 isEmptyResult && isFollower -> {
-                    onError("$username " +
-                            requireContext().getString(R.string.error_empty_follower))
+                    onError(
+                        "$username " +
+                            requireContext().getString(R.string.error_empty_follower)
+                    )
                 }
                 isEmptyResult && !isFollower -> {
-                    onError("$username " +
-                            requireContext().getString(R.string.error_empty_following))
+                    onError(
+                        "$username " +
+                            requireContext().getString(R.string.error_empty_following)
+                    )
                 }
                 else -> {
                     listAdapter?.renderList(items)
