@@ -7,6 +7,7 @@ import com.rekyb.jyro.repository.FavouritesRepositoryImpl
 import com.rekyb.jyro.utils.ExceptionHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import java.lang.Exception
 import javax.inject.Inject
@@ -20,7 +21,10 @@ class GetFavListUseCase @Inject constructor(
         return flow {
             try {
                 emit(DataState.Loading)
-                emit(DataState.Success(repo.getFavouritesList()))
+                repo.getFavouritesList()
+                    .collect {
+                        emit(DataState.Success(it))
+                    }
             } catch (error: Exception) {
                 emit(ExceptionHandler(context).handleError(error))
             }

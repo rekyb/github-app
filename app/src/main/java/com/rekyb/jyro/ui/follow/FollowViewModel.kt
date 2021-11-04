@@ -1,4 +1,4 @@
-package com.rekyb.jyro.ui.profile.follow
+package com.rekyb.jyro.ui.follow
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

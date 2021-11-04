@@ -2,7 +2,7 @@ package com.rekyb.jyro.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.rekyb.jyro.ui.profile.follow.FollowFragment
+import com.rekyb.jyro.ui.follow.FollowFragment
 
 class ViewPagerAdapter(
     fragment: Fragment,

@@ -1,4 +1,4 @@
-package com.rekyb.jyro.ui.profile.follow
+package com.rekyb.jyro.ui.follow
 
 import android.os.Bundle
 import android.view.View
@@ -13,7 +13,7 @@ import com.rekyb.jyro.common.Constants.FRAGMENT_USERNAME
 import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.databinding.FragmentFollowBinding
 import com.rekyb.jyro.domain.model.UserItemsModel
-import com.rekyb.jyro.ui.adapter.MainListAdapter
+import com.rekyb.jyro.ui.adapter.DiscoverListAdapter
 import com.rekyb.jyro.ui.base.BaseFragment
 import com.rekyb.jyro.ui.profile.ProfileFragmentDirections
 import com.rekyb.jyro.utils.hide
@@ -26,11 +26,11 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_follow),
-    MainListAdapter.Listener {
+    DiscoverListAdapter.Listener {
 
     private var username: String? = null
     private var followType: String? = null
-    private var listAdapter: MainListAdapter? = null
+    private var listAdapter: DiscoverListAdapter? = null
     private var recyclerView: RecyclerView? = null
 
     private val viewModel: FollowViewModel by viewModels()
@@ -77,7 +77,7 @@ class FollowFragment : BaseFragment<FragmentFollowBinding>(R.layout.fragment_fol
     }
 
     private fun setAdapter() {
-        listAdapter = MainListAdapter(this)
+        listAdapter = DiscoverListAdapter(this)
 
         recyclerView = binding?.rvFollowList
         recyclerView?.adapter = listAdapter

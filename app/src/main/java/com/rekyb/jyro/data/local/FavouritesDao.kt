@@ -5,22 +5,23 @@ import androidx.room.Query
 import androidx.room.OnConflictStrategy
 import androidx.room.Insert
 import androidx.room.Delete
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavouritesDao {
 
     @Query("SELECT * FROM favourites_table")
-    suspend fun getFavouritesList(): List<FavouritesEntity>
+    fun getFavouritesList(): Flow<List<FavouritesEntity>>
 
     @Query("SELECT EXISTS(SELECT * FROM favourites_table WHERE id = :userId)")
     suspend fun check(userId: Int): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun add(user: FavouritesEntity)
+    suspend fun add(user: FavouritesEntity)
 
     @Delete
-    fun remove(user: FavouritesEntity)
+    suspend fun remove(user: FavouritesEntity)
 
-    // @Query("DELETE FROM favourites_table")
-    // suspend fun deleteAllFavEntries()
+    @Query("DELETE FROM favourites_table")
+    suspend fun deleteAll()
 }

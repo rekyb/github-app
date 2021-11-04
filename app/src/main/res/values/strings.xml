@@ -22,4 +22,5 @@
     <string name="error_empty_following">isn\'t following anyone</string>
     <string name="label_following">Following</string>
     <string name="label_followers">Followers</string>
+    <string name="empty_fav_list">Feels empty here…</string>
 </resources>

@@ -30,7 +30,7 @@ data class FavouritesEntity(
         }
     }
 
-    fun toModel(): UserDetailsModel {
+    fun toDetailModel(): UserDetailsModel {
         return UserDetailsModel(
             id,
             login,

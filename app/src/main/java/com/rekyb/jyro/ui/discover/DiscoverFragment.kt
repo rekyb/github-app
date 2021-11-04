@@ -16,7 +16,7 @@ import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.databinding.FragmentDiscoverBinding
 import com.rekyb.jyro.domain.model.UserItemsModel
 import com.rekyb.jyro.ui.adapter.AdapterDataObserver
-import com.rekyb.jyro.ui.adapter.MainListAdapter
+import com.rekyb.jyro.ui.adapter.DiscoverListAdapter
 import com.rekyb.jyro.ui.base.BaseFragment
 import com.rekyb.jyro.utils.hide
 import com.rekyb.jyro.utils.navigateTo
@@ -31,11 +31,11 @@ import kotlinx.coroutines.flow.onEach
 @AndroidEntryPoint
 class DiscoverFragment :
     BaseFragment<FragmentDiscoverBinding>(R.layout.fragment_discover),
-    SearchView.OnQueryTextListener, MainListAdapter.Listener {
+    SearchView.OnQueryTextListener, DiscoverListAdapter.Listener {
 
     private var searchView: SearchView? = null
     private var recyclerView: RecyclerView? = null
-    private var listAdapter: MainListAdapter? = null
+    private var listAdapter: DiscoverListAdapter? = null
 
     private val viewModel: DiscoverViewModel by navGraphViewModels(R.id.app_navigation) {
         defaultViewModelProviderFactory
@@ -96,7 +96,7 @@ class DiscoverFragment :
     }
 
     private fun setAdapter() {
-        listAdapter = MainListAdapter(this)
+        listAdapter = DiscoverListAdapter(this)
 
         recyclerView = binding?.rvSearchResults!!
         recyclerView!!.adapter = listAdapter

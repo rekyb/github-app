@@ -1,4 +1,4 @@
-package com.rekyb.jyro.ui.profile.follow
+package com.rekyb.jyro.ui.follow
 
 import com.rekyb.jyro.common.DataState
 import com.rekyb.jyro.domain.model.UserItemsModel
