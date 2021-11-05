@@ -50,11 +50,13 @@ class MoreFragment : PreferenceFragmentCompat() {
             themePreference?.value = defaultTheme
             onSelectionThemeChanged(defaultTheme)
 
-            FancyToast.makeText(requireContext(),
+            FancyToast.makeText(
+                requireContext(),
                 getString(R.string.notify_cache_cleaned),
                 FancyToast.LENGTH_SHORT,
                 FancyToast.SUCCESS,
-                false).show()
+                false
+            ).show()
 
             true
         }
@@ -76,12 +78,13 @@ class MoreFragment : PreferenceFragmentCompat() {
             cache.directory.deleteRecursively()
             viewModel.clearAppPref()
         } catch (e: Exception) {
-            FancyToast.makeText(requireContext(),
+            FancyToast.makeText(
+                requireContext(),
                 e.message,
                 FancyToast.LENGTH_SHORT,
                 FancyToast.ERROR,
-                false).show()
+                false
+            ).show()
         }
     }
 }
-

@@ -11,7 +11,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.rekyb.jyro.R
-import com.rekyb.jyro.common.Themes
 import com.rekyb.jyro.databinding.ActivityMainBinding
 import com.rekyb.jyro.domain.use_case.data_store.GetThemeUseCase
 import com.rekyb.jyro.utils.ThemeChanger
