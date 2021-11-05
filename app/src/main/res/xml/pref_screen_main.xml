@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Settings">
+    <PreferenceCategory android:title="@string/pref_settings">
 
         <ListPreference
-            android:defaultValue="1"
-            android:dialogTitle="Appearance"
+            android:defaultValue="0"
+            android:dialogTitle="@string/pref_appearance"
             android:entries="@array/app_theme_preferences"
             android:entryValues="@array/app_theme_preferences"
             android:icon="@drawable/ic_theme"
             android:key="@string/key_list_theme"
-            android:summary="Choose your light or dark theme preference"
-            android:title="Appearance" />
+            android:summary="@string/pref_appearance_summary"
+            android:title="@string/pref_appearance" />
 
         <Preference
             android:icon="@drawable/ic_lang"
-            android:summary="Change your user interface language"
-            android:title="Language">
+            android:summary="@string/pref_lang_summary"
+            android:title="@string/pref_lang">
 
             <intent android:action="android.settings.LOCALE_SETTINGS" />
 
@@ -24,31 +24,30 @@
 
         <Preference
             android:key="@string/key_clear_cache"
-            android:summary="Wipe all image cache and application preferences"
-            android:title="Wipe cache" />
+            android:summary="@string/pref_clear_summary"
+            android:title="@string/pref_clear_cache" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Info">
+    <PreferenceCategory android:title="@string/pref_info">
         <Preference
 
-            android:title="Source code">
+            android:title="@string/pref_source_code">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://github.com/rekybongso/jyro" />
+                android:data="@string/pref_project_url" />
         </Preference>
         <Preference
 
-            android:title="Contact me">
+            android:title="@string/pref_contact_me">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="mailto:rekybongso@gmail.com?subject=jyro_feedback" />
+                android:data="@string/pref_mail_to" />
         </Preference>
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="About">
+    <PreferenceCategory android:title="@string/pref_about">
         <Preference
             android:selectable="false"
-            android:summary="Just another Github API android project. Made by Reky Bongso." />
-
+            android:summary="@string/pref_about_summary" />
     </PreferenceCategory>
 </PreferenceScreen>

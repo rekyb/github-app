@@ -5,7 +5,7 @@ import com.rekyb.jyro.common.Themes
 
 class ThemeChanger {
 
-    fun changeBy(selection: CharSequence) {
+    fun changeBy(selection: String) {
         when (selection) {
             Themes.SYSTEM_DEFAULT.selection -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

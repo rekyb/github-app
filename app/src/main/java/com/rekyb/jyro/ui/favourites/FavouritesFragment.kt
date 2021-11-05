@@ -95,7 +95,7 @@ class FavouritesFragment :
         } else {
             FancyToast.makeText(
                 requireContext(),
-                requireContext().getString(R.string.notify_list_delated),
+                requireContext().getString(R.string.notify_list_deleted),
                 FancyToast.LENGTH_SHORT,
                 FancyToast.SUCCESS,
                 false

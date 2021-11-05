@@ -1,2 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <!-- Generals -->
+    <string name="app_name">Jyro</string>
+    <string name="query_hint">Cari pengguna Github</string>
+    <string name="user_ava_desc">Foto profil pengguna</string>
+    <string name="default_state_text">Yuk, mari mulai!</string>
+    <string name="empty_fav_list">Daftar favorit anda kosong</string>
+
+    <!-- Labels -->
+    <string name="label_discover">Temukan</string>
+    <string name="label_favourites">Favorit</string>
+    <string name="label_more">Lainnya</string>
+    <string name="label_search">Cari</string>
+    <string name="label_profile">Profil</string>
+    <string name="label_getting_data">Mengambil data…</string>
+    <string name="label_following">Mengikuti</string>
+    <string name="label_followers">Pengikut</string>
+    <string name="label_clear_list">Bersihkan daftar</string>
+
+    <!-- Errors -->
+    <string name="error_empty_follower">belum memiliki pengikut</string>
+    <string name="error_empty_following">tidak mengikuti siapapun</string>
+    <string name="error_default">Ops, ada yang error nih!</string>
+    <string name="error_not_identified">Mamang error, mamang!</string>
+    <string name="error_unknown_host">Waduh, Anda terputus dari jaringan Internet, silahkan coba lagi</string>
+    <string name="error_not_found">Data tidak ditemukan, silahkan coba lagi</string>
+
+    <!-- Notifications -->
+    <string name="notify_list_empty">Daftar favorit Anda kosong</string>
+    <string name="notify_list_deleted">Berhasil menghapus semua entri</string>
+    <string name="notify_added_to_list">Ditambahkan ke daftar favorit</string>
+    <string name="notify_removed_from_list">Dihapus dari daftar favorit</string>
+    <string name="notify_cache_cleaned">Semua cache berhasil dihapus</string>
+
+    <!-- Prefs -->
+    <string name="pref_appearance">Penampilan</string>
+    <string name="pref_appearance_summary">Pilih tema yang akan digunakan</string>
+    <string name="pref_settings">Pengaturan</string>
+    <string name="pref_lang_summary">Ganti bahasa yang digunakan</string>
+    <string name="pref_lang">Bahasa</string>
+    <string name="pref_clear_summary">Hapus semua cache gambar dan preferensi aplikasi</string>
+    <string name="pref_clear_cache">Hapus cache</string>
+    <string name="pref_info">Informasi</string>
+    <string name="pref_source_code">Sumber kode</string>
+    <string name="pref_contact_me">Hubungi saya</string>
+    <string name="pref_about">Tentang</string>
+    <string name="pref_about_summary">Hanya aplikasi Githup API sederhana. Dibuat oleh Reky Bongso.</string>
+    <string name="pref_use_device_theme">Tema perangkat</string>
+    <string name="pref_light_theme">Tema terang</string>
+    <string name="pref_dark_theme">Tema redup</string>
+</resources>
