@@ -12,7 +12,6 @@
     <string name="label_favourites">Favorit</string>
     <string name="label_more">Lainnya</string>
     <string name="label_search">Cari</string>
-    <string name="label_profile">Profil</string>
     <string name="label_getting_data">Mengambil data…</string>
     <string name="label_following">Mengikuti</string>
     <string name="label_followers">Pengikut</string>
@@ -46,7 +45,4 @@
     <string name="pref_contact_me">Hubungi saya</string>
     <string name="pref_about">Tentang</string>
     <string name="pref_about_summary">Hanya aplikasi Githup API sederhana. Dibuat oleh Reky Bongso.</string>
-    <string name="pref_use_device_theme">Tema perangkat</string>
-    <string name="pref_light_theme">Tema terang</string>
-    <string name="pref_dark_theme">Tema redup</string>
 </resources>

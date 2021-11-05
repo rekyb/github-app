@@ -130,7 +130,9 @@ class FollowFragment :
     private fun onLoad() {
         binding?.apply {
             rvFollowList.hide()
-            tvPlaceholder.hide()
+            tvPlaceholder.apply {
+                text = requireContext().getText(R.string.label_getting_data)
+            }.show()
         }
     }
 

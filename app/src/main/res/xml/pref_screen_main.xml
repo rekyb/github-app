@@ -41,7 +41,7 @@
             android:title="@string/pref_contact_me">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="@string/pref_mail_to" />
+                android:data="@string/pref_twitter" />
         </Preference>
     </PreferenceCategory>
 
