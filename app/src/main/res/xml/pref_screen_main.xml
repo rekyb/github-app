@@ -24,19 +24,31 @@
 
         <Preference
             android:key="@string/key_clear_cache"
-            android:title="Clear cache" />
+            android:summary="Wipe all image cache and application preferences"
+            android:title="Wipe cache" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Info">
+        <Preference
+
+            android:title="Source code">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/rekybongso/jyro" />
+        </Preference>
+        <Preference
+
+            android:title="Contact me">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="mailto:rekybongso@gmail.com?subject=jyro_feedback" />
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="About">
         <Preference
             android:selectable="false"
             android:summary="Just another Github API android project. Made by Reky Bongso." />
-        <Preference
-            android:summary="The source code of this project can be found on my Github repository."
-            android:title="Source code">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="https://github.com/rekybongso/jyro" />
-        </Preference>
+
     </PreferenceCategory>
 </PreferenceScreen>

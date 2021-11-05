@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rekyb.jyro.common.DataState
+import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.domain.use_case.local.ClearFavListUseCase
 import com.rekyb.jyro.domain.use_case.local.GetFavListUseCase
@@ -20,8 +20,8 @@ class FavouritesViewModel @Inject constructor(
     private val clearFavList: ClearFavListUseCase
 ) : ViewModel() {
 
-    private val _favouritesState: MutableLiveData<DataState<List<UserDetailsModel>>> = MutableLiveData()
-    val favouritesState: LiveData<DataState<List<UserDetailsModel>>> = _favouritesState
+    private val _favouritesState: MutableLiveData<Resources<List<UserDetailsModel>>> = MutableLiveData()
+    val favouritesState: LiveData<Resources<List<UserDetailsModel>>> = _favouritesState
 
     init {
         getFavouritesList()

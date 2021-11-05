@@ -1,7 +1,7 @@
 package com.rekyb.jyro.domain.use_case.remote
 
 import android.content.Context
-import com.rekyb.jyro.common.DataState
+import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.domain.model.UserItemsModel
 import com.rekyb.jyro.repository.UserRepositoryImpl
 import com.rekyb.jyro.utils.ExceptionHandler
@@ -13,14 +13,14 @@ import javax.inject.Inject
 
 class GetFollowersUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val repo: UserRepositoryImpl,
+    private val repositoryImpl: UserRepositoryImpl,
 ) {
 
-    operator fun invoke(userName: String): Flow<DataState<List<UserItemsModel>>> {
+    operator fun invoke(userName: String): Flow<Resources<List<UserItemsModel>>> {
         return flow {
             try {
-                emit(DataState.Loading)
-                emit(DataState.Success(repo.getFollowers(userName)))
+                emit(Resources.Loading)
+                emit(Resources.Success(repositoryImpl.getFollowers(userName)))
             } catch (error: Exception) {
                 emit(ExceptionHandler(context).handleError(error))
             }

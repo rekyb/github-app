@@ -5,7 +5,8 @@ import com.rekyb.jyro.repository.FavouritesRepositoryImpl
 import javax.inject.Inject
 
 class AddToFavUseCase @Inject constructor(
-    private val repo: FavouritesRepositoryImpl,
+    private val repositoryImpl: FavouritesRepositoryImpl,
 ) {
-    suspend operator fun invoke(user: UserDetailsModel) = repo.addUserToFavList(user)
+
+    suspend operator fun invoke(user: UserDetailsModel) = repositoryImpl.addUserToFavList(user)
 }

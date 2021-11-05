@@ -3,7 +3,7 @@ package com.rekyb.jyro.ui.discover
 import android.os.Parcelable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rekyb.jyro.common.DataState
+import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.domain.use_case.remote.SearchUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +27,7 @@ class DiscoverViewModel @Inject constructor(
     var scrollState: Parcelable? = null
 
     fun searchUser(query: String) {
-        val isErrorEncountered = _dataState.value.result is DataState.Error
+        val isErrorEncountered = _dataState.value.result is Resources.Error
 
         if (query == _query.value && !isErrorEncountered) return
 
