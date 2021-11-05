@@ -3,7 +3,9 @@ package com.rekyb.jyro.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,6 +19,7 @@ import com.rekyb.jyro.utils.ThemeChanger
 import com.rekyb.jyro.utils.gone
 import com.rekyb.jyro.utils.show
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -32,6 +35,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        appThemeController()
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(binding?.root)
@@ -58,8 +63,6 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController!!, appBarConfiguration!!)
         bottomNavView?.setupWithNavController(navController!!)
-
-        appThemeController()
     }
 
     override fun onSupportNavigateUp(): Boolean =
@@ -75,15 +78,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun appThemeController() {
-        lifecycleScope.launchWhenCreated {
-            val themeSelection = getThemeUseCase()
-            val themeChanger = ThemeChanger()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                val themeSelection = getThemeUseCase()
+                val themeChanger = ThemeChanger()
 
-            themeSelection?.let { theme ->
-                themeChanger.changeBy(theme)
+                themeSelection?.let { theme ->
+                    themeChanger.changeBy(theme)
+                }
+
+                Timber.d("Theme changed to $themeSelection")
             }
-
-            Timber.d("Theme changed to $themeSelection")
         }
     }
 
