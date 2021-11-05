@@ -4,7 +4,8 @@ import com.rekyb.jyro.repository.FavouritesRepositoryImpl
 import javax.inject.Inject
 
 class ClearFavListUseCase @Inject constructor(
-    private val repo: FavouritesRepositoryImpl
+    private val repositoryImpl: FavouritesRepositoryImpl
 ) {
-    suspend operator fun invoke() = repo.clearFavList()
+
+    suspend operator fun invoke() = repositoryImpl.clearFavList()
 }

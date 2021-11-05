@@ -6,9 +6,10 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CheckUserUseCase @Inject constructor(
-    private val repo: FavouritesRepositoryImpl,
+    private val repositoryImpl: FavouritesRepositoryImpl,
 ) {
+
     operator fun invoke(userName: String): Flow<Boolean> = flow {
-        emit(repo.checkUserOnFavList(userName))
+        emit(repositoryImpl.checkUserOnFavList(userName))
     }
 }

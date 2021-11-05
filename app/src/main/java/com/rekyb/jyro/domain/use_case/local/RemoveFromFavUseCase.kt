@@ -5,7 +5,8 @@ import com.rekyb.jyro.repository.FavouritesRepositoryImpl
 import javax.inject.Inject
 
 class RemoveFromFavUseCase @Inject constructor(
-    private val repo: FavouritesRepositoryImpl,
+    private val repositoryImpl: FavouritesRepositoryImpl,
 ) {
-    suspend operator fun invoke(user: UserDetailsModel) = repo.removeUserFromFavList(user)
+
+    suspend operator fun invoke(user: UserDetailsModel) = repositoryImpl.removeUserFromFavList(user)
 }

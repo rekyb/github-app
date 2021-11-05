@@ -10,7 +10,7 @@ import androidx.core.view.isEmpty
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
-import com.rekyb.jyro.common.DataState
+import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.databinding.FragmentFavouritesBinding
 import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.ui.adapter.FavouritesListAdapter
@@ -76,9 +76,9 @@ class FavouritesFragment :
     private fun setFavouritesDataObserver() {
         viewModel.favouritesState.observe(viewLifecycleOwner, {
             when (val result = viewModel.favouritesState.value) {
-                is DataState.Loading -> onLoad()
-                is DataState.Success -> onSuccess(result.data)
-                is DataState.Error -> onError(result.message)
+                is Resources.Loading -> onLoad()
+                is Resources.Success -> onSuccess(result.data)
+                is Resources.Error -> onError(result.message)
             }
         })
     }
@@ -95,7 +95,7 @@ class FavouritesFragment :
         } else {
             FancyToast.makeText(
                 requireContext(),
-                requireContext().getString(R.string.notify_list_delated),
+                requireContext().getString(R.string.notify_list_deleted),
                 FancyToast.LENGTH_SHORT,
                 FancyToast.SUCCESS,
                 false

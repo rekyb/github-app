@@ -1,31 +1,56 @@
 <resources>
+    <!-- Generals -->
     <string name="app_name">Jyro</string>
+    <string name="query_hint">Search Github users</string>
+    <string name="user_ava_desc">User\'s Avatar Image</string>
+    <string name="default_state_text">All good, ready to go</string>
+    <string name="empty_fav_list">Feels empty here…</string>
+    <string name="key_list_theme" translatable="false">list_preference</string>
+    <string name="key_clear_cache" translatable="false">clear_cache</string>
+
+    <!-- Labels -->
     <string name="label_discover">Discover</string>
     <string name="label_favourites">Favourites</string>
     <string name="label_more">More</string>
     <string name="label_search">Search</string>
-    <string name="query_hint">Search Github users</string>
-    <string name="user_ava_desc">User\'s Avatar Image</string>
-    <string name="default_state_text">All good, ready to go</string>
-    <string name="error_default">Ops, something went wrong!</string>
-    <string name="error_not_identified">Unexpected error encountered</string>
-    <string name="error_socket_timeout">Request timeout, please try again later</string>
-    <string name="error_unknown_host">Cannot resolve host, please check your internet connection</string>
-    <string name="error_bad_request">Bad request</string>
-    <string name="error_unauthorized">Unauthorized request</string>
-    <string name="error_forbidden">Forbidden request</string>
-    <string name="error_not_found">Data not found, please try again.</string>
-    <string name="error_internal_server">Internal server error</string>
-    <string name="label_profile">Profile</string>
     <string name="label_getting_data">Getting required data…</string>
-    <string name="error_empty_follower">doesn\'t have any followers yet</string>
-    <string name="error_empty_following">isn\'t following anyone</string>
     <string name="label_following">Following</string>
     <string name="label_followers">Followers</string>
-    <string name="empty_fav_list">Feels empty here…</string>
     <string name="label_clear_list">Clear list</string>
+
+    <!-- Errors -->
+    <string name="error_empty_follower">doesn\'t have any followers yet</string>
+    <string name="error_empty_following">isn\'t following anyone</string>
+    <string name="error_default">Ops, something went wrong!</string>
+    <string name="error_not_identified">Unexpected error encountered</string>
+    <string name="error_socket_timeout" translatable="false">Request timeout, please try again later</string>
+    <string name="error_unknown_host">Cannot resolve host, please check your internet connection</string>
+    <string name="error_bad_request" translatable="false">Bad request</string>
+    <string name="error_unauthorized" translatable="false">Unauthorized request</string>
+    <string name="error_forbidden" translatable="false">Forbidden request</string>
+    <string name="error_not_found">Data not found, please try again.</string>
+    <string name="error_internal_server" translatable="false">Internal server error</string>
+
+    <!-- Notifications -->
     <string name="notify_list_empty">Your list are empty</string>
-    <string name="notify_list_delated">All entries successfully deleted</string>
+    <string name="notify_list_deleted">All entries successfully deleted</string>
     <string name="notify_added_to_list">Added to your list</string>
     <string name="notify_removed_from_list">Removed from your list</string>
+    <string name="notify_cache_cleaned">All cache has been wiped</string>
+
+    <!-- Prefs -->
+    <string name="pref_appearance">Appearance</string>
+    <string name="pref_appearance_summary">Choose your light or dark theme preference</string>
+    <string name="pref_settings">Settings</string>
+    <string name="pref_lang_summary">Change your user interface language</string>
+    <string name="pref_lang">Language</string>
+    <string name="pref_clear_summary">Wipe all image cache and application preferences</string>
+    <string name="pref_clear_cache">Clear cache</string>
+    <string name="pref_info">Information</string>
+    <string name="pref_source_code">Source code</string>
+    <string name="pref_project_url" translatable="false">https://github.com/rekybongso/jyro</string>
+    <string name="pref_contact_me">Contact me</string>
+    <string name="pref_about">About</string>
+    <string name="pref_about_summary">Just another Github API android project. Made by Reky Bongso.</string>
+    <string name="pref_twitter" translatable="false">https://twitter.com/rekybongso</string>
 </resources>

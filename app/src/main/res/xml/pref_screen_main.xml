@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_settings">
+
+        <ListPreference
+            android:defaultValue="0"
+            android:dialogTitle="@string/pref_appearance"
+            android:entries="@array/app_theme_preferences"
+            android:entryValues="@array/app_theme_preferences"
+            android:icon="@drawable/ic_theme"
+            android:key="@string/key_list_theme"
+            android:summary="@string/pref_appearance_summary"
+            android:title="@string/pref_appearance" />
+
+        <Preference
+            android:icon="@drawable/ic_lang"
+            android:summary="@string/pref_lang_summary"
+            android:title="@string/pref_lang">
+
+            <intent android:action="android.settings.LOCALE_SETTINGS" />
+
+        </Preference>
+
+        <Preference
+            android:key="@string/key_clear_cache"
+            android:summary="@string/pref_clear_summary"
+            android:title="@string/pref_clear_cache" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_info">
+        <Preference
+
+            android:title="@string/pref_source_code">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/pref_project_url" />
+        </Preference>
+        <Preference
+
+            android:title="@string/pref_contact_me">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/pref_twitter" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_about">
+        <Preference
+            android:selectable="false"
+            android:summary="@string/pref_about_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

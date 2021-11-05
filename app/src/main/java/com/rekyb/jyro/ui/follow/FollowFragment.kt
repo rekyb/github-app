@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
 import com.rekyb.jyro.common.Constants.FRAGMENT_FOLLOW_TYPE
 import com.rekyb.jyro.common.Constants.FRAGMENT_USERNAME
-import com.rekyb.jyro.common.DataState
+import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.databinding.FragmentFollowBinding
 import com.rekyb.jyro.domain.model.UserItemsModel
 import com.rekyb.jyro.ui.adapter.DiscoverListAdapter
@@ -100,13 +100,13 @@ class FollowFragment :
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
                 when (val result = state.result) {
-                    is DataState.Loading -> onLoad()
-                    is DataState.Success -> onSuccess(
+                    is Resources.Loading -> onLoad()
+                    is Resources.Success -> onSuccess(
                         isFollower = true,
                         isEmptyResult = result.data.isEmpty(),
                         items = result.data
                     )
-                    is DataState.Error -> onError(result.message)
+                    is Resources.Error -> onError(result.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -116,13 +116,13 @@ class FollowFragment :
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
                 when (val result = state.result) {
-                    is DataState.Loading -> onLoad()
-                    is DataState.Success -> onSuccess(
+                    is Resources.Loading -> onLoad()
+                    is Resources.Success -> onSuccess(
                         isFollower = false,
                         isEmptyResult = result.data.isEmpty(),
                         items = result.data
                     )
-                    is DataState.Error -> onError(result.message)
+                    is Resources.Error -> onError(result.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -130,7 +130,9 @@ class FollowFragment :
     private fun onLoad() {
         binding?.apply {
             rvFollowList.hide()
-            tvPlaceholder.hide()
+            tvPlaceholder.apply {
+                text = requireContext().getText(R.string.label_getting_data)
+            }.show()
         }
     }
 

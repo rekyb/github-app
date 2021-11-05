@@ -12,10 +12,12 @@
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_fav_white_border.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_favorite_24dp.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_got_error.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_lang.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_location.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_no_internet.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_ready_to_search.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_ready_to_search_white.xml" value="0.22552083333333334" />
+        <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/ic_theme.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/drawable/layer_splash_screen.xml" value="0.22552083333333334" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/layout/fragment_discover.xml" value="0.1" />
@@ -32,6 +34,7 @@
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/menu/menu_bottom_nav_items.xml" value="0.209375" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/menu/menu_fav_toggle.xml" value="0.209375" />
         <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/menu/menu_search_appbar.xml" value="0.209375" />
+        <entry key="..\:/Users/Reky/AndroidStudioProjects/Jyro/app/src/main/res/xml/pref_screen_main.xml" value="0.209375" />
       </map>
     </option>
   </component>

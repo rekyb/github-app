@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.rekyb.jyro.R
-import com.rekyb.jyro.common.DataState
+import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.databinding.FragmentDiscoverBinding
 import com.rekyb.jyro.domain.model.UserItemsModel
 import com.rekyb.jyro.ui.adapter.AdapterDataObserver
@@ -114,8 +114,8 @@ class DiscoverFragment :
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
                 when (val result = state.result) {
-                    is DataState.Loading -> onLoad()
-                    is DataState.Success -> {
+                    is Resources.Loading -> onLoad()
+                    is Resources.Success -> {
                         result.data.apply {
                             onSuccess(
                                 isEmptyResults = totalCount == 0,
@@ -123,7 +123,7 @@ class DiscoverFragment :
                             )
                         }
                     }
-                    is DataState.Error -> onError(result.message)
+                    is Resources.Error -> onError(result.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }

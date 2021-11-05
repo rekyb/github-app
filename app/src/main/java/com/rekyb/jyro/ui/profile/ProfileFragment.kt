@@ -12,7 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rekyb.jyro.R
-import com.rekyb.jyro.common.DataState
+import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.databinding.FragmentProfileBinding
 import com.rekyb.jyro.domain.model.UserDetailsModel
 import com.rekyb.jyro.ui.adapter.ViewPagerAdapter
@@ -113,14 +113,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
                 when (state.result) {
-                    is DataState.Loading -> onLoad()
-                    is DataState.Success -> {
+                    is Resources.Loading -> onLoad()
+                    is Resources.Success -> {
                         onSuccess(state.result)
 
                         isItFavourite = state.isUserListedAsFavourite ?: false
                         toggleFabIcon(isItFavourite)
                     }
-                    is DataState.Error -> onError(state.result.message)
+                    is Resources.Error -> onError(state.result.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -134,7 +134,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         }
     }
 
-    private fun onSuccess(state: DataState.Success<UserDetailsModel>) {
+    private fun onSuccess(state: Resources.Success<UserDetailsModel>) {
         binding?.apply {
             userdata = state.data
             progressBar.hide()
