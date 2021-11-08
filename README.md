@@ -4,7 +4,7 @@
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
 </p>
 <p align="center">
-Just another Github API beginner android project which utilize MVVM architecture and some modern Android tech-stacks.
+Just another Github API beginner android project which utilize MVVM architecture and modern Android tech-stacks.
 Searching data through Github API end-points, then store some data with Room Database (favourite or bookmarking feature).
 It also provide dark or light theme that can be stored to Data Store preferences.
 </p>
