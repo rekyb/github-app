@@ -70,13 +70,6 @@ class FollowFragment :
         )
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        listAdapter = null
-        recyclerView = null
-    }
-
     private fun setAdapter() {
         listAdapter = DiscoverListAdapter(this)
 

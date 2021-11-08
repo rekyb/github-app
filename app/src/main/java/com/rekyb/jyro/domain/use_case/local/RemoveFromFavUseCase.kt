@@ -1,7 +1,7 @@
 package com.rekyb.jyro.domain.use_case.local
 
 import com.rekyb.jyro.domain.model.UserDetailsModel
-import com.rekyb.jyro.repository.FavouritesRepositoryImpl
+import com.rekyb.jyro.data.repository.FavouritesRepositoryImpl
 import javax.inject.Inject
 
 class RemoveFromFavUseCase @Inject constructor(

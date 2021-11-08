@@ -1,8 +1,9 @@
-package com.rekyb.jyro.repository
+package com.rekyb.jyro.data.repository
 
 import com.rekyb.jyro.data.local.FavouritesDao
 import com.rekyb.jyro.data.local.FavouritesEntity
 import com.rekyb.jyro.domain.model.UserDetailsModel
+import com.rekyb.jyro.domain.repository.FavouritesRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged

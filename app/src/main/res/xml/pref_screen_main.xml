@@ -4,7 +4,7 @@
     <PreferenceCategory android:title="@string/pref_settings">
 
         <ListPreference
-            android:defaultValue="0"
+            android:defaultValue="@string/pref_pref_default"
             android:dialogTitle="@string/pref_appearance"
             android:entries="@array/app_theme_preferences"
             android:entryValues="@array/app_theme_preferences"

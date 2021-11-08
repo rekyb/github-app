@@ -1,6 +1,6 @@
 package com.rekyb.jyro.domain.use_case.local
 
-import com.rekyb.jyro.repository.FavouritesRepositoryImpl
+import com.rekyb.jyro.data.repository.FavouritesRepositoryImpl
 import javax.inject.Inject
 
 class ClearFavListUseCase @Inject constructor(

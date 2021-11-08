@@ -59,13 +59,6 @@ class FavouritesFragment :
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        listAdapter = null
-        recyclerView = null
-    }
-
     private fun setAdapter() {
         listAdapter = FavouritesListAdapter(this)
 

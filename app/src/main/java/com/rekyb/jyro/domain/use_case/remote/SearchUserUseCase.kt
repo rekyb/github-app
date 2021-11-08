@@ -3,7 +3,7 @@ package com.rekyb.jyro.domain.use_case.remote
 import android.content.Context
 import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.domain.model.SearchResultsModel
-import com.rekyb.jyro.repository.UserRepositoryImpl
+import com.rekyb.jyro.data.repository.UserRepositoryImpl
 import com.rekyb.jyro.utils.ExceptionHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow

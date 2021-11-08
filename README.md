@@ -4,7 +4,7 @@
   <a href="https://android-arsenal.com/api?level=21"><img alt="API" src="https://img.shields.io/badge/API-21%2B-brightgreen.svg?style=flat"/></a>
 </p>
 <p align="center">
-Just another Github API beginner android project which utilize MVVM architetcure and some modern Android tech-stacks.
+Just another Github API beginner android project which utilize MVVM architecture and some modern Android tech-stacks.
 Searching data through Github API end-points, then store some data with Room Database (favourite or bookmarking feature).
 It also provide dark or light theme that can be stored to Data Store preferences.
 </p>
@@ -17,7 +17,7 @@ It also provide dark or light theme that can be stored to Data Store preferences
 </p>
 
 ## Tech-stacks and Libraries
-- Full writen in Kotlin
+- Full written in Kotlin
 - Coroutines, Flow, and Live Data
 - Jetpack libraries:
   - Hilt
@@ -41,14 +41,14 @@ It also provide dark or light theme that can be stored to Data Store preferences
 
 ## How-to
 1. You need to generate a personal access token. Go to [Github Docs](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for more informations
-2. In your gradle.properties file, add these lines: 
+2. In your gradle.properties file, add this line: 
 ```` 
 ```
-# Github API key
 GithubApiKey=token your_personal_access_token
 ```
 ```` 
-3. If the gradle.properties doesn't exists, just create a new one.
+3. Change the value with your personal access token
+4. If the gradle.properties doesn't exists, just create a new one.
 
 # License
 ```xml

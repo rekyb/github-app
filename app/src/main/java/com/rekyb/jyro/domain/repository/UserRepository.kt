@@ -1,4 +1,4 @@
-package com.rekyb.jyro.repository
+package com.rekyb.jyro.domain.repository
 
 import com.rekyb.jyro.domain.model.SearchResultsModel
 import com.rekyb.jyro.domain.model.UserDetailsModel

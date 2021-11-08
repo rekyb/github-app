@@ -1,4 +1,4 @@
-package com.rekyb.jyro.repository
+package com.rekyb.jyro.data.repository
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.rekyb.jyro.common.Constants
 import com.rekyb.jyro.common.Themes
+import com.rekyb.jyro.domain.repository.DataStoreRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

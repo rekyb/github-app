@@ -1,4 +1,4 @@
-package com.rekyb.jyro.repository
+package com.rekyb.jyro.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 

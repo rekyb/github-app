@@ -44,13 +44,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         setProfileDataState()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        tabs = null
-        viewPager = null
-    }
-
     private fun setComponents() {
         val tabsTitles = listOf(
             requireContext().getString(R.string.label_following),

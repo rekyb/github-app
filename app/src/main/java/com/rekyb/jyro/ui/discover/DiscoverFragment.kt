@@ -53,11 +53,6 @@ class DiscoverFragment :
 
         recyclerView?.apply {
             viewModel.scrollState = layoutManager?.onSaveInstanceState()
-
-            adapter = null
-            listAdapter = null
-            searchView = null
-            recyclerView = null
         }
     }
 

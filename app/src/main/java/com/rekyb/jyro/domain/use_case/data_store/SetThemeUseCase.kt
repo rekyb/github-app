@@ -1,6 +1,6 @@
 package com.rekyb.jyro.domain.use_case.data_store
 
-import com.rekyb.jyro.repository.DataStoreRepositoryImpl
+import com.rekyb.jyro.data.repository.DataStoreRepositoryImpl
 import javax.inject.Inject
 
 class SetThemeUseCase @Inject constructor(

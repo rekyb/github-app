@@ -3,7 +3,7 @@ package com.rekyb.jyro.domain.use_case.local
 import android.content.Context
 import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.domain.model.UserDetailsModel
-import com.rekyb.jyro.repository.FavouritesRepositoryImpl
+import com.rekyb.jyro.data.repository.FavouritesRepositoryImpl
 import com.rekyb.jyro.utils.ExceptionHandler
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow

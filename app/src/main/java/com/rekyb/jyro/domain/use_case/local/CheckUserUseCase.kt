@@ -1,6 +1,6 @@
 package com.rekyb.jyro.domain.use_case.local
 
-import com.rekyb.jyro.repository.FavouritesRepositoryImpl
+import com.rekyb.jyro.data.repository.FavouritesRepositoryImpl
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

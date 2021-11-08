@@ -53,4 +53,5 @@
     <string name="pref_about">About</string>
     <string name="pref_about_summary">Just another Github API android project. Made by Reky Bongso.</string>
     <string name="pref_twitter" translatable="false">https://twitter.com/rekybongso</string>
+    <string name="pref_pref_default" translatable="false">Use device theme</string>
 </resources>
