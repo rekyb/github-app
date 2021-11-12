@@ -1,5 +1,6 @@
 package com.rekyb.jyro.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -14,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rekyb.jyro.R
+import com.rekyb.jyro.common.Constants
 import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.databinding.FragmentProfileBinding
 import com.rekyb.jyro.domain.model.UserDetailsModel
@@ -93,15 +95,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
         fbAdd?.setOnClickListener { onAddButtonClicked() }
         fbFavourite?.setOnClickListener { setFavourite() }
-        fbShare?.setOnClickListener {
-            FancyToast.makeText(
-                requireContext(),
-                "Share",
-                FancyToast.LENGTH_SHORT,
-                FancyToast.INFO,
-                false
-            ).show()
-        }
+        fbShare?.setOnClickListener { shareIntent() }
 
         viewPager?.adapter = ViewPagerAdapter(this, args.username, tabsTitles)
 
@@ -161,6 +155,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
                     is Resources.Error -> onError(state.result.message)
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun shareIntent() {
+        val userProfileUrl = Constants.GITHUB_URL + binding?.userdata?.userName
+
+        val share = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/html"
+            putExtra(Intent.EXTRA_TEXT, userProfileUrl)
+        }, null)
+
+        startActivity(share)
     }
 
     private fun onAddButtonClicked() {
