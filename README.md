@@ -13,7 +13,7 @@ It also provide dark or light theme that can be stored to Data Store preferences
 
 ## Screenshots
 <p align="center">
-<img src="https://raw.githubusercontent.com/rekybongso/jyro/main/screenshots/20211105_125701.jpg" width="32%"/>
+<img src="https://raw.githubusercontent.com/rekybongso/jyro/main/screenshots/20211112_204231.jpg" width="32%"/>
 <img src="https://raw.githubusercontent.com/rekybongso/jyro/main/screenshots/20211105_123304.jpg" width="32%"/>
 <img src="https://raw.githubusercontent.com/rekybongso/jyro/main/screenshots/20211105_123312.jpg" width="32%"/>
 </p>
