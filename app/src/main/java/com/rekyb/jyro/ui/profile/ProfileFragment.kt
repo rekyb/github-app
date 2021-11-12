@@ -1,7 +1,10 @@
 package com.rekyb.jyro.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -12,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.rekyb.jyro.R
+import com.rekyb.jyro.common.Constants
 import com.rekyb.jyro.common.Resources
 import com.rekyb.jyro.databinding.FragmentProfileBinding
 import com.rekyb.jyro.domain.model.UserDetailsModel
@@ -30,10 +34,41 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
     private val args by navArgs<ProfileFragmentArgs>()
     private val viewModel: ProfileViewModel by viewModels()
 
-    private var fab: FloatingActionButton? = null
+    private var fbFavourite: FloatingActionButton? = null
+    private var fbAdd: FloatingActionButton? = null
+    private var fbShare: FloatingActionButton? = null
     private var tabs: TabLayout? = null
     private var viewPager: ViewPager2? = null
-    private var isItFavourite: Boolean = false
+    private var isItFavourite = false
+    private var isClicked = false
+
+    private val rotateOpenAnim: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.rotate_open,
+        )
+    }
+
+    private val rotateCloseAnim: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.rotate_close,
+        )
+    }
+
+    private val fromBottomAnim: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.from_bottom,
+        )
+    }
+
+    private val toBottomAnim: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.to_bottom,
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -51,12 +86,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         )
 
         binding?.apply {
-            fab = fabFavorite
+            fbFavourite = fabFavorite
+            fbAdd = fabAdd
+            fbShare = fabShare
             tabs = tabLayout
             viewPager = profileViewPager
         }
 
-        fab?.setOnClickListener { setFavourite() }
+        fbAdd?.setOnClickListener { onAddButtonClicked() }
+        fbFavourite?.setOnClickListener { setFavourite() }
+        fbShare?.setOnClickListener { shareIntent() }
 
         viewPager?.adapter = ViewPagerAdapter(this, args.username, tabsTitles)
 
@@ -69,9 +108,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
         viewModel.checkIsUserOnFavList(args.username)
 
         if (state) {
-            fab!!.setImageResource(R.drawable.ic_fav_filled)
+            fbFavourite!!.setImageResource(R.drawable.ic_fav_filled)
         } else {
-            fab!!.setImageResource(R.drawable.ic_fav_border)
+            fbFavourite!!.setImageResource(R.drawable.ic_fav_border)
         }
     }
 
@@ -118,12 +157,52 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
+    private fun shareIntent() {
+        val userProfileUrl = Constants.GITHUB_URL + binding?.userdata?.userName
+
+        val share = Intent.createChooser(Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/html"
+            putExtra(Intent.EXTRA_TEXT, userProfileUrl)
+        }, null)
+
+        startActivity(share)
+    }
+
+    private fun onAddButtonClicked() {
+        setFabVisibility(isClicked)
+        setFabAnimation(isClicked)
+        isClicked = !isClicked
+    }
+
+    private fun setFabVisibility(state: Boolean) {
+        if (!state) {
+            fbShare?.show()
+            fbFavourite?.show()
+        } else {
+            fbShare?.hide()
+            fbFavourite?.hide()
+        }
+    }
+
+    private fun setFabAnimation(state: Boolean) {
+        if (!state) {
+            fbAdd?.startAnimation(rotateOpenAnim)
+            fbFavourite?.startAnimation(fromBottomAnim)
+            fbShare?.startAnimation(fromBottomAnim)
+        } else {
+            fbAdd?.startAnimation(rotateCloseAnim)
+            fbFavourite?.startAnimation(toBottomAnim)
+            fbShare?.startAnimation(toBottomAnim)
+        }
+    }
+
     private fun onLoad() {
         binding?.apply {
             progressBar.show()
             profileContentWrapper.hide()
             tvPlaceholder.hide()
-            fabFavorite.hide()
+            fbAdd?.hide()
         }
     }
 
@@ -133,7 +212,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             progressBar.hide()
             profileContentWrapper.show()
             tvPlaceholder.hide()
-            fabFavorite.show()
+            fbAdd?.show()
         }
     }
 
@@ -144,7 +223,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             tvPlaceholder.apply {
                 text = errorMessage
             }.show()
-            fabFavorite.hide()
+            fbAdd?.hide()
         }
     }
 }

@@ -14,4 +14,6 @@
     <dimen name="small_dp">3dp</dimen>
     <dimen name="medium_dp">10dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_margin_bottom_1">75dp</dimen>
+    <dimen name="fab_margin_bottom_2">133dp</dimen>
 </resources>
