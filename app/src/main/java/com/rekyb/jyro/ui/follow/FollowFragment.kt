@@ -90,7 +90,7 @@ class FollowFragment :
 
     private fun setFollowersDataState() {
         viewModel.followersState
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach { state ->
                 when (val result = state.result) {
                     is Resources.Loading -> onLoad()
@@ -106,7 +106,7 @@ class FollowFragment :
 
     private fun setFollowingDataState() {
         viewModel.followingState
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach { state ->
                 when (val result = state.result) {
                     is Resources.Loading -> onLoad()

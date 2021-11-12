@@ -65,7 +65,7 @@ class MoreFragment : PreferenceFragmentCompat() {
     private fun onSelectionThemeChanged(selection: String) {
         val themeChanger = ThemeChanger()
 
-        themeChanger.changeBy(selection)
+        themeChanger.changeTo(selection)
         viewModel.saveSelectedAppTheme(selection)
     }
 
