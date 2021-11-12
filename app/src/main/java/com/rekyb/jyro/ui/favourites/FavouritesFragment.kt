@@ -113,7 +113,9 @@ class FavouritesFragment :
 
     private fun onLoad() {
         binding?.apply {
-            tvPlaceholder.hide()
+            tvPlaceholder.apply {
+                text = requireContext().getString(R.string.label_getting_data)
+            }.show()
             rvFavList.hide()
         }
     }

@@ -5,7 +5,7 @@ import com.rekyb.jyro.common.Themes
 
 class ThemeChanger {
 
-    fun changeBy(selection: String) {
+    fun changeTo(selection: String) {
 
         when (selection) {
             Themes.SYSTEM_DEFAULT.selection -> {

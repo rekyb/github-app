@@ -4,7 +4,7 @@ buildscript {
         build_gradle = "7.0.3"
         kotlin_gradle = "1.5.31"
         spotless = "5.17.0"
-        hilt_version = "2.39.1"
+        hilt_version = "2.40.1"
         navigation_version = "2.3.5"
         retrofit_version = "2.9.0"
         okhttp_version = "5.0.0-alpha.2"
