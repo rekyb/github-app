@@ -95,7 +95,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
         fbAdd?.setOnClickListener { onAddButtonClicked() }
         fbFavourite?.setOnClickListener { setFavourite() }
-        fbShare?.setOnClickListener { shareIntent() }
+        fbShare?.setOnClickListener { createShareIntent() }
 
         viewPager?.adapter = ViewPagerAdapter(this, args.username, tabsTitles)
 
@@ -157,8 +157,8 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
             }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun shareIntent() {
-        val userProfileUrl = Constants.GITHUB_URL + binding?.userdata?.userName
+    private fun createShareIntent() {
+        val userProfileUrl = Constants.GITHUB_URL + args.username
 
         val share = Intent.createChooser(Intent().apply {
             action = Intent.ACTION_SEND
@@ -177,11 +177,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(R.layout.fragment_p
 
     private fun setFabVisibility(state: Boolean) {
         if (!state) {
-            fbShare?.show()
-            fbFavourite?.show()
+            fbShare?.visibility = View.VISIBLE
+            fbFavourite?.visibility = View.VISIBLE
         } else {
-            fbShare?.hide()
-            fbFavourite?.hide()
+            fbShare?.visibility = View.INVISIBLE
+            fbFavourite?.visibility = View.INVISIBLE
         }
     }
 

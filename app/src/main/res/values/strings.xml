@@ -28,7 +28,7 @@
     <string name="error_socket_timeout" translatable="false">Request timeout, please try again later</string>
     <string name="error_unknown_host">Cannot resolve host, please check your internet connection</string>
     <string name="error_bad_request" translatable="false">Bad request</string>
-    <string name="error_unauthorized" translatable="false">Unauthorized request</string>
+    <string name="error_unauthorized" translatable="false">Unauthorized request, the token has been expired or revoked by its owner</string>
     <string name="error_forbidden" translatable="false">Forbidden request</string>
     <string name="error_not_found">Data not found, please try again.</string>
     <string name="error_internal_server" translatable="false">Internal server error</string>

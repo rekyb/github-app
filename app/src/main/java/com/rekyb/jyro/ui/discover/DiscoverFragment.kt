@@ -106,7 +106,7 @@ class DiscoverFragment :
 
     private fun setSearchResultsState() {
         viewModel.dataState
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
             .onEach { state ->
                 when (val result = state.result) {
                     is Resources.Loading -> onLoad()
