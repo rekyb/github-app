@@ -52,6 +52,9 @@ GithubApiKey=token your_personal_access_token
 3. Change the value with your personal access token
 4. If the gradle.properties doesn't exists, just create a new one.
 
+## Contacts
+I'm available at Discord: rekyb#3481 or DM me via twitter @rekybongso.
+
 # License
 ```xml
 MIT License
