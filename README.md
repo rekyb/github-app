@@ -53,13 +53,13 @@ GithubApiKey=token your_personal_access_token
 4. If the gradle.properties doesn't exists, just create a new one.
 
 ## Contacts
-I'm available at Discord: rekyb#3481 or DM me via twitter @rekybongso.
+I'm available at Discord: rekyb#3481.
 
 # License
 ```xml
 MIT License
 
-Copyright (c) 2021 Reky Bongso
+Copyright (c) 2021 Rekyb
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
